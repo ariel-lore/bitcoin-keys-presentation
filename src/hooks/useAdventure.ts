@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { AdventureState, Choice, KeyFlag, RecommendedPath, TrailStep } from '../types/schema';
 import { isSufficientToOperate } from '../types/schema';
-import { tree, nodeById, uniquePush } from '../lib/data';
+import { tree, nodeById, uniquePush, mitigationById } from '../lib/data';
+
+/** Survives React Strict Mode remount so we only bootstrap history once. */
+let historyBootstrapped = false;
 
 function emptyKeys() {
   return { hasPrivateKey: false, hasPublicKey: false, hasXpub: false };
@@ -78,7 +81,24 @@ function replayTrail(kept: TrailStep[], mitigatedVulnIds: string[]): AdventureSt
   }
 
   const vulnSet = new Set(vulnIds);
-  const keptMitigated = mitigatedVulnIds.filter((id) => vulnSet.has(id));
+  let keptMitigated = mitigatedVulnIds.filter((id) => vulnSet.has(id));
+
+  // Restore pre-mitigations that were applied on the restored node.
+  const finalNode = nodeById[currentNodeId];
+  if (finalNode?.preMitigationIds?.length) {
+    for (const mid of finalNode.preMitigationIds) {
+      const mit = mitigationById[mid];
+      if (!mit?.addressesVulnIds?.length) continue;
+      const addressed = mit.addressesVulnIds;
+      if (!addressed.some((id) => mitigatedVulnIds.includes(id))) continue;
+      vulnIds = uniquePush(vulnIds, addressed);
+      keptMitigated = uniquePush(
+        keptMitigated,
+        addressed.filter((id) => mitigatedVulnIds.includes(id)),
+      );
+      tags = uniquePush(tags, ['ceremony-opsec', mid]);
+    }
+  }
 
   return {
     currentNodeId,
@@ -168,124 +188,126 @@ export function useAdventure() {
     return initialState();
   });
 
-  const ready = useRef(false);
+  const stateRef = useRef(state);
+  stateRef.current = state;
 
   useEffect(() => {
-    const snap = state;
-    window.history.replaceState(snap, '', urlFor(snap.currentNodeId));
-    ready.current = true;
-  }, []);
+    if (!historyBootstrapped) {
+      const snap = stateRef.current;
+      window.history.replaceState(snap, '', urlFor(snap.currentNodeId));
+      historyBootstrapped = true;
+    }
 
-  useEffect(() => {
     const onPop = (e: PopStateEvent) => {
       if (snapshotValid(e.state)) {
         setState(normalizeLegacy(e.state));
-      } else if (e.state && typeof e.state === 'object' && Array.isArray((e.state as AdventureState).vulnIds)) {
-        setState(normalizeLegacy(e.state as AdventureState));
+        return;
+      }
+      // Never restore a truncated URL-only trail mid-session.
+      // If history entry is null/invalid, step back one via trail replay.
+      const cur = stateRef.current;
+      if (cur.trail.length > 1) {
+        const next = replayTrail(cur.trail.slice(0, -1), cur.mitigatedVulnIds);
+        setState(next);
+        window.history.replaceState(next, '', urlFor(next.currentNodeId));
       } else {
-        const fromUrl = readNodeFromUrl();
-        setState(
-          fromUrl
-            ? {
-                currentNodeId: fromUrl,
-                trail: [{ nodeId: fromUrl, choiceId: null, choiceLabel: null }],
-                vulnIds: [],
-                mitigatedVulnIds: [],
-                tags: [],
-                ...emptyKeys(),
-              }
-            : initialState(),
-        );
+        const next = initialState();
+        setState(next);
+        window.history.replaceState(next, '', urlFor(next.currentNodeId));
       }
     };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  const push = useCallback((next: AdventureState) => {
-    setState(next);
-    if (ready.current) {
-      window.history.pushState(next, '', urlFor(next.currentNodeId));
-    }
-  }, []);
-
-  const replace = useCallback((next: AdventureState) => {
-    setState(next);
-    if (ready.current) {
-      window.history.replaceState(next, '', urlFor(next.currentNodeId));
-    }
-  }, []);
-
-  const currentNode = nodeById[state.currentNodeId];
-
   const choose = useCallback((choice: Choice) => {
-    setState((prev) => {
-      const next = applyChoice(prev, choice);
-      if (!next) return prev;
-      if (ready.current) {
-        window.history.pushState(next, '', urlFor(next.currentNodeId));
-      }
-      return next;
-    });
+    const prev = stateRef.current;
+    const next = applyChoice(prev, choice);
+    if (!next) return;
+    setState(next);
+    window.history.pushState(next, '', urlFor(next.currentNodeId));
   }, []);
 
   const applyMitigationForVuln = useCallback((vulnId: string) => {
-    setState((prev) => {
-      if (!prev.vulnIds.includes(vulnId) || prev.mitigatedVulnIds.includes(vulnId)) {
-        return prev;
-      }
-      const next: AdventureState = {
-        ...prev,
-        mitigatedVulnIds: uniquePush(prev.mitigatedVulnIds, [vulnId]),
-      };
-      if (ready.current) {
-        window.history.replaceState(next, '', urlFor(next.currentNodeId));
-      }
-      return next;
-    });
+    const prev = stateRef.current;
+    if (!prev.vulnIds.includes(vulnId) || prev.mitigatedVulnIds.includes(vulnId)) {
+      return;
+    }
+    const next: AdventureState = {
+      ...prev,
+      mitigatedVulnIds: uniquePush(prev.mitigatedVulnIds, [vulnId]),
+    };
+    setState(next);
+    window.history.replaceState(next, '', urlFor(next.currentNodeId));
+  }, []);
+
+  /**
+   * Apply a node pre-mitigation while staying on the same question.
+   * Adds addressed vulns (so they appear in the risk strip) and marks them mitigated.
+   */
+  const applyPreMitigation = useCallback((mitigationId: string) => {
+    const mit = mitigationById[mitigationId];
+    if (!mit) return;
+    const prev = stateRef.current;
+    const addressed = mit.addressesVulnIds ?? [];
+    if (!addressed.length) return;
+    const already = addressed.every((id) => prev.mitigatedVulnIds.includes(id));
+    if (already) return;
+    const next: AdventureState = {
+      ...prev,
+      vulnIds: uniquePush(prev.vulnIds, addressed),
+      mitigatedVulnIds: uniquePush(prev.mitigatedVulnIds, addressed),
+      tags: uniquePush(prev.tags, ['ceremony-opsec', mitigationId]),
+    };
+    setState(next);
+    window.history.replaceState(next, '', urlFor(next.currentNodeId));
   }, []);
 
   const undo = useCallback(() => {
-    if (state.trail.length <= 1) return;
+    if (stateRef.current.trail.length <= 1) return;
     window.history.back();
-  }, [state.trail.length]);
+  }, []);
 
   const reset = useCallback(() => {
-    replace(initialState());
-  }, [replace]);
+    const next = initialState();
+    setState(next);
+    window.history.replaceState(next, '', urlFor(next.currentNodeId));
+  }, []);
 
   const jumpToNode = useCallback((nodeId: string) => {
     if (!nodeById[nodeId]) return;
-    setState((prev) => {
-      const idx = prev.trail.findIndex((t) => t.nodeId === nodeId);
-      if (idx >= 0) {
-        const next = replayTrail(prev.trail.slice(0, idx + 1), prev.mitigatedVulnIds);
-        if (ready.current) {
-          window.history.pushState(next, '', urlFor(next.currentNodeId));
-        }
-        return next;
-      }
-      const next: AdventureState = {
-        ...prev,
-        currentNodeId: nodeId,
-        trail: [
-          ...prev.trail,
-          { nodeId, choiceId: null, choiceLabel: `Jump → ${nodeById[nodeId].title}` },
-        ],
-      };
-      if (ready.current) {
+    const prev = stateRef.current;
+    const idx = prev.trail.findIndex((t) => t.nodeId === nodeId);
+    let next: AdventureState;
+    if (idx >= 0) {
+      next = replayTrail(prev.trail.slice(0, idx + 1), prev.mitigatedVulnIds);
+      const stepsBack = prev.trail.length - 1 - idx;
+      setState(next);
+      if (stepsBack > 0) {
+        // Prefer walking history so Back/Forward stay consistent.
+        // replaceState after go would race; push a fresh snapshot instead when
+        // jumping mid-trail via UI (trail click) — one entry for the restored step.
         window.history.pushState(next, '', urlFor(next.currentNodeId));
       }
-      return next;
-    });
+      return;
+    }
+    next = {
+      ...prev,
+      currentNodeId: nodeId,
+      trail: [
+        ...prev.trail,
+        { nodeId, choiceId: null, choiceLabel: `Jump → ${nodeById[nodeId].title}` },
+      ],
+    };
+    setState(next);
+    window.history.pushState(next, '', urlFor(next.currentNodeId));
   }, []);
 
-  const applyPath = useCallback(
-    (path: RecommendedPath) => {
-      push(walkPath(path));
-    },
-    [push],
-  );
+  const applyPath = useCallback((path: RecommendedPath) => {
+    const next = walkPath(path);
+    setState(next);
+    window.history.pushState(next, '', urlFor(next.currentNodeId));
+  }, []);
 
   const canUndo = state.trail.length > 1;
 
@@ -295,6 +317,8 @@ export function useAdventure() {
   );
 
   const sufficientToOperate = useMemo(() => isSufficientToOperate(state), [state]);
+
+  const currentNode = nodeById[state.currentNodeId];
 
   return useMemo(
     () => ({
@@ -306,6 +330,7 @@ export function useAdventure() {
       jumpToNode,
       applyPath,
       applyMitigationForVuln,
+      applyPreMitigation,
       canUndo,
       openVulnIds,
       sufficientToOperate,
@@ -319,6 +344,7 @@ export function useAdventure() {
       jumpToNode,
       applyPath,
       applyMitigationForVuln,
+      applyPreMitigation,
       canUndo,
       openVulnIds,
       sufficientToOperate,

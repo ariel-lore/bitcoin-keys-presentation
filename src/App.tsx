@@ -65,7 +65,12 @@ export default function App() {
             onApplyMitigation={adventure.applyMitigationForVuln}
           />
         ) : (
-          <NodeView node={adventure.currentNode} onChoose={adventure.choose} />
+          <NodeView
+            node={adventure.currentNode}
+            onChoose={adventure.choose}
+            mitigatedVulnIds={adventure.state.mitigatedVulnIds}
+            onApplyPreMitigation={adventure.applyPreMitigation}
+          />
         )}
       </main>
 

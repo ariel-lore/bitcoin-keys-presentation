@@ -34,12 +34,18 @@ Brand icons live in **`public/brands/`**.
 
 ### Choice fields
 
-- `addsVulnIds` — risks introduced by the choice
+- `addsVulnIds` — risks introduced by the choice (also shown **under** the option button)
 - `icon` — optional path like `/brands/ledger.svg`
 - `subtitle` — optional service line (e.g. `Hardware · USB`)
 - `setsFlags` — `privateKey` / `publicKey` / `xpub` (educational labels only)
 - `enables` / `capabilities` — tool capability tags for differentiated follow-ups
 - `addsMitigationIds` — deprecated / ignored (mitigations are click-to-apply)
+
+### Node fields
+
+- `title` — the question on the slide (large, centered)
+- `preMitigationIds` — optional mitigations apply-able **on this slide before choosing** (e.g. ceremony OPSEC on manual entropy). Apply adds addressed vulns and marks them secured.
+- `isSummary` — end-of-path summary slide
 
 ### Key accumulation & sufficiency
 
@@ -52,7 +58,7 @@ When a path reaches an operable setup, the slide is a **summary** (`isSummary: t
 
 ### Mitigation UX
 
-Choices add vulnerabilities. The UI shows each open risk with its paired mitigation. Click **Apply** to mark that risk secured (`mitigatedVulnIds`).
+Choices add vulnerabilities (titles/descriptions always visible under the option). The top strip shows each open risk with its paired mitigation. Click **Apply** to mark that risk secured (`mitigatedVulnIds`).
 
 ### Recommended paths (`paths.json`)
 
@@ -63,10 +69,12 @@ TypeScript types live in `src/types/schema.ts`.
 ## UX features
 
 - **True slides**: each view fits the viewport; no page scrollbars
-- **Question titles**: every node asks a question; choices are the answers
+- **Question titles**: every node asks a question (large, centered); choices are the answers
+- **Full choice trail**: every choice label so far in a compact wrapping strip (hover shows the node question)
 - **Self-custody → single key → tools** (Ledger, Trezor, Coldcard, Bitkey, Seedsigner, Jade, Tails, phone, air-gapped phone, BlueWallet, Bitcoin Core, manual) with logos and differentiated follow-ups
-- Compact trail + setup status + paired risk/mitigation icons; details on hover; click to secure
-- **Browser Back / Forward** (History API + `?node=` deep-link)
+- Manual entropy: ceremony OPSEC as on-slide pre-mitigations; dice → manual map or hardware assist; entropy+hardware device list
+- Setup status + paired risk/mitigation icons; details on hover; click to secure
+- **Browser Back / Forward** (History API + `?node=` deep-link): exactly one history entry per adventure step; Back restores the previous full snapshot in one click
 
 ## Stack
 

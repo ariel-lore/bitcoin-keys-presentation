@@ -56,6 +56,11 @@ export interface TreeNode {
   tags?: string[];
   /** When true, render end-of-path SummaryView (trail + vulns + harden) */
   isSummary?: boolean;
+  /**
+   * Mitigations selectable on this slide before choosing an answer
+   * (e.g. ceremony OPSEC). Apply adds addressed vulns + marks them mitigated.
+   */
+  preMitigationIds?: string[];
 }
 
 export interface RecommendedPath {

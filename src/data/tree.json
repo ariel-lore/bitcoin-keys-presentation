@@ -4,7 +4,7 @@
     {
       "id": "start",
       "title": "How will this wallet be structured?",
-      "body": "**Educational presentation \u2014 not financial advice.**\n\nWho holds the keys that authorize spending?\n",
+      "body": "**Educational presentation — not financial advice.**\n\nWho holds the keys that authorize spending?\n",
       "choices": [
         {
           "id": "start-custodian",
@@ -27,7 +27,7 @@
     {
       "id": "custodian-mode",
       "title": "Which custody model?",
-      "body": "A third party holds Bitcoin on your behalf. You hold an account claim \u2014 not necessarily on-chain keys.\n",
+      "body": "A third party holds Bitcoin on your behalf. You hold an account claim — not necessarily on-chain keys.\n",
       "category": "Custodial",
       "choices": [
         {
@@ -51,13 +51,13 @@
     {
       "id": "single-custodian",
       "title": "Which custodian?",
-      "body": "Pick a recognizable service. Icons are brand marks; offerings change \u2014 verify current features yourself.\n",
+      "body": "Pick a recognizable service. Icons are brand marks; offerings change — verify current features yourself.\n",
       "category": "Custodial",
       "choices": [
         {
           "id": "sc-kraken",
           "label": "Kraken",
-          "subtitle": "Exchange \u00b7 Lightning \u00b7 Lending-related",
+          "subtitle": "Exchange · Lightning · Lending-related",
           "icon": "/brands/kraken.svg",
           "nextNodeId": "auth-kraken",
           "addsVulnIds": [
@@ -107,7 +107,7 @@
         {
           "id": "sc-stacks",
           "label": "Stacks",
-          "subtitle": "Stacks ecosystem \u00b7 stacks.co",
+          "subtitle": "Stacks ecosystem · stacks.co",
           "icon": "/brands/stacks.svg",
           "nextNodeId": "auth-stacks",
           "addsVulnIds": [
@@ -132,7 +132,7 @@
         {
           "id": "sc-coinos",
           "label": "Coinos",
-          "subtitle": "Web wallet \u00b7 Lightning \u00b7 Custodial options",
+          "subtitle": "Web wallet · Lightning · Custodial options",
           "icon": "/brands/coinos.svg",
           "nextNodeId": "auth-coinos",
           "addsVulnIds": [
@@ -157,7 +157,7 @@
         {
           "id": "sc-bull",
           "label": "Bull Bitcoin",
-          "subtitle": "Exchange \u00b7 Buy / sell",
+          "subtitle": "Exchange · Buy / sell",
           "icon": "/brands/bullbitcoin.svg",
           "nextNodeId": "auth-bullbitcoin",
           "addsVulnIds": [
@@ -182,7 +182,7 @@
         {
           "id": "sc-wos",
           "label": "Wallet of Satoshi",
-          "subtitle": "Lightning \u00b7 Custodial (supported regions)",
+          "subtitle": "Lightning · Custodial (supported regions)",
           "icon": "/brands/walletofsatoshi.svg",
           "nextNodeId": "auth-wos",
           "addsVulnIds": [
@@ -207,7 +207,7 @@
         {
           "id": "sc-well",
           "label": "Bitcoin Well",
-          "subtitle": "Buy / sell \u00b7 Related services",
+          "subtitle": "Buy / sell · Related services",
           "icon": "/brands/bitcoinwell.svg",
           "nextNodeId": "auth-bitcoinwell",
           "addsVulnIds": [
@@ -635,7 +635,7 @@
     {
       "id": "path-end-custodial",
       "title": "What remains on this custodial path?",
-      "body": "**Operable account claim** \u2014 auth hardening helps takeover risk; it does **not** remove counterparty risk (insolvency, freeze, seizure, KYC).\n\nApply paired mitigations above. Continue hardening below \u2014 or leave only if comparing structures.\n",
+      "body": "**Operable account claim** — auth hardening helps takeover risk; it does **not** remove counterparty risk (insolvency, freeze, seizure, KYC).\n\nApply paired mitigations above. Continue hardening below — or leave only if comparing structures.\n",
       "category": "Summary",
       "isSummary": true,
       "choices": [
@@ -656,9 +656,9 @@
         },
         {
           "id": "pe-c-explore",
-          "label": "Explore another structure\u2026",
+          "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional \u2014 leave this path"
+          "subtitle": "Optional — leave this path"
         }
       ]
     },
@@ -671,7 +671,7 @@
         {
           "id": "fc-fedi",
           "label": "Fedi",
-          "subtitle": "Federation \u00b7 Community custody",
+          "subtitle": "Federation · Community custody",
           "icon": "/brands/fedi.svg",
           "nextNodeId": "fed-fedi",
           "addsVulnIds": [
@@ -691,7 +691,7 @@
         {
           "id": "fc-ln-fed",
           "label": "Lightning community / federation",
-          "subtitle": "Payments \u00b7 Privacy (e-cash where relevant)",
+          "subtitle": "Payments · Privacy (e-cash where relevant)",
           "nextNodeId": "fed-lightning",
           "addsVulnIds": [
             "phish-creds",
@@ -782,9 +782,9 @@
         },
         {
           "id": "pe-f-explore",
-          "label": "Explore another structure\u2026",
+          "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional \u2014 leave this path"
+          "subtitle": "Optional — leave this path"
         }
       ]
     },
@@ -824,7 +824,7 @@
         {
           "id": "sk-ledger",
           "label": "Ledger",
-          "subtitle": "Hardware \u00b7 USB / Bluetooth",
+          "subtitle": "Hardware · USB / Bluetooth",
           "icon": "/brands/ledger.svg",
           "nextNodeId": "tool-ledger",
           "tags": [
@@ -852,7 +852,7 @@
         {
           "id": "sk-trezor",
           "label": "Trezor",
-          "subtitle": "Hardware \u00b7 USB",
+          "subtitle": "Hardware · USB",
           "icon": "/brands/trezor.svg",
           "nextNodeId": "tool-trezor",
           "tags": [
@@ -880,7 +880,7 @@
         {
           "id": "sk-coldcard",
           "label": "Coldcard",
-          "subtitle": "Hardware \u00b7 air-gap oriented \u00b7 SD",
+          "subtitle": "Hardware · air-gap oriented · SD",
           "icon": "/brands/coldcard.svg",
           "nextNodeId": "tool-coldcard",
           "tags": [
@@ -934,7 +934,7 @@
         {
           "id": "sk-seedsigner",
           "label": "Seedsigner",
-          "subtitle": "Air-gapped \u00b7 DIY \u00b7 QR only",
+          "subtitle": "Air-gapped · DIY · QR only",
           "icon": "/brands/seedsigner.svg",
           "nextNodeId": "tool-seedsigner",
           "tags": [
@@ -956,7 +956,7 @@
         {
           "id": "sk-jade",
           "label": "Jade",
-          "subtitle": "Blockstream \u00b7 optional blind oracle",
+          "subtitle": "Blockstream · optional blind oracle",
           "icon": "/brands/jade.svg",
           "nextNodeId": "tool-jade",
           "tags": [
@@ -983,7 +983,7 @@
         {
           "id": "sk-tails",
           "label": "Tails OS",
-          "subtitle": "Live amnesic OS \u00b7 desktop",
+          "subtitle": "Live amnesic OS · desktop",
           "icon": "/brands/tails.svg",
           "nextNodeId": "tool-tails",
           "tags": [
@@ -1006,7 +1006,7 @@
         {
           "id": "sk-phone",
           "label": "Smartphone",
-          "subtitle": "Hot \u00b7 internet-connected",
+          "subtitle": "Hot · internet-connected",
           "icon": "/brands/smartphone.svg",
           "nextNodeId": "tool-smartphone",
           "tags": [
@@ -1055,7 +1055,7 @@
         {
           "id": "sk-blue",
           "label": "BlueWallet",
-          "subtitle": "Mobile app \u00b7 hot / watch-only",
+          "subtitle": "Mobile app · hot / watch-only",
           "icon": "/brands/bluewallet.svg",
           "nextNodeId": "tool-bluewallet",
           "tags": [
@@ -1081,7 +1081,7 @@
         {
           "id": "sk-core",
           "label": "Bitcoin Core / Bitcoin-Qt",
-          "subtitle": "Full node \u00b7 desktop wallet",
+          "subtitle": "Full node · desktop wallet",
           "icon": "/brands/bitcoincore.svg",
           "nextNodeId": "tool-bitcoincore",
           "tags": [
@@ -1105,7 +1105,7 @@
         {
           "id": "sk-manual",
           "label": "Manual seed + signing device",
-          "subtitle": "Dice / DIY entropy \u2192 load signer",
+          "subtitle": "Dice / DIY entropy → load signer",
           "icon": "/brands/manual-seed.svg",
           "nextNodeId": "tool-manual",
           "tags": [
@@ -1163,27 +1163,13 @@
           "tags": [
             "user-entropy"
           ]
-        },
-        {
-          "id": "led-import",
-          "label": "Import existing BIP39",
-          "nextNodeId": "tool-ledger-protect",
-          "addsVulnIds": [
-            "supply-chain-device"
-          ],
-          "setsFlags": [
-            "privateKey"
-          ],
-          "tags": [
-            "bip39-import"
-          ]
         }
       ]
     },
     {
       "id": "tool-ledger-protect",
       "title": "PIN and passphrase on Ledger?",
-      "body": "PIN protects the device. BIP39 passphrase creates a hidden wallet \u2014 backup separately and test recovery.\n",
+      "body": "PIN protects the device. BIP39 passphrase creates a hidden wallet — backup separately and test recovery.\n",
       "category": "Ledger",
       "choices": [
         {
@@ -1219,7 +1205,7 @@
     {
       "id": "tool-trezor",
       "title": "How will you generate the Trezor seed?",
-      "body": "Trezor generates BIP39 on-device. Shamir (SLIP39) is an advanced option on some models \u2014 educational path sticks to BIP39.\n",
+      "body": "Trezor generates BIP39 on-device. Shamir (SLIP39) is an advanced option on some models — educational path sticks to BIP39.\n",
       "category": "Trezor",
       "choices": [
         {
@@ -1242,17 +1228,6 @@
           "addsVulnIds": [
             "supply-chain-device",
             "entropy-not-followed"
-          ],
-          "setsFlags": [
-            "privateKey"
-          ]
-        },
-        {
-          "id": "trz-import",
-          "label": "Import existing BIP39",
-          "nextNodeId": "tool-trezor-protect",
-          "addsVulnIds": [
-            "supply-chain-device"
           ],
           "setsFlags": [
             "privateKey"
@@ -1323,17 +1298,6 @@
           "setsFlags": [
             "privateKey"
           ]
-        },
-        {
-          "id": "cc-import",
-          "label": "Import BIP39 via SD / QR",
-          "nextNodeId": "tool-coldcard-store",
-          "addsVulnIds": [
-            "supply-chain-device"
-          ],
-          "setsFlags": [
-            "privateKey"
-          ]
         }
       ]
     },
@@ -1382,7 +1346,7 @@
     {
       "id": "tool-bitkey",
       "title": "How will Bitkey hold key material?",
-      "body": "Bitkey uses a mobile + hardware collaborative design (typically 2-of-3). Cloud assist eases recovery \u2014 and reintroduces dependency.\n",
+      "body": "Bitkey uses a mobile + hardware collaborative design (typically 2-of-3). Cloud assist eases recovery — and reintroduces dependency.\n",
       "category": "Bitkey",
       "choices": [
         {
@@ -1440,7 +1404,7 @@
     {
       "id": "tool-seedsigner",
       "title": "How will Seedsigner create entropy?",
-      "body": "Seedsigner is typically **stateless**: generate, backup, sign via QR \u2014 seed not stored on device between sessions.\n",
+      "body": "Seedsigner is typically **stateless**: generate, backup, sign via QR — seed not stored on device between sessions.\n",
       "category": "Seedsigner",
       "choices": [
         {
@@ -1468,17 +1432,6 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
-        },
-        {
-          "id": "ss-import",
-          "label": "Load existing BIP39 via QR",
-          "nextNodeId": "tool-seedsigner-store",
-          "setsFlags": [
-            "privateKey"
-          ],
-          "tags": [
-            "bip39-import"
           ]
         }
       ]
@@ -1522,7 +1475,7 @@
     {
       "id": "tool-jade",
       "title": "How will you generate the Jade seed?",
-      "body": "Blockstream Jade: on-device RNG, optional blind oracle for entropy assist, PIN, passphrase, BIP39 import.\n",
+      "body": "Blockstream Jade: on-device RNG, optional blind oracle for entropy assist, PIN, passphrase.\n",
       "category": "Jade",
       "choices": [
         {
@@ -1541,17 +1494,6 @@
         {
           "id": "jd-oracle",
           "label": "RNG + blind oracle assist",
-          "nextNodeId": "tool-jade-protect",
-          "addsVulnIds": [
-            "supply-chain-device"
-          ],
-          "setsFlags": [
-            "privateKey"
-          ]
-        },
-        {
-          "id": "jd-import",
-          "label": "Import BIP39",
           "nextNodeId": "tool-jade-protect",
           "addsVulnIds": [
             "supply-chain-device"
@@ -1594,7 +1536,7 @@
     {
       "id": "tool-tails",
       "title": "Which wallet tooling on Tails?",
-      "body": "Tails is an amnesic live OS. **Electrum does not generate BIP39** \u2014 stay Electrum-native or use BIP39-capable offline tooling.\n",
+      "body": "Tails is an amnesic live OS. **Electrum does not generate BIP39** — stay Electrum-native or use BIP39-capable offline tooling.\n",
       "category": "Tails OS",
       "choices": [
         {
@@ -1632,7 +1574,7 @@
     {
       "id": "tool-tails-ops",
       "title": "How will you keep Tails air-gapped?",
-      "body": "Never \"just enable Wi\u2011Fi\" to install packages. Ferry verified software via USB.\n",
+      "body": "Never \"just enable Wi‑Fi\" to install packages. Ferry verified software via USB.\n",
       "category": "Tails OS",
       "choices": [
         {
@@ -1698,18 +1640,6 @@
           "addsVulnIds": [
             "hot-malware",
             "insufficient-entropy"
-          ],
-          "setsFlags": [
-            "privateKey"
-          ]
-        },
-        {
-          "id": "ph-import",
-          "label": "Import existing BIP39",
-          "nextNodeId": "tool-smartphone-backup",
-          "addsVulnIds": [
-            "hot-malware",
-            "seed-phishing-support"
           ],
           "setsFlags": [
             "privateKey"
@@ -1792,26 +1722,18 @@
           "setsFlags": [
             "privateKey"
           ]
-        },
-        {
-          "id": "aps-import",
-          "label": "Import BIP39 offline",
-          "nextNodeId": "seed-aftercare",
-          "setsFlags": [
-            "privateKey"
-          ]
         }
       ]
     },
     {
       "id": "tool-bluewallet",
       "title": "Hot wallet or watch-only in BlueWallet?",
-      "body": "BlueWallet can hold keys (hot) or import an xpub as watch-only. Lightning features may be custodial \u2014 check current mode.\n",
+      "body": "BlueWallet can hold keys (hot) or import an xpub as watch-only. Lightning features may be custodial — check current mode.\n",
       "category": "BlueWallet",
       "choices": [
         {
           "id": "bw-hot",
-          "label": "Hot: create / import seed",
+          "label": "Hot: create seed",
           "nextNodeId": "tool-bluewallet-seed",
           "addsVulnIds": [
             "hot-malware",
@@ -1834,23 +1756,12 @@
     {
       "id": "tool-bluewallet-seed",
       "title": "How will BlueWallet get the seed?",
-      "body": "App RNG or BIP39 import. Keep backups offline.\n",
+      "body": "App RNG generates BIP39. Keep backups offline.\n",
       "category": "BlueWallet",
       "choices": [
         {
           "id": "bw-rng",
           "label": "App-generated BIP39",
-          "nextNodeId": "tool-smartphone-backup",
-          "addsVulnIds": [
-            "hot-malware"
-          ],
-          "setsFlags": [
-            "privateKey"
-          ]
-        },
-        {
-          "id": "bw-import",
-          "label": "Import BIP39",
           "nextNodeId": "tool-smartphone-backup",
           "addsVulnIds": [
             "hot-malware"
@@ -1936,15 +1847,33 @@
     {
       "id": "tool-manual",
       "title": "How will you create physical entropy?",
-      "body": "You generate first 11/23 words; compute checksum offline; load into a signing device.\n",
+      "body": "You generate entropy yourself, then derive a BIP39 seed (often via a hardware device that mixes or maps your entropy). Apply ceremony OPSEC below before choosing a method.\n",
       "category": "Manual",
       "choices": [
         {
           "id": "man-dice",
-          "label": "Dice + mapping table",
-          "nextNodeId": "seed-dice",
+          "label": "Dice rolling",
+          "nextNodeId": "seed-dice-method",
           "tags": [
             "dice"
+          ],
+          "addsVulnIds": [
+            "dice-sort-bias",
+            "biased-dice"
+          ]
+        },
+        {
+          "id": "man-entropy-hw",
+          "label": "Entropy + hardware device",
+          "subtitle": "You supply entropy · device hashes to seed",
+          "nextNodeId": "seed-entropy-hw",
+          "tags": [
+            "user-entropy",
+            "hardware"
+          ],
+          "addsVulnIds": [
+            "entropy-not-followed",
+            "device-ignores-entropy"
           ]
         },
         {
@@ -1965,11 +1894,229 @@
           "tags": [
             "cards"
           ]
+        }
+      ],
+      "preMitigationIds": [
+        "pencil-paper-only",
+        "never-speak-seed",
+        "no-cameras"
+      ]
+    },
+    {
+      "id": "seed-entropy-hw",
+      "title": "Which device will mix your entropy?",
+      "body": "You provide entropy; the device hashes/mixes it with its RNG to produce the seed. Prefer devices with clear user-entropy procedures.\n",
+      "category": "Seed generation",
+      "choices": [
+        {
+          "id": "seh-coldcard",
+          "label": "Coldcard",
+          "subtitle": "Dice / user entropy on device",
+          "icon": "/brands/coldcard.svg",
+          "nextNodeId": "tool-coldcard-store",
+          "setsFlags": [
+            "privateKey"
+          ],
+          "tags": [
+            "user-entropy",
+            "coldcard"
+          ],
+          "capabilities": [
+            "hardware",
+            "user-entropy",
+            "airgap"
+          ],
+          "addsVulnIds": [
+            "supply-chain-device",
+            "entropy-not-followed"
+          ]
         },
         {
-          "id": "man-opsec",
-          "label": "Review ceremony OPSEC first",
-          "nextNodeId": "seed-opsec"
+          "id": "seh-seedsigner",
+          "label": "Seedsigner",
+          "subtitle": "Dice or camera entropy",
+          "icon": "/brands/seedsigner.svg",
+          "nextNodeId": "tool-seedsigner-store",
+          "setsFlags": [
+            "privateKey"
+          ],
+          "tags": [
+            "user-entropy",
+            "seedsigner"
+          ],
+          "capabilities": [
+            "hardware",
+            "user-entropy",
+            "airgap"
+          ],
+          "addsVulnIds": [
+            "entropy-not-followed"
+          ]
+        },
+        {
+          "id": "seh-jade",
+          "label": "Blockstream Jade",
+          "subtitle": "RNG + optional oracle / user entropy",
+          "icon": "/brands/jade.svg",
+          "nextNodeId": "tool-jade-protect",
+          "setsFlags": [
+            "privateKey"
+          ],
+          "tags": [
+            "user-entropy",
+            "jade"
+          ],
+          "capabilities": [
+            "hardware",
+            "user-entropy"
+          ],
+          "addsVulnIds": [
+            "supply-chain-device",
+            "entropy-not-followed"
+          ]
+        },
+        {
+          "id": "seh-ledger",
+          "label": "Ledger",
+          "subtitle": "Device RNG + user entropy",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger-protect",
+          "setsFlags": [
+            "privateKey"
+          ],
+          "tags": [
+            "user-entropy",
+            "ledger"
+          ],
+          "capabilities": [
+            "hardware",
+            "user-entropy"
+          ],
+          "addsVulnIds": [
+            "supply-chain-device",
+            "entropy-not-followed",
+            "device-ignores-entropy"
+          ]
+        },
+        {
+          "id": "seh-trezor",
+          "label": "Trezor",
+          "subtitle": "Computer / keyboard entropy",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor-protect",
+          "setsFlags": [
+            "privateKey"
+          ],
+          "tags": [
+            "user-entropy",
+            "trezor"
+          ],
+          "capabilities": [
+            "hardware",
+            "user-entropy"
+          ],
+          "addsVulnIds": [
+            "supply-chain-device",
+            "entropy-not-followed"
+          ]
+        },
+        {
+          "id": "seh-back",
+          "label": "Other entropy methods",
+          "nextNodeId": "tool-manual"
+        }
+      ]
+    },
+    {
+      "id": "seed-dice-hw",
+      "title": "Which device will take dice rolls?",
+      "body": "These devices can generate a BIP39 seed from dice rolls you provide on-device.\n",
+      "category": "Seed generation",
+      "choices": [
+        {
+          "id": "sdh-coldcard",
+          "label": "Coldcard",
+          "subtitle": "Dice rolls on device",
+          "icon": "/brands/coldcard.svg",
+          "nextNodeId": "tool-coldcard-store",
+          "setsFlags": [
+            "privateKey"
+          ],
+          "tags": [
+            "dice",
+            "coldcard"
+          ],
+          "capabilities": [
+            "hardware",
+            "dice",
+            "airgap"
+          ],
+          "addsVulnIds": [
+            "dice-sort-bias",
+            "biased-dice",
+            "supply-chain-device"
+          ]
+        },
+        {
+          "id": "sdh-seedsigner",
+          "label": "Seedsigner",
+          "subtitle": "Dice entropy · stateless",
+          "icon": "/brands/seedsigner.svg",
+          "nextNodeId": "tool-seedsigner-store",
+          "setsFlags": [
+            "privateKey"
+          ],
+          "tags": [
+            "dice",
+            "seedsigner"
+          ],
+          "capabilities": [
+            "hardware",
+            "dice",
+            "airgap"
+          ],
+          "addsVulnIds": [
+            "dice-sort-bias",
+            "biased-dice"
+          ]
+        },
+        {
+          "id": "sdh-back",
+          "label": "Other entropy methods",
+          "nextNodeId": "tool-manual"
+        }
+      ]
+    },
+    {
+      "id": "seed-dice-method",
+      "title": "How will dice become a seed?",
+      "body": "Map rolls yourself with a trusted table, or use a hardware device that accepts dice rolls and derives the BIP39 seed.\n",
+      "category": "Seed generation",
+      "choices": [
+        {
+          "id": "sdm-manual",
+          "label": "Manual mapping to seed words",
+          "nextNodeId": "seed-dice",
+          "tags": [
+            "dice",
+            "manual-map"
+          ],
+          "addsVulnIds": [
+            "unsafe-dice-instructions",
+            "biased-word-mapping"
+          ]
+        },
+        {
+          "id": "sdm-hw",
+          "label": "Hardware device assistance",
+          "nextNodeId": "seed-dice-hw",
+          "tags": [
+            "dice",
+            "hardware"
+          ],
+          "addsVulnIds": [
+            "supply-chain-device"
+          ]
         }
       ]
     },
@@ -1981,7 +2128,7 @@
       "choices": [
         {
           "id": "ms-same-country",
-          "label": "Home \u00b7 family \u00b7 bank (same country)",
+          "label": "Home · family · bank (same country)",
           "subtitle": "Geographic / jurisdiction concentration",
           "nextNodeId": "multisig-same-country",
           "addsVulnIds": [
@@ -1992,7 +2139,7 @@
         {
           "id": "ms-multi-vendor",
           "label": "Multi-vendor devices",
-          "subtitle": "Same-vendor multisig \u2260 independent",
+          "subtitle": "Same-vendor multisig ≠ independent",
           "nextNodeId": "multisig-diverse"
         },
         {
@@ -2076,7 +2223,7 @@
       "choices": [
         {
           "id": "msd-dist",
-          "label": "Yes \u2014 distribute locations / parties",
+          "label": "Yes — distribute locations / parties",
           "nextNodeId": "distributed-multisig"
         },
         {
@@ -2103,7 +2250,7 @@
       "choices": [
         {
           "id": "dm-parties",
-          "label": "Yes \u2014 independent humans / orgs",
+          "label": "Yes — independent humans / orgs",
           "nextNodeId": "independent-multisig",
           "addsVulnIds": [
             "collusion-multisig"
@@ -2158,7 +2305,7 @@
       "choices": [
         {
           "id": "mka-yes",
-          "label": "Yes \u2014 I retain spending threshold",
+          "label": "Yes — I retain spending threshold",
           "nextNodeId": "path-end-multisig",
           "setsFlags": [
             "privateKey",
@@ -2167,7 +2314,7 @@
         },
         {
           "id": "mka-no",
-          "label": "No \u2014 firm is required to spend",
+          "label": "No — firm is required to spend",
           "nextNodeId": "path-end-multisig",
           "addsVulnIds": [
             "key-agent-custody"
@@ -2187,7 +2334,7 @@
       "choices": [
         {
           "id": "mp-drill",
-          "label": "Yes \u2014 scheduled recovery drill",
+          "label": "Yes — scheduled recovery drill",
           "nextNodeId": "path-end-multisig",
           "setsFlags": [
             "privateKey",
@@ -2266,21 +2413,21 @@
         },
         {
           "id": "pe-ms-explore",
-          "label": "Explore another structure\u2026",
+          "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional \u2014 leave this path"
+          "subtitle": "Optional — leave this path"
         }
       ]
     },
     {
       "id": "glacier",
       "title": "Accept Glacier-style complexity?",
-      "body": "Dual permanently offline computers, dice entropy, printed checklists. Highest single-org assurance \u2014 human error dominates residual risk.\n",
+      "body": "Dual permanently offline computers, dice entropy, printed checklists. Highest single-org assurance — human error dominates residual risk.\n",
       "category": "Glacier",
       "choices": [
         {
           "id": "gl-accept",
-          "label": "Yes \u2014 max assurance ceremony",
+          "label": "Yes — max assurance ceremony",
           "nextNodeId": "glacier-ceremony",
           "addsVulnIds": [
             "glacier-complexity"
@@ -2301,7 +2448,7 @@
     {
       "id": "glacier-ceremony",
       "title": "Ready to run the ceremony outline?",
-      "body": "Two air-gapped machines; dice \u2192 BIP39; checksum offline; dual-verify addresses; metal backup; inheritance sealed. Practice with **throwaway** entropy first.\n",
+      "body": "Two air-gapped machines; dice → BIP39; checksum offline; dual-verify addresses; metal backup; inheritance sealed. Practice with **throwaway** entropy first.\n",
       "category": "Glacier",
       "choices": [
         {
@@ -2349,16 +2496,16 @@
         },
         {
           "id": "pe-g-explore",
-          "label": "Explore another structure\u2026",
+          "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional \u2014 leave this path"
+          "subtitle": "Optional — leave this path"
         }
       ]
     },
     {
       "id": "seed-dice",
-      "title": "Which dice procedure will you follow?",
-      "body": "Casino/tested dice + trusted table; **never sort** multi-die outcomes before mapping.\n",
+      "title": "Which manual dice procedure will you follow?",
+      "body": "Casino/tested dice + trusted mapping table; **never sort** multi-die outcomes before mapping.\n",
       "category": "Seed generation",
       "choices": [
         {
@@ -2370,11 +2517,6 @@
             "biased-dice",
             "unsafe-dice-instructions"
           ]
-        },
-        {
-          "id": "sd-opsec",
-          "label": "Review OPSEC first",
-          "nextNodeId": "seed-opsec"
         },
         {
           "id": "sd-back",
@@ -2391,7 +2533,7 @@
       "choices": [
         {
           "id": "sc-ok",
-          "label": "Reviewed card procedure \u2192 checksum",
+          "label": "Reviewed card procedure → checksum",
           "nextNodeId": "seed-checksum"
         },
         {
@@ -2409,7 +2551,7 @@
       "choices": [
         {
           "id": "so-apply",
-          "label": "Yes \u2014 paper + silence + no cameras",
+          "label": "Yes — paper + silence + no cameras",
           "nextNodeId": "tool-manual",
           "addsVulnIds": [
             "intermediate-math-online",
@@ -2540,7 +2682,7 @@
       "choices": [
         {
           "id": "xph-harden",
-          "label": "Yes \u2014 verify on cold / hardware",
+          "label": "Yes — verify on cold / hardware",
           "nextNodeId": "xpub-verified",
           "setsFlags": [
             "publicKey",
@@ -2562,7 +2704,7 @@
       "choices": [
         {
           "id": "xhw-ok",
-          "label": "Yes \u2014 addresses match",
+          "label": "Yes — addresses match",
           "nextNodeId": "xpub-verified",
           "setsFlags": [
             "publicKey",
@@ -2583,12 +2725,12 @@
     {
       "id": "xpub-airgap",
       "title": "Do offline and watcher addresses match?",
-      "body": "If they disagree, stop \u2014 derivation mismatch or malware.\n",
+      "body": "If they disagree, stop — derivation mismatch or malware.\n",
       "category": "xpub",
       "choices": [
         {
           "id": "xa-ok",
-          "label": "Yes \u2014 addresses match",
+          "label": "Yes — addresses match",
           "nextNodeId": "xpub-verified",
           "setsFlags": [
             "publicKey",
@@ -2687,12 +2829,12 @@
     {
       "id": "backup-inheritance",
       "title": "Will you write an inheritance playbook?",
-      "body": "Heirs need where materials are, software/paths, passphrase existence \u2014 **without** pasting the seed into a public will.\n",
+      "body": "Heirs need where materials are, software/paths, passphrase existence — **without** pasting the seed into a public will.\n",
       "category": "Backup",
       "choices": [
         {
           "id": "bi-ok",
-          "label": "Yes \u2014 write playbook",
+          "label": "Yes — write playbook",
           "nextNodeId": "backup-done"
         },
         {
@@ -2705,7 +2847,7 @@
     {
       "id": "backup-done",
       "title": "What next after backup posture improves?",
-      "body": "Recoverability is up. Re-test restores periodically \u2014 especially after software upgrades.\n",
+      "body": "Recoverability is up. Re-test restores periodically — especially after software upgrades.\n",
       "category": "Backup",
       "choices": [
         {
@@ -2728,12 +2870,12 @@
     {
       "id": "passphrase",
       "title": "Will you use a BIP39 passphrase?",
-      "body": "Optional passphrase creates a hidden wallet. Great for secrecy \u2014 catastrophic if lost or untested.\n",
+      "body": "Optional passphrase creates a hidden wallet. Great for secrecy — catastrophic if lost or untested.\n",
       "category": "Passphrase",
       "choices": [
         {
           "id": "pp-yes",
-          "label": "Yes \u2014 separate backup + recovery test",
+          "label": "Yes — separate backup + recovery test",
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "passphrase-lost"
@@ -2741,7 +2883,7 @@
         },
         {
           "id": "pp-no",
-          "label": "No \u2014 simpler recovery",
+          "label": "No — simpler recovery",
           "nextNodeId": "seed-aftercare"
         }
       ]
@@ -2754,7 +2896,7 @@
       "choices": [
         {
           "id": "sr-verify",
-          "label": "Yes \u2014 verify full address on device",
+          "label": "Yes — verify full address on device",
           "nextNodeId": "signing-hardened",
           "addsVulnIds": [
             "address-poisoning",
@@ -2790,7 +2932,7 @@
     {
       "id": "path-end-single",
       "title": "What remains on this self-custody path?",
-      "body": "If keys are in place, the setup can operate \u2014 **risks may still remain**. Apply paired mitigations; continue hardening below rather than restarting the tree.\n",
+      "body": "If keys are in place, the setup can operate — **risks may still remain**. Apply paired mitigations; continue hardening below rather than restarting the tree.\n",
       "category": "Summary",
       "isSummary": true,
       "choices": [
@@ -2826,9 +2968,9 @@
         },
         {
           "id": "pe-s-explore",
-          "label": "Explore another structure\u2026",
+          "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional \u2014 leave this path"
+          "subtitle": "Optional — leave this path"
         }
       ]
     }
