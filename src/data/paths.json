@@ -1,36 +1,50 @@
 [
   {
     "id": "path-custodial",
-    "name": "Custodial",
-    "summary": "Exchange / hosted wallet: max convenience & support recovery; accept counterparty, phishing, seizure, and insolvency risk. Harden with hardware 2FA, allowlists, and limited balances.",
+    "name": "Single custodian",
+    "summary": "Exchange/hosted wallet (e.g. Kraken) with stronger auth. Convenience and support recovery; residual counterparty, phishing, freeze, and insolvency risk.",
     "choiceSequence": [
-      "start-ladder",
-      "lad-cust",
-      "cust-mitigate",
-      "cm-hw2fa",
-      "ch-end"
+      "start-custodian",
+      "cm-single",
+      "sc-kraken",
+      "ak-hw",
+      "cp-end"
     ],
     "highlightColor": "#f7931a"
   },
   {
-    "id": "path-hot",
-    "name": "Single-sig hot wallet",
-    "summary": "Phone/desktop wallet you control: convenient spending and better privacy than KYC exchanges, but malware and seed handling dominate risk.",
+    "id": "path-federated",
+    "name": "Federated custody",
+    "summary": "Community/federation custody (e.g. Fedi): payments and privacy tradeoffs; collusion, jurisdiction, and seed-loss risks.",
     "choiceSequence": [
-      "start-ladder",
-      "lad-hot",
-      "hot-harden",
-      "hh-end"
+      "start-custodian",
+      "cm-fed",
+      "fc-fedi",
+      "ff-end"
+    ],
+    "highlightColor": "#a78bfa"
+  },
+  {
+    "id": "path-hot",
+    "name": "Single-key hot wallet",
+    "summary": "Self-custody on an internet-connected device: convenient spending; malware and seed handling dominate risk.",
+    "choiceSequence": [
+      "start-self",
+      "sf-single",
+      "sk-hot",
+      "hot-seed"
     ],
     "highlightColor": "#38bdf8"
   },
   {
     "id": "path-cold",
-    "name": "Single-sig cold wallet",
-    "summary": "Hardware or air-gapped single signature: strong malware resistance when used correctly; supply-chain, entropy, and backup discipline matter. Still one seed to rule them all.",
+    "name": "Single-key cold wallet",
+    "summary": "Hardware or air-gapped single signature: stronger malware resistance when used correctly; supply-chain, entropy, and backups matter.",
     "choiceSequence": [
-      "start-ladder",
-      "lad-hw",
+      "start-self",
+      "sf-single",
+      "sk-cold",
+      "cw-hw",
       "hw-supply",
       "hsc-ok",
       "hr-end"
@@ -39,17 +53,16 @@
   },
   {
     "id": "path-multisig",
-    "name": "Multisig (distributed / multi-party)",
-    "summary": "m-of-n with diverse vendors and locations/parties: removes single points of failure; higher complexity; watch for same-vendor correlation and key-agent custody risk.",
+    "name": "Multisig (distributed)",
+    "summary": "m-of-n with geographic/party distribution: removes single points of failure; watch same-vendor and same-country correlation.",
     "choiceSequence": [
-      "start-ladder",
-      "lad-ms",
-      "ms-div",
-      "msd-dist",
+      "start-self",
+      "sf-multi",
+      "ms-geo",
       "dm-parties",
       "im-peers",
       "mp-end"
     ],
-    "highlightColor": "#a78bfa"
+    "highlightColor": "#c084fc"
   }
 ]

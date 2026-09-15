@@ -8,6 +8,8 @@ export interface Vulnerability {
   description: string;
   severity: Severity;
   categories: string[];
+  /** Preferred mitigation shown paired with this risk in the UI */
+  defaultMitigationId?: string;
 }
 
 export interface Mitigation {
@@ -21,9 +23,15 @@ export interface Choice {
   id: string;
   label: string;
   nextNodeId: string;
+  /** Risks introduced by taking this choice */
   addsVulnIds?: string[];
+  /** @deprecated Prefer click-to-apply mitigations paired with vulns; ignored by adventure state */
   addsMitigationIds?: string[];
   tags?: string[];
+  /** Brand / service icon path under public/, e.g. /brands/kraken.svg */
+  icon?: string;
+  /** Short service line under the label, e.g. "Exchange · Lightning" */
+  subtitle?: string;
 }
 
 export interface TreeNode {
@@ -62,7 +70,9 @@ export interface AdventureState {
   currentNodeId: string;
   /** History of steps for trail + undo */
   trail: TrailStep[];
+  /** Accumulated vulnerability ids from choices */
   vulnIds: string[];
-  mitigationIds: string[];
+  /** Vulns the user has secured by applying paired mitigations */
+  mitigatedVulnIds: string[];
   tags: string[];
 }

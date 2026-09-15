@@ -4,363 +4,596 @@
     "title": "Credential phishing",
     "description": "Attackers impersonate exchanges, support, or wallet UIs to steal username/password, 2FA codes, or seed phrases.",
     "severity": "high",
-    "categories": ["social-engineering", "custodial", "hot-wallet"]
+    "categories": [
+      "social-engineering",
+      "custodial",
+      "hot-wallet"
+    ],
+    "defaultMitigationId": "never-enter-seed-online"
   },
   {
     "id": "sim-swap",
     "title": "SIM-swap / SMS 2FA takeover",
     "description": "Carrier account takeover lets attackers intercept SMS OTP and reset custodial account credentials.",
     "severity": "critical",
-    "categories": ["custodial", "2fa"]
+    "categories": [
+      "custodial",
+      "2fa"
+    ],
+    "defaultMitigationId": "hw-2fa"
   },
   {
     "id": "compromised-creds",
     "title": "Compromised credentials",
     "description": "Password reuse, malware keyloggers, or leaked databases expose custodial logins.",
     "severity": "high",
-    "categories": ["custodial"]
+    "categories": [
+      "custodial"
+    ],
+    "defaultMitigationId": "strong-unique-password"
   },
   {
     "id": "custodian-hack",
     "title": "Custodian / exchange hack",
     "description": "Hot-wallet or infrastructure breach can drain customer funds held by the service.",
     "severity": "critical",
-    "categories": ["custodial", "counterparty"]
+    "categories": [
+      "custodial",
+      "counterparty"
+    ],
+    "defaultMitigationId": "self-custody-withdrawal"
   },
   {
     "id": "insider-theft",
     "title": "Rogue employee / insider theft",
     "description": "Privileged staff may steal funds, leak KYC data, or abuse withdrawal tools.",
     "severity": "high",
-    "categories": ["custodial", "federation", "counterparty"]
+    "categories": [
+      "custodial",
+      "federation",
+      "counterparty"
+    ],
+    "defaultMitigationId": "split-holdings"
   },
   {
     "id": "insolvency",
     "title": "Insolvency / bankruptcy",
-    "description": "If the custodian fails, customer Bitcoin may become unsecured claims—often partially recovered or delayed for years.",
+    "description": "If the custodian fails, customer Bitcoin may become unsecured claims\u2014often partially recovered or delayed for years.",
     "severity": "critical",
-    "categories": ["custodial", "counterparty"]
+    "categories": [
+      "custodial",
+      "counterparty"
+    ],
+    "defaultMitigationId": "self-custody-withdrawal"
   },
   {
     "id": "withdrawal-freeze",
     "title": "Withdrawal / account freeze",
     "description": "Compliance holds, risk systems, or operational outages can block access to your Bitcoin indefinitely.",
     "severity": "high",
-    "categories": ["custodial"]
+    "categories": [
+      "custodial"
+    ],
+    "defaultMitigationId": "self-custody-withdrawal"
   },
   {
     "id": "gov-seizure",
     "title": "Government seizure",
     "description": "Courts or agencies can compel custodians (or concentrated federations) to freeze or surrender assets.",
     "severity": "high",
-    "categories": ["custodial", "federation", "jurisdiction"]
+    "categories": [
+      "custodial",
+      "federation",
+      "jurisdiction"
+    ],
+    "defaultMitigationId": "split-holdings"
   },
   {
     "id": "debasement",
     "title": "Debasement / fractional reserves",
     "description": "Custodian may not hold 1:1 reserves; you hold an IOU, not on-chain Bitcoin.",
     "severity": "critical",
-    "categories": ["custodial", "counterparty"]
+    "categories": [
+      "custodial",
+      "counterparty"
+    ],
+    "defaultMitigationId": "proof-of-reserves"
   },
   {
     "id": "privacy-leak-kyc",
     "title": "KYC / privacy leak",
     "description": "Identity, balances, and transaction history are visible to the custodian, hackers of their databases, and police.",
     "severity": "medium",
-    "categories": ["custodial", "privacy"]
+    "categories": [
+      "custodial",
+      "privacy"
+    ],
+    "defaultMitigationId": "split-holdings"
   },
   {
     "id": "fed-collusion",
     "title": "Federation collusion",
     "description": "Enough federation members can collude to censor, seize, or steal user funds.",
     "severity": "high",
-    "categories": ["federation"]
+    "categories": [
+      "federation"
+    ],
+    "defaultMitigationId": "fed-threshold-docs"
   },
   {
     "id": "fed-jurisdiction",
     "title": "Concentrated federation jurisdiction",
     "description": "If federation operators share a jurisdiction, a single legal order can pressure the whole set.",
     "severity": "high",
-    "categories": ["federation", "jurisdiction"]
+    "categories": [
+      "federation",
+      "jurisdiction"
+    ],
+    "defaultMitigationId": "fed-jurisdictional-dispersion"
   },
   {
     "id": "fed-key-loss",
     "title": "Federation seed / key loss (no recovery path)",
     "description": "Unlike custodial KYC recovery, losing federation wallet seeds often means permanent loss; inheritance is hard.",
     "severity": "high",
-    "categories": ["federation", "recovery"]
+    "categories": [
+      "federation",
+      "recovery"
+    ],
+    "defaultMitigationId": "offline-seed-backup"
   },
   {
     "id": "hot-malware",
     "title": "Hot-wallet malware / clipboard hijack",
     "description": "Internet-connected devices can have malware that steals seeds, swaps addresses, or signs malicious txs.",
     "severity": "critical",
-    "categories": ["hot-wallet", "single-sig"]
+    "categories": [
+      "hot-wallet",
+      "single-sig"
+    ],
+    "defaultMitigationId": "airgap-signing"
   },
   {
     "id": "seed-screenshot",
     "title": "Seed stored digitally / screenshots",
     "description": "Photos, cloud backups, password managers synced online, or chat history can leak the seed.",
     "severity": "critical",
-    "categories": ["seed", "backup"]
+    "categories": [
+      "seed",
+      "backup"
+    ],
+    "defaultMitigationId": "offline-seed-backup"
   },
   {
     "id": "no-backup",
     "title": "No / inadequate seed backup",
     "description": "Device failure without a tested backup = permanent loss of funds.",
     "severity": "critical",
-    "categories": ["recovery", "backup"]
+    "categories": [
+      "recovery",
+      "backup"
+    ],
+    "defaultMitigationId": "offline-seed-backup"
   },
   {
     "id": "unsafe-seed-gen-sw",
     "title": "Unsafe seed-generation software",
     "description": "Rogue employees or malicious providers can ship RNG that leaks or constrains private keys.",
     "severity": "critical",
-    "categories": ["seed-generation", "supply-chain"]
+    "categories": [
+      "seed-generation",
+      "supply-chain"
+    ],
+    "defaultMitigationId": "user-entropy-dice"
   },
   {
     "id": "supply-chain-device",
     "title": "Compromised supply chain / tampered device",
     "description": "Hardware wallet intercepted, resealed, or firmware-flashed before delivery can exfiltrate seeds.",
     "severity": "critical",
-    "categories": ["hardware", "supply-chain"]
+    "categories": [
+      "hardware",
+      "supply-chain"
+    ],
+    "defaultMitigationId": "tamper-evident-seal"
   },
   {
     "id": "insufficient-entropy",
     "title": "Insufficient entropy",
     "description": "Weak RNG or too-few dice/coin flips produces guessable seeds.",
     "severity": "critical",
-    "categories": ["seed-generation"]
+    "categories": [
+      "seed-generation"
+    ],
+    "defaultMitigationId": "user-entropy-dice"
   },
   {
     "id": "entropy-not-followed",
     "title": "User entropy instructions not followed",
     "description": "Skipping dice rolls, using too few flips, or ignoring device docs leaves entropy weak.",
     "severity": "high",
-    "categories": ["seed-generation", "human-error"]
+    "categories": [
+      "seed-generation",
+      "human-error"
+    ],
+    "defaultMitigationId": "follow-provider-instructions"
   },
   {
     "id": "device-ignores-entropy",
     "title": "Device ignores user-supplied entropy",
     "description": "Malicious or buggy firmware may discard dice/coin input and use its own (possibly weak) RNG.",
     "severity": "critical",
-    "categories": ["hardware", "seed-generation"]
+    "categories": [
+      "hardware",
+      "seed-generation"
+    ]
   },
   {
     "id": "audit-missed-bugs",
     "title": "Audit missed critical bugs",
     "description": "Even audited code can contain unnoticed flaws in RNG, parsing, or UX that leaks keys.",
     "severity": "medium",
-    "categories": ["audit", "software"]
+    "categories": [
+      "audit",
+      "software"
+    ],
+    "defaultMitigationId": "audit-trust-council"
   },
   {
     "id": "software-changed-post-audit",
     "title": "Software changed after audit",
     "description": "Updates after the audit window may introduce new defects without re-review.",
     "severity": "high",
-    "categories": ["audit", "software"]
+    "categories": [
+      "audit",
+      "software"
+    ],
+    "defaultMitigationId": "run-audited-version"
   },
   {
     "id": "binary-source-mismatch",
-    "title": "Audited source ≠ built/signed binary",
+    "title": "Audited source \u2260 built/signed binary",
     "description": "You may run a binary that does not match the audited source (build pipeline compromise).",
     "severity": "critical",
-    "categories": ["supply-chain", "reproducible-builds"]
+    "categories": [
+      "supply-chain",
+      "reproducible-builds"
+    ],
+    "defaultMitigationId": "verify-signatures"
   },
   {
     "id": "forced-upgrades",
     "title": "Forced firmware / app upgrades",
     "description": "Vendors may push updates you cannot refuse; a malicious or buggy update can compromise keys.",
     "severity": "high",
-    "categories": ["hardware", "software"]
+    "categories": [
+      "hardware",
+      "software"
+    ],
+    "defaultMitigationId": "run-audited-version"
   },
   {
     "id": "firmware-rng-defect",
     "title": "Hardware RNG / firmware seed-gen defect",
-    "description": "Weak on-device entropy (historical firmware bugs) can make seeds crackable. Firmware updates do NOT fix existing seeds—you must migrate funds to a new seed.",
+    "description": "Weak on-device entropy (historical firmware bugs) can make seeds crackable. Firmware updates do NOT fix existing seeds\u2014you must migrate funds to a new seed.",
     "severity": "critical",
-    "categories": ["hardware", "seed-generation"]
+    "categories": [
+      "hardware",
+      "seed-generation"
+    ],
+    "defaultMitigationId": "user-entropy-dice"
   },
   {
     "id": "brain-wallet-weak",
     "title": "Brain wallet / weak passphrase",
     "description": "Human-memorable phrases are brute-forceable; brain wallets have a long history of theft.",
     "severity": "critical",
-    "categories": ["seed-generation"]
+    "categories": [
+      "seed-generation"
+    ]
   },
   {
     "id": "electrum-not-bip39",
-    "title": "Electrum ≠ BIP39 seed incompatibility",
-    "description": "Electrum generates its own mnemonic scheme, not BIP39—restoring into BIP39 wallets fails or produces different keys.",
+    "title": "Electrum \u2260 BIP39 seed incompatibility",
+    "description": "Electrum generates its own mnemonic scheme, not BIP39\u2014restoring into BIP39 wallets fails or produces different keys.",
     "severity": "medium",
-    "categories": ["compatibility", "seed-generation"]
+    "categories": [
+      "compatibility",
+      "seed-generation"
+    ]
   },
   {
     "id": "dice-sort-bias",
     "title": "Dice sorting bias",
     "description": "Rolling multiple dice then sorting them before mapping biases word selection and reduces entropy.",
     "severity": "high",
-    "categories": ["seed-generation", "dice"]
+    "categories": [
+      "seed-generation",
+      "dice"
+    ],
+    "defaultMitigationId": "casino-dice"
   },
   {
     "id": "biased-dice",
     "title": "Biased physical dice",
     "description": "Cheap dice may be physically biased; entropy loss is usually small but real for high-security ceremonies.",
     "severity": "low",
-    "categories": ["seed-generation", "dice"]
+    "categories": [
+      "seed-generation",
+      "dice"
+    ],
+    "defaultMitigationId": "casino-dice"
   },
   {
     "id": "unsafe-dice-instructions",
     "title": "Unsafe / incorrect dice instructions",
     "description": "Wrong mapping tables or procedures can produce non-uniform word selection.",
     "severity": "high",
-    "categories": ["seed-generation", "dice"]
+    "categories": [
+      "seed-generation",
+      "dice"
+    ],
+    "defaultMitigationId": "follow-provider-instructions"
   },
   {
     "id": "biased-word-mapping",
-    "title": "Biased own-randomness→word mapping",
+    "title": "Biased own-randomness\u2192word mapping",
     "description": "Homegrown encoding from bits to BIP39 words often has modular bias or off-by-one errors.",
     "severity": "high",
-    "categories": ["seed-generation"]
+    "categories": [
+      "seed-generation"
+    ],
+    "defaultMitigationId": "trustworthy-dice-guide"
   },
   {
     "id": "intermediate-math-online",
     "title": "Intermediate entropy math on internet device",
     "description": "Typing dice rolls, checksums, or partial words into a phone/laptop can leak the seed via malware or cloud sync.",
     "severity": "critical",
-    "categories": ["seed-generation", "opsec"]
+    "categories": [
+      "seed-generation",
+      "opsec"
+    ],
+    "defaultMitigationId": "pencil-paper-only"
   },
   {
     "id": "speaking-seed",
     "title": "Speaking seed words aloud",
     "description": "Smart speakers, phones, and home audio can record seed phrases.",
     "severity": "critical",
-    "categories": ["opsec", "seed"]
+    "categories": [
+      "opsec",
+      "seed"
+    ],
+    "defaultMitigationId": "never-speak-seed"
   },
   {
     "id": "camera-seed",
     "title": "Cameras observing seed ceremony",
     "description": "Webcams, phones, doorbell cams, or meeting room cameras can capture written or displayed seeds.",
     "severity": "critical",
-    "categories": ["opsec", "seed"]
+    "categories": [
+      "opsec",
+      "seed"
+    ],
+    "defaultMitigationId": "no-cameras"
   },
   {
     "id": "wrong-cli",
     "title": "Wrong CLI / unsafe checksum tooling",
     "description": "Using the wrong command or untrusted guide when computing the BIP39 checksum word can leak entropy or produce bad seeds.",
     "severity": "high",
-    "categories": ["seed-generation", "airgap"]
+    "categories": [
+      "seed-generation",
+      "airgap"
+    ],
+    "defaultMitigationId": "trustworthy-cli-guide"
   },
   {
     "id": "break-airgap-install",
     "title": "Breaking air-gap to install software",
     "description": "Connecting an 'offline' machine to the internet to download tools defeats the air-gap.",
     "severity": "critical",
-    "categories": ["airgap", "opsec"]
+    "categories": [
+      "airgap",
+      "opsec"
+    ],
+    "defaultMitigationId": "usb-ferry-software"
   },
   {
     "id": "checksum-mismatch",
     "title": "Checksum word mismatch vs written seed",
-    "description": "Transcription errors mean the last word you wrote doesn't match the entropy—wallet may reject or derive wrong keys.",
+    "description": "Transcription errors mean the last word you wrote doesn't match the entropy\u2014wallet may reject or derive wrong keys.",
     "severity": "high",
-    "categories": ["seed-generation", "human-error"]
+    "categories": [
+      "seed-generation",
+      "human-error"
+    ],
+    "defaultMitigationId": "trustworthy-cli-guide"
   },
   {
     "id": "derivation-path-mismatch",
     "title": "Address check uses different derivation path",
     "description": "Comparing addresses across wallets that use different BIP44/84/86 paths falsely suggests backup failure (or hides real failure).",
     "severity": "medium",
-    "categories": ["compatibility", "verification"]
+    "categories": [
+      "compatibility",
+      "verification"
+    ],
+    "defaultMitigationId": "reload-seed-twice"
   },
   {
     "id": "xpub-privacy",
     "title": "xpub leaks privacy / all addresses",
     "description": "Anyone with an account xpub can derive all public addresses and watch full balance/history for that account.",
     "severity": "medium",
-    "categories": ["privacy", "watch-only"]
+    "categories": [
+      "privacy",
+      "watch-only"
+    ],
+    "defaultMitigationId": "limit-xpub-share"
   },
   {
     "id": "watch-only-malware",
     "title": "Malware on watch-only / verifier device",
     "description": "Infected online machine can show poisoned receive addresses even if the cold key is safe.",
     "severity": "high",
-    "categories": ["hot-wallet", "address-poisoning"]
+    "categories": [
+      "hot-wallet",
+      "address-poisoning"
+    ],
+    "defaultMitigationId": "verify-address-on-device"
   },
   {
     "id": "address-poisoning",
     "title": "Address poisoning / lookalike addresses",
     "description": "Attackers craft addresses with similar prefixes or malware swaps the address shown vs the one encoded in a QR/PSBT.",
     "severity": "high",
-    "categories": ["social-engineering", "malware"]
+    "categories": [
+      "social-engineering",
+      "malware"
+    ],
+    "defaultMitigationId": "xpub-watcher-match"
   },
   {
     "id": "physical-theft-seed",
     "title": "Physical theft of seed backups",
     "description": "Paper/metal backups can be stolen, photographed, or coerced.",
     "severity": "critical",
-    "categories": ["backup", "physical"]
+    "categories": [
+      "backup",
+      "physical"
+    ],
+    "defaultMitigationId": "geographic-backup-diversity"
   },
   {
     "id": "fire-flood-backup",
     "title": "Fire / flood destroying backups",
     "description": "Single-location paper backups are lost to disasters; metal plates help but location diversity still matters.",
     "severity": "high",
-    "categories": ["backup", "physical"]
+    "categories": [
+      "backup",
+      "physical"
+    ],
+    "defaultMitigationId": "offline-seed-backup"
   },
   {
     "id": "inheritance-unclear",
     "title": "Inheritance without clear instructions",
     "description": "Heirs may not find seeds, may not know passphrase/derivation, or may fall for 'support' scams while grieving.",
     "severity": "high",
-    "categories": ["inheritance", "recovery"]
+    "categories": [
+      "inheritance",
+      "recovery"
+    ],
+    "defaultMitigationId": "record-derivation-path"
   },
   {
     "id": "same-vendor-multisig",
     "title": "Same-vendor multisig is not independent",
-    "description": "Multiple keys from one manufacturer share firmware, entropy source, and supply-chain risk—one bug can hit the signing threshold.",
+    "description": "Multiple keys from one manufacturer share firmware, entropy source, and supply-chain risk\u2014one bug can hit the signing threshold.",
     "severity": "critical",
-    "categories": ["multisig", "supply-chain"]
+    "categories": [
+      "multisig",
+      "supply-chain"
+    ],
+    "defaultMitigationId": "diversify-vendors"
   },
   {
     "id": "passphrase-lost",
     "title": "BIP39 passphrase (25th word) lost / untested",
     "description": "Passphrase creates a hidden wallet; losing it or never testing recovery locks funds forever even with the seed.",
     "severity": "critical",
-    "categories": ["passphrase", "recovery"]
+    "categories": [
+      "passphrase",
+      "recovery"
+    ],
+    "defaultMitigationId": "passphrase-separate-backup"
   },
   {
     "id": "seed-phishing-support",
     "title": "Seed phishing / fake support / verify-wallet scams",
     "description": "Scammers pose as wallet support or 'security verification' and ask you to enter your seed into a website or fake app.",
     "severity": "critical",
-    "categories": ["social-engineering", "seed"]
+    "categories": [
+      "social-engineering",
+      "seed"
+    ],
+    "defaultMitigationId": "never-enter-seed-online"
   },
   {
     "id": "single-point-key",
     "title": "Single key = single point of failure",
     "description": "One compromised or lost seed controls (or loses) everything; no threshold protection.",
     "severity": "high",
-    "categories": ["single-sig"]
+    "categories": [
+      "single-sig"
+    ],
+    "defaultMitigationId": "multisig-threshold"
   },
   {
     "id": "glacier-complexity",
-    "title": "Ceremony complexity → human error",
+    "title": "Ceremony complexity \u2192 human error",
     "description": "High-security dual-computer offline protocols (e.g. Glacier-style) have many steps; mistakes can brick funds or leak entropy.",
     "severity": "medium",
-    "categories": ["glacier", "human-error"]
+    "categories": [
+      "glacier",
+      "human-error"
+    ],
+    "defaultMitigationId": "practice-dry-run"
   },
   {
     "id": "collusion-multisig",
     "title": "Multisig co-signer collusion / coercion",
     "description": "Enough independent parties can still collude, or be coerced, to move funds against your wishes.",
     "severity": "medium",
-    "categories": ["multisig"]
+    "categories": [
+      "multisig"
+    ],
+    "defaultMitigationId": "multi-party-locations"
   },
   {
     "id": "key-agent-custody",
     "title": "Key-agent / co-signer becomes custodian-like",
     "description": "If a service holds a required co-sign key and can refuse to sign, you have reintroduced counterparty risk.",
     "severity": "high",
-    "categories": ["multisig", "counterparty"]
+    "categories": [
+      "multisig",
+      "counterparty"
+    ]
+  },
+  {
+    "id": "credential-stuffing",
+    "title": "Credential stuffing",
+    "description": "Reused passwords from other breaches are tried against exchange logins at scale.",
+    "severity": "high",
+    "categories": [
+      "custodial",
+      "auth"
+    ],
+    "defaultMitigationId": "strong-unique-password"
+  },
+  {
+    "id": "account-recovery-se",
+    "title": "Account recovery social engineering",
+    "description": "Attackers abuse support/email recovery flows to take over accounts without the password.",
+    "severity": "high",
+    "categories": [
+      "custodial",
+      "social-engineering",
+      "auth"
+    ],
+    "defaultMitigationId": "hw-2fa"
+  },
+  {
+    "id": "geo-jurisdiction-concentration",
+    "title": "Geographic / jurisdictional concentration",
+    "description": "Keys or co-signers in the same country share legal process, disaster, and coercion risk.",
+    "severity": "medium",
+    "categories": [
+      "multisig",
+      "jurisdiction"
+    ],
+    "defaultMitigationId": "multi-party-locations"
   }
 ]

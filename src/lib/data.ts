@@ -25,6 +25,16 @@ export const mitigationById: Record<string, Mitigation> = Object.fromEntries(
   mitigations.map((m) => [m.id, m]),
 );
 
+/** First mitigation that addresses a vuln, preferring defaultMitigationId. */
+export function mitigationForVuln(vulnId: string): Mitigation | undefined {
+  const v = vulnById[vulnId];
+  if (v?.defaultMitigationId) {
+    const preferred = mitigationById[v.defaultMitigationId];
+    if (preferred) return preferred;
+  }
+  return mitigations.find((m) => m.addressesVulnIds.includes(vulnId));
+}
+
 export function uniquePush(list: string[], ids: string[] | undefined): string[] {
   if (!ids?.length) return list;
   const set = new Set(list);
@@ -45,4 +55,12 @@ export function bodyTeaser(body: string, maxLen = 140): string {
   const sentence = plain.match(/^[^.!?]+[.!?]/)?.[0] ?? plain;
   if (sentence.length <= maxLen) return sentence.trim();
   return sentence.slice(0, maxLen - 1).trimEnd() + '…';
+}
+
+/** Initials fallback when a brand icon fails to load. */
+export function brandInitials(label: string): string {
+  const parts = label.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '?';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[1][0]).toUpperCase();
 }

@@ -329,11 +329,17 @@ button {
 .trail-dot:focus-visible > .hover-detail,
 .icon-chip:hover > .hover-detail,
 .icon-chip:focus-visible > .hover-detail,
+.icon-chip:focus-within > .hover-detail,
 .node-teaser-wrap:hover > .hover-detail,
 .node-teaser-wrap:focus-within > .hover-detail,
 .choice-btn:hover > .choice-detail,
 .choice-btn:focus-visible > .choice-detail {
   display: block;
+}
+
+/* Allow clicking Apply on risk-mitigation tooltips */
+.icon-chip .risk-detail {
+  pointer-events: auto;
 }
 
 /* Keep trail tooltips from clipping off left edge */
@@ -752,4 +758,101 @@ button {
     min-height: 3.4rem;
     padding: 0.85rem 1rem;
   }
+}
+
+
+/* ——— Brand icons on choices ——— */
+
+.brand-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 6px;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: #0a0c10;
+  margin-right: 0.75rem;
+}
+
+.brand-fallback {
+  display: grid;
+  place-items: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--orange);
+  border: 1px solid var(--border);
+  letter-spacing: 0.02em;
+}
+
+.choice-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.choice-subtitle {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+/* ——— Paired risk + mitigation chips ——— */
+
+.icon-chip.risk-pair.open {
+  border-color: #7f1d1d;
+  color: #fca5a5;
+  background: #2a1010;
+}
+
+.icon-chip.risk-pair.open.sev-critical {
+  border-color: #ef4444;
+}
+
+.icon-chip.risk-pair.mitigated {
+  border-color: #166534;
+  color: #86efac;
+  background: #0c1a12;
+  opacity: 0.85;
+}
+
+.paired-mit {
+  margin-top: 0.55rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--border);
+}
+
+.paired-mit .detail-heading {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--green);
+  margin-bottom: 0.2rem;
+}
+
+.paired-mit .mit-title {
+  margin-bottom: 0.15rem;
+  color: #bbf7d0;
+}
+
+.apply-mit-btn {
+  margin-top: 0.45rem;
+  width: 100%;
+}
+
+.mit-applied {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.choices[data-count="7"] ul {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
 }

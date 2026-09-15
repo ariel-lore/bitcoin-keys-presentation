@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import type { TreeNode, Choice } from '../types/schema';
 import { Markdown } from '../lib/markdown';
-import { bodyTeaser, vulnById, mitigationById } from '../lib/data';
+import { bodyTeaser, vulnById, brandInitials } from '../lib/data';
 
 export function NodeView({
   node,
@@ -16,12 +17,14 @@ export function NodeView({
       <header className="node-header">
         {node.category && <span className="badge">{node.category}</span>}
         <h1>{node.title}</h1>
-        <div className="node-teaser-wrap" tabIndex={0}>
-          <p className="node-teaser">{teaser}</p>
-          <div className="hover-detail node-body-detail" role="tooltip">
-            <Markdown source={node.body} />
+        {teaser && (
+          <div className="node-teaser-wrap" tabIndex={0}>
+            <p className="node-teaser">{teaser}</p>
+            <div className="hover-detail node-body-detail" role="tooltip">
+              <Markdown source={node.body} />
+            </div>
           </div>
-        </div>
+        )}
       </header>
 
       <div className="choices" data-count={node.choices.length}>
@@ -29,7 +32,11 @@ export function NodeView({
           {node.choices.map((c) => (
             <li key={c.id}>
               <button type="button" className="choice-btn" onClick={() => onChoose(c)}>
-                <span className="choice-label">{c.label}</span>
+                {(c.icon || c.subtitle) && <BrandIcon choice={c} />}
+                <span className="choice-text">
+                  <span className="choice-label">{c.label}</span>
+                  {c.subtitle && <span className="choice-subtitle">{c.subtitle}</span>}
+                </span>
                 <ChoiceDetail choice={c} />
               </button>
             </li>
@@ -40,13 +47,39 @@ export function NodeView({
   );
 }
 
+function BrandIcon({ choice }: { choice: Choice }) {
+  const [failed, setFailed] = useState(false);
+  if (!choice.icon || failed) {
+    return (
+      <span className="brand-icon brand-fallback" aria-hidden>
+        {brandInitials(choice.label)}
+      </span>
+    );
+  }
+  return (
+    <img
+      className="brand-icon"
+      src={choice.icon}
+      alt=""
+      width={28}
+      height={28}
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 function ChoiceDetail({ choice }: { choice: Choice }) {
   const vulns = (choice.addsVulnIds ?? []).map((id) => vulnById[id]).filter(Boolean);
-  const mits = (choice.addsMitigationIds ?? []).map((id) => mitigationById[id]).filter(Boolean);
-  if (!vulns.length && !mits.length) return null;
+  if (!vulns.length && !choice.subtitle) return null;
 
   return (
     <div className="choice-detail hover-detail" role="tooltip">
+      {choice.subtitle && (
+        <div className="detail-block">
+          <span className="detail-heading">Services</span>
+          <p style={{ margin: 0, color: 'var(--muted)' }}>{choice.subtitle}</p>
+        </div>
+      )}
       {vulns.length > 0 && (
         <div className="detail-block">
           <span className="detail-heading">Risks introduced</span>
@@ -55,19 +88,6 @@ function ChoiceDetail({ choice }: { choice: Choice }) {
               <li key={v.id}>
                 <strong>{v.title}</strong>
                 <span>{v.description}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {mits.length > 0 && (
-        <div className="detail-block">
-          <span className="detail-heading">Mitigations</span>
-          <ul>
-            {mits.map((m) => (
-              <li key={m.id}>
-                <strong>{m.title}</strong>
-                <span>{m.description}</span>
               </li>
             ))}
           </ul>

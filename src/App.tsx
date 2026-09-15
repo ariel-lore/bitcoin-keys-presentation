@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAdventure } from './hooks/useAdventure';
 import { DemoBanner } from './components/DemoBanner';
 import { TrailStrip } from './components/Trail';
-import { VulnStrip, MitigationStrip } from './components/ChipLists';
+import { RiskMitigationStrip } from './components/ChipLists';
 import { PathPanel } from './components/PathPanel';
 import { NodeView } from './components/NodeView';
 
@@ -30,8 +30,11 @@ export default function App() {
         <TrailStrip trail={adventure.state.trail} onJump={adventure.jumpToNode} />
 
         <div className="status-cluster">
-          <VulnStrip ids={adventure.state.vulnIds} />
-          <MitigationStrip ids={adventure.state.mitigationIds} />
+          <RiskMitigationStrip
+            vulnIds={adventure.state.vulnIds}
+            mitigatedVulnIds={adventure.state.mitigatedVulnIds}
+            onApplyMitigation={adventure.applyMitigationForVuln}
+          />
         </div>
 
         <div className="top-actions">

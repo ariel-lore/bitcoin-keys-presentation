@@ -1,7 +1,7 @@
 # Bitcoin Custody
 
 Data-driven **interactive presentation** about Bitcoin custody and keys.
-Each screen is a slide: pick a path; risks and hardening accumulate as compact icons (details on hover). No scoring meters — serious educational UX, not a game.
+Each screen is a slide: pick a path; open **risks** accumulate with a **paired mitigation** you can click to apply. No scoring meters — serious educational UX, not a game.
 
 **Educational demo only — not financial, legal, or investment advice.**
 
@@ -26,64 +26,40 @@ All narrative lives under **`src/data/`**:
 | File | Purpose |
 |------|---------|
 | `tree.json` | Decision nodes + choices |
-| `vulnerabilities.json` | Risk catalog |
-| `mitigations.json` | Hardening catalog |
+| `vulnerabilities.json` | Risk catalog (`defaultMitigationId` pairs a mitigation) |
+| `mitigations.json` | Hardening catalog (`addressesVulnIds`) |
 | `paths.json` | Recommended walkthroughs |
 
-The React app only **renders** this data. To change copy, branches, or recommended paths: edit JSON, then refresh / rebuild.
+Brand icons live in **`public/brands/`**.
 
-### Node schema (`tree.json`)
+### Choice fields
 
-```json
-{
-  "startNodeId": "start",
-  "nodes": [
-    {
-      "id": "example",
-      "title": "Title",
-      "body": "Markdown-ish body (**bold**, lists). Full text shows on hover.",
-      "category": "Optional badge",
-      "choices": [
-        {
-          "id": "unique-choice-id",
-          "label": "What the presenter clicks",
-          "nextNodeId": "another-node-id",
-          "addsVulnIds": ["phish-creds"],
-          "addsMitigationIds": ["hw-2fa"],
-          "tags": ["optional"]
-        }
-      ]
-    }
-  ]
-}
-```
+- `addsVulnIds` — risks introduced by the choice
+- `icon` — optional path like `/brands/kraken.svg`
+- `subtitle` — optional service line (e.g. `Exchange · Lightning`)
+- `addsMitigationIds` — deprecated / ignored (mitigations are click-to-apply)
 
-### Vulnerabilities / mitigations
+### Mitigation UX
 
-- Vulnerability: `id`, `title`, `description`, `severity` (`low|medium|high|critical`), `categories[]`
-- Mitigation: `id`, `title`, `description`, `addressesVulnIds[]`
-
-Choice `addsVulnIds` / `addsMitigationIds` must match these catalogs.
+Choices add vulnerabilities. The UI shows each open risk with its paired mitigation (via `defaultMitigationId` or `addressesVulnIds`). Click **Apply** on the mitigation to mark that risk secured (`mitigatedVulnIds`).
 
 ### Recommended paths (`paths.json`)
 
-Each path has `choiceSequence`: ordered **choice ids** walked from `start` (or `startNodeId`). Use **Paths** in the UI to auto-apply a walkthrough.
+Each path has `choiceSequence`: ordered **choice ids** walked from `start`. Use **Paths** in the UI to auto-apply a walkthrough.
 
 TypeScript types live in `src/types/schema.ts`.
 
 ## UX features
 
-- **True slides**: each view fits the viewport (`100dvh` × `100vw`); no page or panel scrollbars
-- **Choices are the hero**: large, clear buttons; node body and risk/mitigation detail appear on **hover** (and keyboard focus)
-- Compact trail + risk/hardening icons; full text on hover
-- **Browser Back / Forward** navigate the decision history (History API + `?node=` deep-link)
-- On-screen **Back**, **Paths**, and **Reset**
-- Four highlighted paths: Custodial · Hot single-sig · Cold single-sig · Multisig
-- Dark theme + Bitcoin orange — projector-friendly
+- **True slides**: each view fits the viewport; no page scrollbars
+- **Wallet structure** start: Use a custodian · Self-custodied
+- Compact trail + paired risk/mitigation icons; details on hover; click to secure
+- **Browser Back / Forward** (History API + `?node=` deep-link)
+- Recommended paths: Single custodian · Federated · Hot · Cold · Multisig
 
 ## Stack
 
-Vite + React + TypeScript. No backend. No crypto libraries required for this custody presentation.
+Vite + React + TypeScript. No backend.
 
 ## License
 
