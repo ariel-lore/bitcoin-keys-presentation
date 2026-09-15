@@ -8,7 +8,11 @@
       "phish-creds",
       "compromised-creds",
       "account-recovery-se"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Enable hardware security-key 2FA",
+      "description": "Register FIDO2/U2F keys for custodian login. Prefer phishing-resistant factors over SMS."
+    }
   },
   {
     "id": "withdrawal-allowlist",
@@ -18,7 +22,11 @@
       "phish-creds",
       "compromised-creds",
       "sim-swap"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Lock withdrawals to an allowlist",
+      "description": "Configure address allowlists and change delays on the custodian account before depositing large amounts."
+    }
   },
   {
     "id": "split-holdings",
@@ -29,16 +37,24 @@
       "insolvency",
       "gov-seizure",
       "debasement"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Split balances across venues",
+      "description": "Keep only working capital on any single custodian; diversify counterparty exposure."
+    }
   },
   {
     "id": "proof-of-reserves",
     "title": "Prefer transparent / PoR custodians",
-    "description": "Favor services that publish auditable reserves and liabilities\u2014still not a guarantee.",
+    "description": "Favor services that publish auditable reserves and liabilities—still not a guarantee.",
     "addressesVulnIds": [
       "debasement",
       "insolvency"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Prefer custodians with transparent reserves",
+      "description": "Treat PoR as one signal among many — not a guarantee against insolvency or freeze risk."
+    }
   },
   {
     "id": "strong-unique-password",
@@ -48,7 +64,11 @@
       "compromised-creds",
       "phish-creds",
       "credential-stuffing"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Use a unique strong password",
+      "description": "Store it in a reputable password manager; never reuse exchange passwords elsewhere."
+    }
   },
   {
     "id": "fed-jurisdictional-dispersion",
@@ -76,7 +96,11 @@
       "seed-screenshot",
       "no-backup",
       "fire-flood-backup"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Create and store an offline seed backup",
+      "description": "Write or stamp the seed on durable offline media. Verify a restore produces the same first address before you rely on it. Never photograph the backup."
+    }
   },
   {
     "id": "geographic-backup-diversity",
@@ -86,7 +110,11 @@
       "fire-flood-backup",
       "physical-theft-seed",
       "no-backup"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Store backups in more than one place",
+      "description": "Keep geographically separated copies so one fire, flood, or theft cannot destroy every backup."
+    }
   },
   {
     "id": "tamper-evident-seal",
@@ -94,17 +122,25 @@
     "description": "Buy from trusted channels; photograph packaging; abort if seals look disturbed.",
     "addressesVulnIds": [
       "supply-chain-device"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Verify device packaging and seals",
+      "description": "Buy from a trusted channel. Inspect tamper-evident packaging and verify firmware signatures before generating or loading a seed."
+    }
   },
   {
     "id": "user-entropy-dice",
-    "title": "Provide your own entropy (50\u2013100+ dice / flips)",
+    "title": "Provide your own entropy (50–100+ dice / flips)",
     "description": "Follow device docs for external entropy so you do not rely solely on vendor RNG.",
     "addressesVulnIds": [
       "insufficient-entropy",
       "firmware-rng-defect",
       "unsafe-seed-gen-sw"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Add user entropy (dice) when generating the seed",
+      "description": "Follow the device vendor’s entropy procedure with fair dice or equivalent. Do not improvise undocumented steps."
+    }
   },
   {
     "id": "follow-provider-instructions",
@@ -113,7 +149,11 @@
     "addressesVulnIds": [
       "entropy-not-followed",
       "unsafe-dice-instructions"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Follow the vendor entropy instructions exactly",
+      "description": "Use the official flow so the device actually mixes your entropy. Abort if prompts differ from documentation."
+    }
   },
   {
     "id": "audit-trust-council",
@@ -155,7 +195,7 @@
   {
     "id": "migrate-after-rng-bug",
     "title": "Migrate funds after RNG/firmware seed bugs",
-    "description": "A firmware update does not heal an already-generated weak seed\u2014create a new seed and move coins.",
+    "description": "A firmware update does not heal an already-generated weak seed—create a new seed and move coins.",
     "addressesVulnIds": [
       "firmware-rng-defect"
     ]
@@ -167,12 +207,16 @@
     "addressesVulnIds": [
       "biased-dice",
       "dice-sort-bias"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Use fair, high-quality dice",
+      "description": "Prefer casino-grade or otherwise trustworthy dice and a written procedure that avoids sorting bias."
+    }
   },
   {
     "id": "trustworthy-dice-guide",
-    "title": "Trustworthy dice \u2192 BIP39 instructions",
-    "description": "Use well-reviewed mapping tables (e.g. 5 rolls with 1\u20134 + coin, or established Seedpicker procedures).",
+    "title": "Trustworthy dice → BIP39 instructions",
+    "description": "Use well-reviewed mapping tables (e.g. 5 rolls with 1–4 + coin, or established Seedpicker procedures).",
     "addressesVulnIds": [
       "unsafe-dice-instructions",
       "biased-word-mapping"
@@ -192,7 +236,11 @@
     "description": "Silence smart speakers; no video calls; no 'read aloud to verify' habits.",
     "addressesVulnIds": [
       "speaking-seed"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Do not speak seed words aloud",
+      "description": "Write or stamp silently. Microphones and people nearby can capture spoken words."
+    }
   },
   {
     "id": "no-cameras",
@@ -200,7 +248,11 @@
     "description": "Cover/disable webcams; leave phones outside; check room for recording devices.",
     "addressesVulnIds": [
       "camera-seed"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Keep cameras away during seed ceremonies",
+      "description": "Remove phones and webcams from the room while seed words or entropy are visible."
+    }
   },
   {
     "id": "trustworthy-cli-guide",
@@ -217,7 +269,11 @@
     "description": "Transfer verified ISOs/binaries via write-once or inspected USB; do not reconnect the air-gapped PC to the internet.",
     "addressesVulnIds": [
       "break-airgap-install"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Ferry verified software over USB only",
+      "description": "Download and verify builds on an online machine, then move them via USB to the offline environment. Do not enable Wi‑Fi “just this once.”"
+    }
   },
   {
     "id": "reload-seed-twice",
@@ -227,7 +283,11 @@
       "checksum-mismatch",
       "derivation-path-mismatch",
       "no-backup"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Reload and verify the seed twice",
+      "description": "After backup, restore twice and confirm the same first address before depositing meaningful funds."
+    }
   },
   {
     "id": "record-derivation-path",
@@ -236,16 +296,24 @@
     "addressesVulnIds": [
       "derivation-path-mismatch",
       "inheritance-unclear"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Record the derivation path with the backup",
+      "description": "Note script type and derivation path so future software can find the coins."
+    }
   },
   {
     "id": "xpub-watcher-match",
     "title": "Load xpub on online watcher; match offline address",
-    "description": "Export xpub carefully; confirm the first addresses match what the cold device shows\u2014then fund.",
+    "description": "Export xpub carefully; confirm the first addresses match what the cold device shows—then fund.",
     "addressesVulnIds": [
       "derivation-path-mismatch",
       "address-poisoning"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Confirm watch-only wallet matches the cold xpub",
+      "description": "Import the xpub carefully and check that the first addresses match what the signing device derives."
+    }
   },
   {
     "id": "verify-address-on-device",
@@ -255,7 +323,11 @@
       "address-poisoning",
       "watch-only-malware",
       "hot-malware"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Verify receive addresses on the signing device",
+      "description": "Compare the address shown on the hardware or air-gapped screen with what the watch-only wallet displays before sharing it."
+    }
   },
   {
     "id": "limit-xpub-share",
@@ -263,15 +335,23 @@
     "description": "Treat xpubs as sensitive privacy material; use separate accounts for different counterparties.",
     "addressesVulnIds": [
       "xpub-privacy"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Limit who receives the xpub",
+      "description": "Treat xpubs as privacy-sensitive. Share only with wallets and people that need watch-only access."
+    }
   },
   {
     "id": "inheritance-playbook",
     "title": "Written inheritance playbook",
-    "description": "Document where keys live, passphrase handling, who to trust, and how to verify software\u2014without putting the seed in the will text.",
+    "description": "Document where keys live, passphrase handling, who to trust, and how to verify software—without putting the seed in the will text.",
     "addressesVulnIds": [
       "inheritance-unclear"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Write inheritance instructions for beneficiaries",
+      "description": "Document where devices and backups live, how to unlock them (without putting secrets in the same envelope carelessly), and whom to trust. Practice a dry run with a trusted person if appropriate."
+    }
   },
   {
     "id": "passphrase-separate-backup",
@@ -279,7 +359,11 @@
     "description": "Store the 25th word apart from the seed; practice a full restore; note wallet fingerprint/xpub for verification.",
     "addressesVulnIds": [
       "passphrase-lost"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Back up the BIP39 passphrase separately",
+      "description": "Store the passphrase apart from the seed words. Test recovery of the hidden wallet before funding it."
+    }
   },
   {
     "id": "never-enter-seed-online",
@@ -288,7 +372,11 @@
     "addressesVulnIds": [
       "seed-phishing-support",
       "phish-creds"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Never type the seed into websites or chat support",
+      "description": "Real support will not ask for seed words. Bookmark official domains and reject “verify wallet” pages."
+    }
   },
   {
     "id": "multisig-threshold",
@@ -297,7 +385,11 @@
     "addressesVulnIds": [
       "single-point-key",
       "physical-theft-seed"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Document and test the multisig threshold",
+      "description": "Record m-of-n, key locations, and a practice spend so recovery is possible without tribal knowledge."
+    }
   },
   {
     "id": "multi-party-locations",
@@ -308,12 +400,16 @@
       "fire-flood-backup",
       "collusion-multisig",
       "geo-jurisdiction-concentration"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Separate keys across people or places",
+      "description": "Avoid storing every key of a multisig in one building or with one person."
+    }
   },
   {
     "id": "glacier-dual-computer",
     "title": "Glacier-style dual permanently-offline computers",
-    "description": "Two air-gapped machines, printed procedures, and meticulous checklists for maximum seed-gen assurance\u2014at high complexity cost.",
+    "description": "Two air-gapped machines, printed procedures, and meticulous checklists for maximum seed-gen assurance—at high complexity cost.",
     "addressesVulnIds": [
       "hot-malware",
       "break-airgap-install",
@@ -327,7 +423,11 @@
     "addressesVulnIds": [
       "glacier-complexity",
       "checksum-mismatch"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Practice a recovery dry run",
+      "description": "Restore from backup on spare hardware (or wipe-safe flow) and confirm addresses before you need it in an emergency."
+    }
   },
   {
     "id": "self-custody-withdrawal",
@@ -338,7 +438,11 @@
       "insolvency",
       "withdrawal-freeze",
       "debasement"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Withdraw to keys you control",
+      "description": "Move long-term holdings to a wallet whose keys you hold, after you have tested receive and restore."
+    }
   },
   {
     "id": "airgap-signing",
@@ -347,7 +451,11 @@
     "addressesVulnIds": [
       "hot-malware",
       "seed-phishing-support"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Prefer air-gapped or offline signing for large amounts",
+      "description": "Keep hot apps for small spending only. Sign larger transactions on an air-gapped or hardware workflow."
+    }
   },
   {
     "id": "totp-authenticator",
@@ -356,7 +464,11 @@
     "addressesVulnIds": [
       "sim-swap",
       "compromised-creds"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Use an authenticator app (not SMS)",
+      "description": "Replace SMS OTP with TOTP or better. Still prefer hardware keys where available."
+    }
   },
   {
     "id": "passkey-auth",
@@ -367,7 +479,11 @@
       "sim-swap",
       "compromised-creds",
       "credential-stuffing"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Enable passkey / WebAuthn login",
+      "description": "Use platform or roaming passkeys for phishing-resistant custodian authentication when offered."
+    }
   },
   {
     "id": "global-settings-lock",
@@ -377,6 +493,10 @@
       "phish-creds",
       "compromised-creds",
       "account-recovery-se"
-    ]
+    ],
+    "procedureStep": {
+      "title": "Lock sensitive account settings",
+      "description": "Enable custodian locks on withdrawal addresses, API keys, and recovery email changes."
+    }
   }
 ]

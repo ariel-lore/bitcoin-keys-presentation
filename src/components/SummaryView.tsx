@@ -10,29 +10,27 @@ export function SummaryView({
   openVulnIds,
   onChoose,
   onApplyMitigation,
+  procedureMode = false,
 }: {
   node: TreeNode;
   state: AdventureState;
   openVulnIds: string[];
   onChoose: (c: Choice) => void;
   onApplyMitigation: (vulnId: string) => void;
+  /** When true, render as setup/procedure document rather than question chrome */
+  procedureMode?: boolean;
 }) {
   const teaser = bodyTeaser(node.body);
   const sufficient = isSufficientToOperate(state);
-  const trailLabels = state.trail
-    .filter((s) => s.choiceLabel)
-    .map((s) => s.choiceLabel as string);
-  const applied = state.mitigatedVulnIds
-    .map((id) => vulnById[id])
-    .filter(Boolean);
   const open = openVulnIds.map((id) => vulnById[id]).filter(Boolean);
   const remaining = open.length;
+  const showProcedure = procedureMode || sufficient;
 
   return (
-    <article className="node-view summary-view">
+    <article className={`node-view summary-view ${showProcedure ? 'procedure-doc' : ''}`}>
       <header className="node-header">
-        {node.category && <span className="badge">{node.category}</span>}
-        <h1>{node.title}</h1>
+        {node.category && <span className="badge">{showProcedure ? 'Procedure' : node.category}</span>}
+        <h1>{showProcedure ? 'Your custody setup' : node.title}</h1>
         {teaser && (
           <div className="node-teaser-wrap" tabIndex={0}>
             <p className="node-teaser">{teaser}</p>
@@ -44,28 +42,53 @@ export function SummaryView({
         <p className={`summary-risk-line ${sufficient ? 'ready' : 'incomplete'}`}>
           {sufficient
             ? remaining > 0
-              ? `Operable — ${remaining} open risk${remaining === 1 ? '' : 's'} remain`
+              ? `Operable — ${remaining} open risk${remaining === 1 ? '' : 's'} remain. Apply mitigations to add procedure steps.`
               : 'Operable — open risks cleared (vigilance still required)'
             : 'Not yet sufficient to operate — complete private + public sides'}
         </p>
       </header>
 
-      <div className="summary-grid">
-        <section className="summary-panel">
-          <h2 className="summary-h">Path trail</h2>
-          {trailLabels.length === 0 ? (
-            <p className="summary-muted">No choices recorded.</p>
+      <div className={`summary-grid ${showProcedure ? 'procedure-grid' : ''}`}>
+        <section className="summary-panel procedure-panel">
+          <h2 className="summary-h">Setup steps</h2>
+          {state.trail.filter((s) => s.choiceLabel).length === 0 && state.procedureSteps.length === 0 ? (
+            <p className="summary-muted">No choices recorded yet.</p>
           ) : (
-            <ol className="summary-trail">
-              {trailLabels.map((label, i) => (
-                <li key={`${label}-${i}`}>{label}</li>
+            <ol className="summary-trail procedure-steps">
+              {state.trail
+                .filter((s) => s.choiceLabel)
+                .map((s, i) => (
+                  <li key={`t-${s.choiceId}-${i}`}>
+                    <strong>{s.choiceLabel}</strong>
+                    {s.choiceDescription && <span className="proc-desc">{s.choiceDescription}</span>}
+                    {(s.addsVulnIds?.length ?? 0) > 0 && (
+                      <ul className="proc-step-risks">
+                        {(s.addsVulnIds ?? []).map((id) => {
+                          const v = vulnById[id];
+                          if (!v) return null;
+                          const secured = state.mitigatedVulnIds.includes(id);
+                          return (
+                            <li key={id} className={secured ? 'secured' : 'open'}>
+                              {secured ? '✓' : '⚠'} {v.title}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              {state.procedureSteps.map((ps) => (
+                <li key={ps.id} className="proc-mitigation-step">
+                  <strong>{ps.title}</strong>
+                  <span className="proc-desc">{ps.description}</span>
+                </li>
               ))}
             </ol>
           )}
         </section>
 
         <section className="summary-panel">
-          <h2 className="summary-h">Open vulnerabilities</h2>
+          <h2 className="summary-h">Open risks — continue mitigating</h2>
           {open.length === 0 ? (
             <p className="summary-muted">None open — apply ongoing operational discipline.</p>
           ) : (
@@ -81,7 +104,10 @@ export function SummaryView({
                     <p>{v.description}</p>
                     {mit && (
                       <div className="summary-mit-row">
-                        <span className="summary-mit-label">Mitigation: {mit.title}</span>
+                        <span className="summary-mit-label">
+                          Mitigation: {mit.title}
+                          {mit.procedureStep ? ' · adds procedure step' : ''}
+                        </span>
                         <button
                           type="button"
                           className="btn btn-sm btn-primary"
@@ -97,43 +123,33 @@ export function SummaryView({
             </ul>
           )}
         </section>
-
-        <section className="summary-panel">
-          <h2 className="summary-h">Applied mitigations</h2>
-          {applied.length === 0 ? (
-            <p className="summary-muted">None applied yet — click Apply on open risks.</p>
-          ) : (
-            <ul className="summary-applied">
-              {applied.map((v) => (
-                <li key={v.id}>
-                  <span className="check">✓</span> {v.title}
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
       </div>
 
-      <div className="choices summary-choices" data-count={node.choices.length}>
-        <h2 className="summary-h continue-h">Continue mitigating / hardening</h2>
-        <ul>
-          {node.choices.map((c) => (
-            <li key={c.id}>
-              <button
-                type="button"
-                className={`choice-btn ${c.nextNodeId === 'start' ? 'choice-discreet' : ''}`}
-                onClick={() => onChoose(c)}
-              >
-                {(c.icon || c.subtitle) && <BrandIcon choice={c} />}
-                <span className="choice-text">
-                  <span className="choice-label">{c.label}</span>
-                  {c.subtitle && <span className="choice-subtitle">{c.subtitle}</span>}
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {node.choices.length > 0 && (
+        <div className="choices summary-choices" data-count={node.choices.length}>
+          <h2 className="summary-h continue-h">
+            {showProcedure ? 'Further hardening (adds steps)' : 'Continue mitigating / hardening'}
+          </h2>
+          <ul>
+            {node.choices.map((c) => (
+              <li key={c.id}>
+                <button
+                  type="button"
+                  className={`choice-btn ${c.nextNodeId === 'start' ? 'choice-discreet' : ''}`}
+                  onClick={() => onChoose(c)}
+                >
+                  {(c.icon || c.subtitle) && <BrandIcon choice={c} />}
+                  <span className="choice-text">
+                    <span className="choice-label">{c.label}</span>
+                    {c.subtitle && <span className="choice-subtitle">{c.subtitle}</span>}
+                    {c.description && <span className="choice-description">{c.description}</span>}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </article>
   );
 }

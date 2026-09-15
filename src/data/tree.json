@@ -12,7 +12,8 @@
           "nextNodeId": "custodian-mode",
           "tags": [
             "custodial"
-          ]
+          ],
+          "description": "A company or service holds the keys that spend your bitcoin. You trade convenience for counterparty risk."
         },
         {
           "id": "start-self",
@@ -20,7 +21,8 @@
           "nextNodeId": "self-custody",
           "tags": [
             "self-custody"
-          ]
+          ],
+          "description": "You (or a group you choose) hold the keys. You are responsible for backups, devices, and recovery."
         }
       ]
     },
@@ -36,7 +38,8 @@
           "nextNodeId": "single-custodian",
           "tags": [
             "single-custodian"
-          ]
+          ],
+          "description": "One exchange or hosted wallet holds the keys. Simple, but you trust that venue."
         },
         {
           "id": "cm-fed",
@@ -44,7 +47,8 @@
           "nextNodeId": "federated-custody",
           "tags": [
             "federation"
-          ]
+          ],
+          "description": "A group or federation shares custody under threshold rules."
         }
       ]
     },
@@ -77,7 +81,8 @@
           ],
           "setsFlags": [
             "publicKey"
-          ]
+          ],
+          "description": "Use Kraken as the single custodian for this educational path."
         },
         {
           "id": "sc-coinbase",
@@ -102,7 +107,8 @@
           ],
           "setsFlags": [
             "publicKey"
-          ]
+          ],
+          "description": "Use Coinbase as the single custodian for this educational path."
         },
         {
           "id": "sc-stacks",
@@ -127,7 +133,8 @@
           ],
           "setsFlags": [
             "publicKey"
-          ]
+          ],
+          "description": "Use a Stacks-related custodial or hosted path."
         },
         {
           "id": "sc-coinos",
@@ -152,7 +159,8 @@
           ],
           "setsFlags": [
             "publicKey"
-          ]
+          ],
+          "description": "Use Coinos as a lightweight hosted option."
         },
         {
           "id": "sc-bull",
@@ -177,7 +185,8 @@
           ],
           "setsFlags": [
             "publicKey"
-          ]
+          ],
+          "description": "Bull Bitcoin. Exchange · Buy / sell. Choose this if it matches how you will actually operate."
         },
         {
           "id": "sc-wos",
@@ -202,7 +211,8 @@
           ],
           "setsFlags": [
             "publicKey"
-          ]
+          ],
+          "description": "Use Wallet of Satoshi (custodial Lightning convenience)."
         },
         {
           "id": "sc-well",
@@ -227,7 +237,8 @@
           ],
           "setsFlags": [
             "publicKey"
-          ]
+          ],
+          "description": "Bitcoin Well. Buy / sell · Related services. Choose this if it matches how you will actually operate."
         }
       ]
     },
@@ -249,7 +260,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "No extra authentication beyond password. Weak against phishing and credential stuffing."
         },
         {
           "id": "ak-sms",
@@ -262,7 +274,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "SMS one-time codes. Better than nothing, but vulnerable to SIM-swap attacks."
         },
         {
           "id": "ak-totp",
@@ -273,7 +286,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Authenticator-app codes. Stronger than SMS; still phishable on fake login pages."
         },
         {
           "id": "ak-passkey",
@@ -281,7 +295,8 @@
           "nextNodeId": "path-end-custodial",
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Passkeys / WebAuthn resist many phishing sites when the browser and site support them."
         },
         {
           "id": "ak-hw",
@@ -289,7 +304,8 @@
           "nextNodeId": "path-end-custodial",
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Hardware security keys (FIDO2/U2F) for phishing-resistant second factor."
         },
         {
           "id": "ak-email",
@@ -301,7 +317,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Email-based codes or magic links. Convenient; email account takeover becomes critical."
         }
       ]
     },
@@ -323,7 +340,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Password only on Coinbase. High risk if the password leaks or is phished."
         },
         {
           "id": "acb-sms",
@@ -335,7 +353,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "SMS 2FA on Coinbase — watch for SIM-swap."
         },
         {
           "id": "acb-totp",
@@ -346,7 +365,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Authenticator 2FA on Coinbase."
         },
         {
           "id": "acb-passkey",
@@ -354,7 +374,8 @@
           "nextNodeId": "path-end-custodial",
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Passkey login where Coinbase offers it."
         },
         {
           "id": "acb-hw",
@@ -362,7 +383,8 @@
           "nextNodeId": "path-end-custodial",
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Hardware security key as 2FA on Coinbase."
         }
       ]
     },
@@ -383,7 +405,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Password only on Stacks wallet/service path."
         },
         {
           "id": "ast-sms",
@@ -395,7 +418,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "SMS 2FA — SIM-swap risk remains."
         },
         {
           "id": "ast-totp",
@@ -406,7 +430,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Authenticator-app 2FA."
         },
         {
           "id": "ast-passkey",
@@ -414,7 +439,8 @@
           "nextNodeId": "path-end-custodial",
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Passkey-based authentication where available."
         },
         {
           "id": "ast-hw",
@@ -422,7 +448,8 @@
           "nextNodeId": "path-end-custodial",
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Hardware security key 2FA."
         }
       ]
     },
@@ -443,7 +470,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Minimal auth on Coinos."
         },
         {
           "id": "aco-sms",
@@ -455,7 +483,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "SMS codes for Coinos."
         },
         {
           "id": "aco-totp",
@@ -466,7 +495,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Authenticator codes for Coinos."
         },
         {
           "id": "aco-email",
@@ -478,7 +508,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Email-based recovery or codes — protect the inbox."
         }
       ]
     },
@@ -499,7 +530,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Password only on Bull Bitcoin."
         },
         {
           "id": "abb-sms",
@@ -511,7 +543,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "SMS 2FA on Bull Bitcoin."
         },
         {
           "id": "abb-totp",
@@ -522,7 +555,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Authenticator 2FA on Bull Bitcoin."
         },
         {
           "id": "abb-hw",
@@ -530,7 +564,8 @@
           "nextNodeId": "path-end-custodial",
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Hardware security key 2FA on Bull Bitcoin."
         }
       ]
     },
@@ -551,7 +586,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Wallet of Satoshi email login / recovery path."
         },
         {
           "id": "awos-pass",
@@ -564,7 +600,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Password-protected access on Wallet of Satoshi."
         },
         {
           "id": "awos-none",
@@ -576,7 +613,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Minimal protection — fine only for tiny balances you can afford to lose."
         }
       ]
     },
@@ -597,7 +635,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Password only on Bitcoin Well."
         },
         {
           "id": "abw-sms",
@@ -609,7 +648,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "SMS 2FA on Bitcoin Well."
         },
         {
           "id": "abw-totp",
@@ -620,7 +660,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Authenticator 2FA on Bitcoin Well."
         },
         {
           "id": "abw-hw",
@@ -628,7 +669,8 @@
           "nextNodeId": "path-end-custodial",
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Hardware security key 2FA on Bitcoin Well."
         }
       ]
     },
@@ -642,23 +684,27 @@
         {
           "id": "pe-c-auth",
           "label": "Revisit another custodian's auth",
-          "nextNodeId": "single-custodian"
+          "nextNodeId": "single-custodian",
+          "description": "Stay on this custodial path and strengthen login / withdrawal controls."
         },
         {
           "id": "pe-c-self",
           "label": "Compare self-custody instead",
-          "nextNodeId": "self-custody"
+          "nextNodeId": "self-custody",
+          "description": "Leave custody and move toward keys you control."
         },
         {
           "id": "pe-c-fed",
           "label": "Compare federated custody",
-          "nextNodeId": "federated-custody"
+          "nextNodeId": "federated-custody",
+          "description": "Explore a federated / community custody model instead."
         },
         {
           "id": "pe-c-explore",
           "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional — leave this path"
+          "subtitle": "Optional — leave this path",
+          "description": "Optional detour: start over with a different custody structure."
         }
       ]
     },
@@ -686,7 +732,8 @@
           ],
           "setsFlags": [
             "publicKey"
-          ]
+          ],
+          "description": "Community federation custody via Fedi-style setups."
         },
         {
           "id": "fc-ln-fed",
@@ -705,7 +752,8 @@
           ],
           "setsFlags": [
             "publicKey"
-          ]
+          ],
+          "description": "Lightning community / federation. Payments · Privacy (e-cash where relevant). Choose this if it matches how you will actually operate."
         }
       ]
     },
@@ -721,7 +769,8 @@
           "nextNodeId": "path-end-federated",
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Document how federation recovery and guardian claims work before you deposit."
         },
         {
           "id": "ff-weak",
@@ -732,7 +781,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Skip careful backup documentation — high loss risk if guardians or seeds are unclear."
         }
       ]
     },
@@ -748,7 +798,8 @@
           "nextNodeId": "path-end-federated",
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Document Lightning federation recovery and channel/claim procedures."
         },
         {
           "id": "fl-weak",
@@ -759,7 +810,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Proceed without solid recovery documentation."
         }
       ]
     },
@@ -773,18 +825,21 @@
         {
           "id": "pe-f-backup",
           "label": "Strengthen backup playbook",
-          "nextNodeId": "backup-root"
+          "nextNodeId": "backup-root",
+          "description": "Improve federation backup and guardian documentation."
         },
         {
           "id": "pe-f-self",
           "label": "Compare single-key self-custody",
-          "nextNodeId": "single-key"
+          "nextNodeId": "single-key",
+          "description": "Move from federation custody toward self-custody."
         },
         {
           "id": "pe-f-explore",
           "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional — leave this path"
+          "subtitle": "Optional — leave this path",
+          "description": "Optional detour: start over with a different custody structure."
         }
       ]
     },
@@ -803,7 +858,8 @@
           ],
           "tags": [
             "single-sig"
-          ]
+          ],
+          "description": "One key (or one seed) can spend. Simpler than multisig, but a single failure can lose funds."
         },
         {
           "id": "sf-multi",
@@ -811,7 +867,8 @@
           "nextNodeId": "multisig",
           "tags": [
             "multisig"
-          ]
+          ],
+          "description": "Several keys must cooperate to spend (m-of-n). Removes some single points of failure; adds operational complexity."
         }
       ]
     },
@@ -826,7 +883,7 @@
           "label": "Ledger",
           "subtitle": "Hardware · USB / Bluetooth",
           "icon": "/brands/ledger.svg",
-          "nextNodeId": "tool-ledger",
+          "nextNodeId": "product-ledger",
           "tags": [
             "ledger",
             "hardware",
@@ -847,14 +904,15 @@
           ],
           "addsVulnIds": [
             "supply-chain-device"
-          ]
+          ],
+          "description": "Ledger hardware wallets keep keys in a secure element and sign on-device. Next you will pick the exact model."
         },
         {
           "id": "sk-trezor",
           "label": "Trezor",
           "subtitle": "Hardware · USB",
           "icon": "/brands/trezor.svg",
-          "nextNodeId": "tool-trezor",
+          "nextNodeId": "product-trezor",
           "tags": [
             "trezor",
             "hardware",
@@ -875,14 +933,15 @@
           ],
           "addsVulnIds": [
             "supply-chain-device"
-          ]
+          ],
+          "description": "Trezor hardware wallets emphasize open design and on-device confirmation. Next you will pick the exact model."
         },
         {
           "id": "sk-coldcard",
           "label": "Coldcard",
           "subtitle": "Hardware · air-gap oriented · SD",
           "icon": "/brands/coldcard.svg",
-          "nextNodeId": "tool-coldcard",
+          "nextNodeId": "product-coldcard",
           "tags": [
             "coldcard",
             "hardware",
@@ -905,14 +964,15 @@
           ],
           "addsVulnIds": [
             "supply-chain-device"
-          ]
+          ],
+          "description": "Coldcard is a Bitcoin-focused, air-gap oriented hardware signer. Next you will pick Mk4, Mk5, or Q."
         },
         {
           "id": "sk-bitkey",
           "label": "Bitkey",
           "subtitle": "Mobile + hardware (2-of-3 style)",
           "icon": "/brands/bitkey.svg",
-          "nextNodeId": "tool-bitkey",
+          "nextNodeId": "product-bitkey",
           "tags": [
             "bitkey"
           ],
@@ -929,14 +989,15 @@
           "addsVulnIds": [
             "hot-malware",
             "supply-chain-device"
-          ]
+          ],
+          "description": "Bitkey combines a hardware device with a phone app in a seedless 2-of-3 recovery design. Next you confirm the product."
         },
         {
           "id": "sk-seedsigner",
           "label": "Seedsigner",
           "subtitle": "Air-gapped · DIY · QR only",
           "icon": "/brands/seedsigner.svg",
-          "nextNodeId": "tool-seedsigner",
+          "nextNodeId": "product-seedsigner",
           "tags": [
             "seedsigner",
             "airgap"
@@ -951,14 +1012,15 @@
             "airgap",
             "bip39",
             "stateless"
-          ]
+          ],
+          "description": "DIY air-gapped signer that does not store the seed after power-off. Next you confirm the kit style."
         },
         {
           "id": "sk-jade",
           "label": "Jade",
           "subtitle": "Blockstream · optional blind oracle",
           "icon": "/brands/jade.svg",
-          "nextNodeId": "tool-jade",
+          "nextNodeId": "product-jade",
           "tags": [
             "jade",
             "hardware",
@@ -978,7 +1040,8 @@
           ],
           "addsVulnIds": [
             "supply-chain-device"
-          ]
+          ],
+          "description": "Blockstream Jade hardware wallet with optional blind-oracle features. Next you pick Classic, Core, or Plus."
         },
         {
           "id": "sk-tails",
@@ -1001,7 +1064,8 @@
           ],
           "addsVulnIds": [
             "break-airgap-install"
-          ]
+          ],
+          "description": "Boot an amnesic live OS and run wallet software there. Strong OPSEC if you never break the air-gap casually."
         },
         {
           "id": "sk-phone",
@@ -1026,7 +1090,8 @@
           "addsVulnIds": [
             "hot-malware",
             "seed-phishing-support"
-          ]
+          ],
+          "description": "A normal internet-connected phone wallet. Convenient for spending; high malware and phishing exposure."
         },
         {
           "id": "sk-airphone",
@@ -1050,7 +1115,8 @@
           ],
           "addsVulnIds": [
             "break-airgap-install"
-          ]
+          ],
+          "description": "A phone kept offline as a signer. Installation and updates must not silently reintroduce network risk."
         },
         {
           "id": "sk-blue",
@@ -1076,7 +1142,8 @@
           "addsVulnIds": [
             "hot-malware",
             "seed-phishing-support"
-          ]
+          ],
+          "description": "Popular mobile Bitcoin wallet. Can be hot (holds seed) or watch-only (xpub only)."
         },
         {
           "id": "sk-core",
@@ -1100,7 +1167,8 @@
           ],
           "addsVulnIds": [
             "hot-malware"
-          ]
+          ],
+          "description": "Full node wallet on a computer. Powerful and sovereign; the machine is usually a hot surface if online."
         },
         {
           "id": "sk-manual",
@@ -1121,6 +1189,643 @@
           "capabilities": [
             "diy",
             "bip39"
+          ],
+          "description": "Create entropy yourself (dice, cards, etc.) then load a signer. Maximum control; easy to get wrong without discipline."
+        }
+      ]
+    },
+    {
+      "id": "product-ledger",
+      "title": "Which Ledger product?",
+      "body": "Ledger makes several hardware wallets. Pick the model you will actually use — features and recovery UX differ by device.\n",
+      "category": "Ledger",
+      "choices": [
+        {
+          "id": "pl-nano-s-plus",
+          "label": "Nano S Plus",
+          "description": "Compact USB device with a clearer screen than the original Nano S. A common choice for computer-connected cold storage.",
+          "subtitle": "USB · Secure Element",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pl-nano-x",
+          "label": "Nano X",
+          "description": "Portable Ledger with Bluetooth for mobile companion apps, plus USB. Convenient, but treat wireless pairing as part of the threat model.",
+          "subtitle": "USB / Bluetooth · Secure Element",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "bluetooth",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pl-nano-gen5",
+          "label": "Nano Gen5",
+          "description": "Current-generation Nano form factor. Confirm the exact model and firmware on Ledger’s site before you buy or restore.",
+          "subtitle": "USB · next-gen Nano",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pl-flex",
+          "label": "Flex",
+          "description": "Larger touchscreen Ledger for clearer address review. Still verify every receive address and firmware authenticity.",
+          "subtitle": "Touchscreen · Secure Element",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "touchscreen",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pl-stax",
+          "label": "Stax",
+          "description": "Premium E Ink touchscreen device aimed at clearer transaction review. Same seed and supply-chain discipline as other Ledgers.",
+          "subtitle": "E Ink touchscreen · Secure Element",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "touchscreen",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pl-nano-s",
+          "label": "Nano S (legacy)",
+          "description": "Older USB-only model. Fine if you already own one and keep firmware current, but new buyers usually prefer Nano S Plus or newer.",
+          "subtitle": "Discontinued · USB only",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger",
+          "tags": [
+            "legacy"
+          ],
+          "capabilities": [
+            "hardware",
+            "usb",
+            "secure-element",
+            "legacy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-trezor",
+      "title": "Which Trezor product?",
+      "body": "Trezor’s current Safe line differs from older Model One / Model T devices. Choose the unit you will set up and verify.\n",
+      "category": "Trezor",
+      "choices": [
+        {
+          "id": "pt-safe3",
+          "label": "Safe 3",
+          "description": "Entry Safe-series device with a secure element. Straightforward USB setup for single-sig cold storage.",
+          "subtitle": "USB · Secure Element",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pt-safe5",
+          "label": "Safe 5",
+          "description": "Touchscreen Safe-series wallet for easier on-device confirmation. Still buy from a trusted channel and verify firmware.",
+          "subtitle": "USB · touchscreen",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "touchscreen",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pt-safe7",
+          "label": "Safe 7",
+          "description": "Current flagship Safe-series model. Use official docs for the exact feature set and recovery flow on your firmware.",
+          "subtitle": "USB · flagship Safe",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pt-model-one",
+          "label": "Model One (legacy)",
+          "description": "Older button-based Trezor. Still usable if you already own it; new purchases should prefer the Safe line.",
+          "subtitle": "Discontinued",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor",
+          "tags": [
+            "legacy"
+          ],
+          "capabilities": [
+            "hardware",
+            "usb",
+            "legacy"
+          ]
+        },
+        {
+          "id": "pt-model-t",
+          "label": "Model T (legacy / discontinued)",
+          "description": "Previous touchscreen flagship, now discontinued for new retail in many channels. Prefer Safe 5 / Safe 7 for new setups.",
+          "subtitle": "Discontinued · touchscreen",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor",
+          "tags": [
+            "legacy"
+          ],
+          "capabilities": [
+            "hardware",
+            "usb",
+            "touchscreen",
+            "legacy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-coldcard",
+      "title": "Which Coldcard product?",
+      "body": "Coldcard devices are air-gap oriented and Bitcoin-focused. Mk4, Mk5, and Q differ mainly in keyboard, display, and workflow comfort.\n",
+      "category": "Coldcard",
+      "choices": [
+        {
+          "id": "pc-mk4",
+          "label": "Mk4",
+          "description": "Established Coldcard with numeric keypad and strong air-gap workflows (PSBT via SD). Widely documented for multisig and dice entropy.",
+          "subtitle": "Air-gap · SD / USB",
+          "icon": "/brands/coldcard.svg",
+          "nextNodeId": "tool-coldcard",
+          "capabilities": [
+            "hardware",
+            "airgap",
+            "sd",
+            "bitcoin-only"
+          ]
+        },
+        {
+          "id": "pc-mk5",
+          "label": "Mk5",
+          "description": "Newer Mk-series Coldcard when available in your channel. Confirm current Coinkite naming and firmware before purchase.",
+          "subtitle": "Air-gap · next Mk",
+          "icon": "/brands/coldcard.svg",
+          "nextNodeId": "tool-coldcard",
+          "capabilities": [
+            "hardware",
+            "airgap",
+            "sd",
+            "bitcoin-only"
+          ]
+        },
+        {
+          "id": "pc-q",
+          "label": "Coldcard Q",
+          "description": "Coldcard with a full keyboard and QR-friendly flows. Useful if you want faster air-gap text entry without a host keyboard.",
+          "subtitle": "Full keyboard · QR",
+          "icon": "/brands/coldcard.svg",
+          "nextNodeId": "tool-coldcard",
+          "capabilities": [
+            "hardware",
+            "airgap",
+            "qr",
+            "bitcoin-only"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-bitkey",
+      "title": "Which Bitkey product?",
+      "body": "Bitkey is a mobile-first self-custody design. Understand the 2-of-3 recovery model before you fund it.\n",
+      "category": "Bitkey",
+      "choices": [
+        {
+          "id": "pb-bitkey",
+          "label": "Bitkey device",
+          "description": "Block’s Bitkey pairs a hardware key with your phone app. Spending uses a 2-of-3 arrangement across the device, the phone, and a Block recovery server — there is no traditional BIP39 seed phrase to write down. Take the recovery and server-dependence model seriously before large balances.",
+          "subtitle": "Hardware + phone · seedless 2-of-3",
+          "icon": "/brands/bitkey.svg",
+          "nextNodeId": "tool-bitkey",
+          "capabilities": [
+            "hardware",
+            "mobile",
+            "2of3",
+            "seedless"
+          ],
+          "addsVulnIds": [
+            "key-agent-custody"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-seedsigner",
+      "title": "Which Seedsigner product?",
+      "body": "Seedsigner is a DIY, stateless air-gapped signer. The kit does not keep your seed after power-off.\n",
+      "category": "Seedsigner",
+      "choices": [
+        {
+          "id": "ps-diy",
+          "label": "DIY Seedsigner kit",
+          "description": "Build or buy a Raspberry Pi Zero–based Seedsigner. It is stateless: seeds live on your backup (metal/paper), not on the device after shutdown. Ideal for air-gapped QR signing when you accept DIY responsibility.",
+          "subtitle": "Raspberry Pi Zero · stateless · QR",
+          "icon": "/brands/seedsigner.svg",
+          "nextNodeId": "tool-seedsigner",
+          "capabilities": [
+            "hardware",
+            "airgap",
+            "diy",
+            "stateless",
+            "qr"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-jade",
+      "title": "Which Jade product?",
+      "body": "Blockstream Jade comes in Classic, Core, and Plus variants. Pick the hardware you will verify and update.\n",
+      "category": "Jade",
+      "choices": [
+        {
+          "id": "pj-classic",
+          "label": "Jade Classic",
+          "subtitle": "USB / Bluetooth · optional oracle",
+          "description": "Original Jade form factor with USB and Bluetooth options and optional blind-oracle entropy assist. Verify authenticity and firmware.",
+          "icon": "/brands/jade.svg",
+          "nextNodeId": "tool-jade",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "bluetooth"
+          ]
+        },
+        {
+          "id": "pj-core",
+          "label": "Jade Core",
+          "subtitle": "Compact Jade",
+          "description": "More compact Jade Core model for the same Blockstream ecosystem. Confirm current SKU details before you buy.",
+          "icon": "/brands/jade.svg",
+          "nextNodeId": "tool-jade",
+          "capabilities": [
+            "hardware",
+            "usb"
+          ]
+        },
+        {
+          "id": "pj-plus",
+          "label": "Jade Plus",
+          "subtitle": "Updated Jade line",
+          "description": "Newer Jade Plus hardware with improved UX over Classic. Same need for genuine purchase channel and firmware checks.",
+          "icon": "/brands/jade.svg",
+          "nextNodeId": "tool-jade",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "bluetooth"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-ledger-ready",
+      "title": "Which Ledger product?",
+      "body": "Ledger makes several hardware wallets. Pick the model you will actually use — features and recovery UX differ by device.\n\nYour entropy path already chose this brand — pick the exact product, then continue into PIN / storage setup.\n",
+      "category": "Ledger",
+      "choices": [
+        {
+          "id": "pl-nano-s-plus-ready",
+          "label": "Nano S Plus",
+          "description": "Compact USB device with a clearer screen than the original Nano S. A common choice for computer-connected cold storage.",
+          "subtitle": "USB · Secure Element",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger-protect",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pl-nano-x-ready",
+          "label": "Nano X",
+          "description": "Portable Ledger with Bluetooth for mobile companion apps, plus USB. Convenient, but treat wireless pairing as part of the threat model.",
+          "subtitle": "USB / Bluetooth · Secure Element",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger-protect",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "bluetooth",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pl-nano-gen5-ready",
+          "label": "Nano Gen5",
+          "description": "Current-generation Nano form factor. Confirm the exact model and firmware on Ledger’s site before you buy or restore.",
+          "subtitle": "USB · next-gen Nano",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger-protect",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pl-flex-ready",
+          "label": "Flex",
+          "description": "Larger touchscreen Ledger for clearer address review. Still verify every receive address and firmware authenticity.",
+          "subtitle": "Touchscreen · Secure Element",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger-protect",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "touchscreen",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pl-stax-ready",
+          "label": "Stax",
+          "description": "Premium E Ink touchscreen device aimed at clearer transaction review. Same seed and supply-chain discipline as other Ledgers.",
+          "subtitle": "E Ink touchscreen · Secure Element",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger-protect",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "touchscreen",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pl-nano-s-ready",
+          "label": "Nano S (legacy)",
+          "description": "Older USB-only model. Fine if you already own one and keep firmware current, but new buyers usually prefer Nano S Plus or newer.",
+          "subtitle": "Discontinued · USB only",
+          "icon": "/brands/ledger.svg",
+          "nextNodeId": "tool-ledger-protect",
+          "tags": [
+            "legacy"
+          ],
+          "capabilities": [
+            "hardware",
+            "usb",
+            "secure-element",
+            "legacy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-trezor-ready",
+      "title": "Which Trezor product?",
+      "body": "Trezor’s current Safe line differs from older Model One / Model T devices. Choose the unit you will set up and verify.\n\nYour entropy path already chose this brand — pick the exact product, then continue into PIN / storage setup.\n",
+      "category": "Trezor",
+      "choices": [
+        {
+          "id": "pt-safe3-ready",
+          "label": "Safe 3",
+          "description": "Entry Safe-series device with a secure element. Straightforward USB setup for single-sig cold storage.",
+          "subtitle": "USB · Secure Element",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor-protect",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pt-safe5-ready",
+          "label": "Safe 5",
+          "description": "Touchscreen Safe-series wallet for easier on-device confirmation. Still buy from a trusted channel and verify firmware.",
+          "subtitle": "USB · touchscreen",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor-protect",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "touchscreen",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pt-safe7-ready",
+          "label": "Safe 7",
+          "description": "Current flagship Safe-series model. Use official docs for the exact feature set and recovery flow on your firmware.",
+          "subtitle": "USB · flagship Safe",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor-protect",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "secure-element"
+          ]
+        },
+        {
+          "id": "pt-model-one-ready",
+          "label": "Model One (legacy)",
+          "description": "Older button-based Trezor. Still usable if you already own it; new purchases should prefer the Safe line.",
+          "subtitle": "Discontinued",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor-protect",
+          "tags": [
+            "legacy"
+          ],
+          "capabilities": [
+            "hardware",
+            "usb",
+            "legacy"
+          ]
+        },
+        {
+          "id": "pt-model-t-ready",
+          "label": "Model T (legacy / discontinued)",
+          "description": "Previous touchscreen flagship, now discontinued for new retail in many channels. Prefer Safe 5 / Safe 7 for new setups.",
+          "subtitle": "Discontinued · touchscreen",
+          "icon": "/brands/trezor.svg",
+          "nextNodeId": "tool-trezor-protect",
+          "tags": [
+            "legacy"
+          ],
+          "capabilities": [
+            "hardware",
+            "usb",
+            "touchscreen",
+            "legacy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-coldcard-ready",
+      "title": "Which Coldcard product?",
+      "body": "Coldcard devices are air-gap oriented and Bitcoin-focused. Mk4, Mk5, and Q differ mainly in keyboard, display, and workflow comfort.\n\nYour entropy path already chose this brand — pick the exact product, then continue into PIN / storage setup.\n",
+      "category": "Coldcard",
+      "choices": [
+        {
+          "id": "pc-mk4-ready",
+          "label": "Mk4",
+          "description": "Established Coldcard with numeric keypad and strong air-gap workflows (PSBT via SD). Widely documented for multisig and dice entropy.",
+          "subtitle": "Air-gap · SD / USB",
+          "icon": "/brands/coldcard.svg",
+          "nextNodeId": "tool-coldcard-store",
+          "capabilities": [
+            "hardware",
+            "airgap",
+            "sd",
+            "bitcoin-only"
+          ]
+        },
+        {
+          "id": "pc-mk5-ready",
+          "label": "Mk5",
+          "description": "Newer Mk-series Coldcard when available in your channel. Confirm current Coinkite naming and firmware before purchase.",
+          "subtitle": "Air-gap · next Mk",
+          "icon": "/brands/coldcard.svg",
+          "nextNodeId": "tool-coldcard-store",
+          "capabilities": [
+            "hardware",
+            "airgap",
+            "sd",
+            "bitcoin-only"
+          ]
+        },
+        {
+          "id": "pc-q-ready",
+          "label": "Coldcard Q",
+          "description": "Coldcard with a full keyboard and QR-friendly flows. Useful if you want faster air-gap text entry without a host keyboard.",
+          "subtitle": "Full keyboard · QR",
+          "icon": "/brands/coldcard.svg",
+          "nextNodeId": "tool-coldcard-store",
+          "capabilities": [
+            "hardware",
+            "airgap",
+            "qr",
+            "bitcoin-only"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-bitkey-ready",
+      "title": "Which Bitkey product?",
+      "body": "Bitkey is a mobile-first self-custody design. Understand the 2-of-3 recovery model before you fund it.\n\nYour entropy path already chose this brand — pick the exact product, then continue into PIN / storage setup.\n",
+      "category": "Bitkey",
+      "choices": [
+        {
+          "id": "pb-bitkey-ready",
+          "label": "Bitkey device",
+          "description": "Block’s Bitkey pairs a hardware key with your phone app. Spending uses a 2-of-3 arrangement across the device, the phone, and a Block recovery server — there is no traditional BIP39 seed phrase to write down. Take the recovery and server-dependence model seriously before large balances.",
+          "subtitle": "Hardware + phone · seedless 2-of-3",
+          "icon": "/brands/bitkey.svg",
+          "nextNodeId": "tool-bitkey-protect",
+          "capabilities": [
+            "hardware",
+            "mobile",
+            "2of3",
+            "seedless"
+          ],
+          "addsVulnIds": [
+            "key-agent-custody"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-seedsigner-ready",
+      "title": "Which Seedsigner product?",
+      "body": "Seedsigner is a DIY, stateless air-gapped signer. The kit does not keep your seed after power-off.\n\nYour entropy path already chose this brand — pick the exact product, then continue into PIN / storage setup.\n",
+      "category": "Seedsigner",
+      "choices": [
+        {
+          "id": "ps-diy-ready",
+          "label": "DIY Seedsigner kit",
+          "description": "Build or buy a Raspberry Pi Zero–based Seedsigner. It is stateless: seeds live on your backup (metal/paper), not on the device after shutdown. Ideal for air-gapped QR signing when you accept DIY responsibility.",
+          "subtitle": "Raspberry Pi Zero · stateless · QR",
+          "icon": "/brands/seedsigner.svg",
+          "nextNodeId": "tool-seedsigner-store",
+          "capabilities": [
+            "hardware",
+            "airgap",
+            "diy",
+            "stateless",
+            "qr"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-jade-ready",
+      "title": "Which Jade product?",
+      "body": "Blockstream Jade comes in Classic, Core, and Plus variants. Pick the hardware you will verify and update.\n\nYour entropy path already chose this brand — pick the exact product, then continue into PIN / storage setup.\n",
+      "category": "Jade",
+      "choices": [
+        {
+          "id": "pj-classic-ready",
+          "label": "Jade Classic",
+          "subtitle": "USB / Bluetooth · optional oracle",
+          "description": "Original Jade form factor with USB and Bluetooth options and optional blind-oracle entropy assist. Verify authenticity and firmware.",
+          "icon": "/brands/jade.svg",
+          "nextNodeId": "tool-jade-protect",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "bluetooth"
+          ]
+        },
+        {
+          "id": "pj-core-ready",
+          "label": "Jade Core",
+          "subtitle": "Compact Jade",
+          "description": "More compact Jade Core model for the same Blockstream ecosystem. Confirm current SKU details before you buy.",
+          "icon": "/brands/jade.svg",
+          "nextNodeId": "tool-jade-protect",
+          "capabilities": [
+            "hardware",
+            "usb"
+          ]
+        },
+        {
+          "id": "pj-plus-ready",
+          "label": "Jade Plus",
+          "subtitle": "Updated Jade line",
+          "description": "Newer Jade Plus hardware with improved UX over Classic. Same need for genuine purchase channel and firmware checks.",
+          "icon": "/brands/jade.svg",
+          "nextNodeId": "tool-jade-protect",
+          "capabilities": [
+            "hardware",
+            "usb",
+            "bluetooth"
           ]
         }
       ]
@@ -1146,7 +1851,8 @@
           ],
           "tags": [
             "device-rng"
-          ]
+          ],
+          "description": "Let the Ledger create the seed with its built-in random number generator only."
         },
         {
           "id": "led-entropy",
@@ -1162,7 +1868,8 @@
           ],
           "tags": [
             "user-entropy"
-          ]
+          ],
+          "description": "Combine device RNG with extra entropy you provide, following Ledger’s documented flow carefully."
         }
       ]
     },
@@ -1182,7 +1889,8 @@
           "tags": [
             "pin",
             "passphrase"
-          ]
+          ],
+          "description": "Set a device PIN and a BIP39 passphrase you have tested in recovery. Passphrase is a second secret."
         },
         {
           "id": "led-pin",
@@ -1190,7 +1898,8 @@
           "nextNodeId": "seed-aftercare",
           "tags": [
             "pin"
-          ]
+          ],
+          "description": "Protect the device with a strong PIN only (no BIP39 passphrase)."
         },
         {
           "id": "led-none",
@@ -1198,7 +1907,8 @@
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "physical-theft-seed"
-          ]
+          ],
+          "description": "Skip PIN/passphrase hardening for now — high physical and theft risk."
         }
       ]
     },
@@ -1219,7 +1929,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Let the Trezor create the seed using device RNG only."
         },
         {
           "id": "trz-entropy",
@@ -1231,7 +1942,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Add entropy from the companion computer/keyboard as documented by Trezor."
         }
       ]
     },
@@ -1247,12 +1959,14 @@
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "passphrase-lost"
-          ]
+          ],
+          "description": "PIN plus tested BIP39 passphrase on Trezor."
         },
         {
           "id": "trz-pin",
           "label": "PIN only",
-          "nextNodeId": "seed-aftercare"
+          "nextNodeId": "seed-aftercare",
+          "description": "Strong PIN only on Trezor."
         },
         {
           "id": "trz-none",
@@ -1260,7 +1974,8 @@
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "physical-theft-seed"
-          ]
+          ],
+          "description": "Skip extra device protection for now."
         }
       ]
     },
@@ -1284,7 +1999,8 @@
           ],
           "tags": [
             "dice"
-          ]
+          ],
+          "description": "Enter dice rolls on the Coldcard so seed entropy includes physical randomness you control."
         },
         {
           "id": "cc-rng",
@@ -1297,7 +2013,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Use the Coldcard’s own RNG to create the seed."
         }
       ]
     },
@@ -1318,7 +2035,8 @@
             "seed-on-device",
             "pin",
             "passphrase"
-          ]
+          ],
+          "description": "Keep the seed on the Coldcard behind PIN/passphrase and treat the device as long-lived."
         },
         {
           "id": "cc-sd",
@@ -1327,7 +2045,8 @@
           "tags": [
             "sd-card",
             "pin"
-          ]
+          ],
+          "description": "Use encrypted SD backup workflows with PIN discipline."
         },
         {
           "id": "cc-wipe",
@@ -1339,7 +2058,8 @@
           ],
           "tags": [
             "paper-metal"
-          ]
+          ],
+          "description": "Back up to metal (or equivalent), then wipe the device so it holds no seed at rest."
         }
       ]
     },
@@ -1360,7 +2080,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Use Bitkey’s normal mobile + hardware + recovery-server setup. Understand who can help recover."
         },
         {
           "id": "bk-min-cloud",
@@ -1372,7 +2093,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Configure to reduce reliance on cloud/server recovery where the product allows — know what you give up."
         }
       ]
     },
@@ -1388,7 +2110,8 @@
           "nextNodeId": "seed-aftercare",
           "tags": [
             "pin"
-          ]
+          ],
+          "description": "Strong device PIN and phone app lock before funding."
         },
         {
           "id": "bk-weak",
@@ -1397,7 +2120,8 @@
           "addsVulnIds": [
             "physical-theft-seed",
             "compromised-creds"
-          ]
+          ],
+          "description": "Weak or default locks — avoid for meaningful balances."
         }
       ]
     },
@@ -1420,7 +2144,8 @@
           ],
           "tags": [
             "dice"
-          ]
+          ],
+          "description": "Create entropy with dice on Seedsigner, then back up the resulting seed offline."
         },
         {
           "id": "ss-image",
@@ -1432,7 +2157,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Use camera/image entropy on Seedsigner. Keep cameras and shoulders away from sensitive screens."
         }
       ]
     },
@@ -1448,7 +2174,8 @@
           "nextNodeId": "seed-aftercare",
           "tags": [
             "paper-metal"
-          ]
+          ],
+          "description": "Stamp or engrave the seed on metal and verify a restore. For Seedsigner, the backup is the wallet."
         },
         {
           "id": "ss-paper",
@@ -1460,7 +2187,8 @@
           ],
           "tags": [
             "paper-metal"
-          ]
+          ],
+          "description": "Paper backup only — vulnerable to fire, water, and wear."
         },
         {
           "id": "ss-none",
@@ -1468,7 +2196,8 @@
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "no-backup"
-          ]
+          ],
+          "description": "No durable backup yet — catastrophic if the seed is lost."
         }
       ]
     },
@@ -1489,7 +2218,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Let Jade create the seed with device RNG."
         },
         {
           "id": "jd-oracle",
@@ -1500,7 +2230,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Use Jade RNG with optional blind-oracle assist as documented by Blockstream."
         }
       ]
     },
@@ -1516,12 +2247,14 @@
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "passphrase-lost"
-          ]
+          ],
+          "description": "PIN plus tested passphrase on Jade."
         },
         {
           "id": "jd-pin",
           "label": "PIN only",
-          "nextNodeId": "seed-aftercare"
+          "nextNodeId": "seed-aftercare",
+          "description": "PIN only on Jade."
         },
         {
           "id": "jd-none",
@@ -1529,7 +2262,8 @@
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "physical-theft-seed"
-          ]
+          ],
+          "description": "Skip extra protection for now."
         }
       ]
     },
@@ -1552,7 +2286,8 @@
           ],
           "tags": [
             "electrum"
-          ]
+          ],
+          "description": "Electrum on Tails. Note: Electrum seeds are not BIP39 — plan recovery tooling carefully."
         },
         {
           "id": "ta-bip39",
@@ -1567,7 +2302,8 @@
           ],
           "tags": [
             "bip39"
-          ]
+          ],
+          "description": "BIP39-capable offline tools on Tails with verified software only."
         }
       ]
     },
@@ -1583,7 +2319,8 @@
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "break-airgap-install"
-          ]
+          ],
+          "description": "Move software only via verified USB ferry; never casually enable networking."
         },
         {
           "id": "ta-online",
@@ -1592,7 +2329,8 @@
           "addsVulnIds": [
             "break-airgap-install",
             "hot-malware"
-          ]
+          ],
+          "description": "Occasionally connect Tails for updates — weakens the air-gap story."
         }
       ]
     },
@@ -1615,7 +2353,8 @@
           ],
           "capabilities": [
             "hot"
-          ]
+          ],
+          "description": "Accept a hot phone wallet for spending convenience."
         },
         {
           "id": "ph-air",
@@ -1623,7 +2362,8 @@
           "nextNodeId": "tool-airgap-phone",
           "tags": [
             "airgap"
-          ]
+          ],
+          "description": "Repurpose the phone as an offline signer instead."
         }
       ]
     },
@@ -1643,7 +2383,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Let the app generate a BIP39 seed on the phone."
         }
       ]
     },
@@ -1659,7 +2400,8 @@
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "physical-theft-seed"
-          ]
+          ],
+          "description": "Offline metal or paper backup; no cloud photos of the seed."
         },
         {
           "id": "ph-cloud",
@@ -1668,7 +2410,8 @@
           "addsVulnIds": [
             "seed-screenshot",
             "hot-malware"
-          ]
+          ],
+          "description": "Cloud or screenshot backup — high leak risk."
         },
         {
           "id": "ph-none",
@@ -1676,7 +2419,8 @@
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "no-backup"
-          ]
+          ],
+          "description": "No backup yet."
         }
       ]
     },
@@ -1692,7 +2436,8 @@
           "nextNodeId": "tool-airgap-phone-seed",
           "addsVulnIds": [
             "break-airgap-install"
-          ]
+          ],
+          "description": "Install signing apps via USB ferry and verify builds offline."
         },
         {
           "id": "ap-break",
@@ -1701,7 +2446,8 @@
           "addsVulnIds": [
             "break-airgap-install",
             "hot-malware"
-          ]
+          ],
+          "description": "Briefly go online to install — reintroduces malware risk."
         }
       ]
     },
@@ -1721,7 +2467,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Generate BIP39 on the offline phone and write the seed securely."
         }
       ]
     },
@@ -1741,7 +2488,8 @@
           ],
           "tags": [
             "hot"
-          ]
+          ],
+          "description": "BlueWallet holds a seed and can spend — treat the phone as hot."
         },
         {
           "id": "bw-watch",
@@ -1749,7 +2497,8 @@
           "nextNodeId": "xpub-root",
           "tags": [
             "watch-only"
-          ]
+          ],
+          "description": "Import an xpub only; spending stays on a cold device."
         }
       ]
     },
@@ -1768,7 +2517,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "App-generated BIP39 seed in BlueWallet."
         }
       ]
     },
@@ -1788,7 +2538,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Create a modern descriptor wallet in Bitcoin Core."
         },
         {
           "id": "bc-import",
@@ -1800,7 +2551,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Import descriptors or keys into Core."
         },
         {
           "id": "bc-watch",
@@ -1809,7 +2561,8 @@
           "setsFlags": [
             "publicKey",
             "xpub"
-          ]
+          ],
+          "description": "Watch-only descriptors — public side only until you add signing keys elsewhere."
         }
       ]
     },
@@ -1829,7 +2582,8 @@
           ],
           "tags": [
             "hot"
-          ]
+          ],
+          "description": "This PC stays online with the wallet — hot malware surface."
         },
         {
           "id": "bc-dedicated",
@@ -1840,7 +2594,8 @@
           ],
           "tags": [
             "cold"
-          ]
+          ],
+          "description": "Use a dedicated or offline machine to reduce malware exposure."
         }
       ]
     },
@@ -1860,7 +2615,8 @@
           "addsVulnIds": [
             "dice-sort-bias",
             "biased-dice"
-          ]
+          ],
+          "description": "Roll physical dice to build entropy for a BIP39 seed."
         },
         {
           "id": "man-entropy-hw",
@@ -1874,7 +2630,8 @@
           "addsVulnIds": [
             "entropy-not-followed",
             "device-ignores-entropy"
-          ]
+          ],
+          "description": "You supply entropy; a hardware device mixes it into a seed."
         },
         {
           "id": "man-coins",
@@ -1885,7 +2642,8 @@
           ],
           "tags": [
             "coin-flips"
-          ]
+          ],
+          "description": "Coin flips mapped to bits/words — easy to bias if process is sloppy."
         },
         {
           "id": "man-cards",
@@ -1893,7 +2651,8 @@
           "nextNodeId": "seed-cards",
           "tags": [
             "cards"
-          ]
+          ],
+          "description": "Playing-card entropy with a documented mapping."
         }
       ],
       "preMitigationIds": [
@@ -1913,7 +2672,7 @@
           "label": "Coldcard",
           "subtitle": "Dice / user entropy on device",
           "icon": "/brands/coldcard.svg",
-          "nextNodeId": "tool-coldcard-store",
+          "nextNodeId": "product-coldcard-ready",
           "setsFlags": [
             "privateKey"
           ],
@@ -1929,14 +2688,15 @@
           "addsVulnIds": [
             "supply-chain-device",
             "entropy-not-followed"
-          ]
+          ],
+          "description": "Coldcard will mix your user entropy on-device."
         },
         {
           "id": "seh-seedsigner",
           "label": "Seedsigner",
           "subtitle": "Dice or camera entropy",
           "icon": "/brands/seedsigner.svg",
-          "nextNodeId": "tool-seedsigner-store",
+          "nextNodeId": "product-seedsigner-ready",
           "setsFlags": [
             "privateKey"
           ],
@@ -1951,14 +2711,15 @@
           ],
           "addsVulnIds": [
             "entropy-not-followed"
-          ]
+          ],
+          "description": "Seedsigner will mix dice or camera entropy."
         },
         {
           "id": "seh-jade",
           "label": "Blockstream Jade",
           "subtitle": "RNG + optional oracle / user entropy",
           "icon": "/brands/jade.svg",
-          "nextNodeId": "tool-jade-protect",
+          "nextNodeId": "product-jade-ready",
           "setsFlags": [
             "privateKey"
           ],
@@ -1973,14 +2734,15 @@
           "addsVulnIds": [
             "supply-chain-device",
             "entropy-not-followed"
-          ]
+          ],
+          "description": "Jade will mix entropy (optional oracle assist)."
         },
         {
           "id": "seh-ledger",
           "label": "Ledger",
           "subtitle": "Device RNG + user entropy",
           "icon": "/brands/ledger.svg",
-          "nextNodeId": "tool-ledger-protect",
+          "nextNodeId": "product-ledger-ready",
           "setsFlags": [
             "privateKey"
           ],
@@ -1996,14 +2758,15 @@
             "supply-chain-device",
             "entropy-not-followed",
             "device-ignores-entropy"
-          ]
+          ],
+          "description": "Ledger will combine device RNG with your entropy."
         },
         {
           "id": "seh-trezor",
           "label": "Trezor",
           "subtitle": "Computer / keyboard entropy",
           "icon": "/brands/trezor.svg",
-          "nextNodeId": "tool-trezor-protect",
+          "nextNodeId": "product-trezor-ready",
           "setsFlags": [
             "privateKey"
           ],
@@ -2018,12 +2781,14 @@
           "addsVulnIds": [
             "supply-chain-device",
             "entropy-not-followed"
-          ]
+          ],
+          "description": "Trezor will accept computer/keyboard entropy."
         },
         {
           "id": "seh-back",
           "label": "Other entropy methods",
-          "nextNodeId": "tool-manual"
+          "nextNodeId": "tool-manual",
+          "description": "Return to other manual entropy methods."
         }
       ]
     },
@@ -2055,7 +2820,8 @@
             "dice-sort-bias",
             "biased-dice",
             "supply-chain-device"
-          ]
+          ],
+          "description": "Coldcard. Dice rolls on device. Choose this if it matches how you will actually operate."
         },
         {
           "id": "sdh-seedsigner",
@@ -2078,12 +2844,14 @@
           "addsVulnIds": [
             "dice-sort-bias",
             "biased-dice"
-          ]
+          ],
+          "description": "Seedsigner. Dice entropy · stateless. Choose this if it matches how you will actually operate."
         },
         {
           "id": "sdh-back",
           "label": "Other entropy methods",
-          "nextNodeId": "tool-manual"
+          "nextNodeId": "tool-manual",
+          "description": "Other entropy methods. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2104,7 +2872,8 @@
           "addsVulnIds": [
             "unsafe-dice-instructions",
             "biased-word-mapping"
-          ]
+          ],
+          "description": "Manual mapping to seed words. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "sdm-hw",
@@ -2116,7 +2885,8 @@
           ],
           "addsVulnIds": [
             "supply-chain-device"
-          ]
+          ],
+          "description": "Hardware device assistance. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2134,18 +2904,21 @@
           "addsVulnIds": [
             "geo-jurisdiction-concentration",
             "collusion-multisig"
-          ]
+          ],
+          "description": "Keys stay in one country — correlated legal and physical risk."
         },
         {
           "id": "ms-multi-vendor",
           "label": "Multi-vendor devices",
           "subtitle": "Same-vendor multisig ≠ independent",
-          "nextNodeId": "multisig-diverse"
+          "nextNodeId": "multisig-diverse",
+          "description": "Multi-vendor devices. Same-vendor multisig ≠ independent. Choose this if it matches how you will actually operate."
         },
         {
           "id": "ms-geo",
           "label": "Different cities / countries",
-          "nextNodeId": "distributed-multisig"
+          "nextNodeId": "distributed-multisig",
+          "description": "Spread keys across different cities or countries."
         },
         {
           "id": "ms-collab",
@@ -2154,7 +2927,8 @@
           "addsVulnIds": [
             "key-agent-custody",
             "collusion-multisig"
-          ]
+          ],
+          "description": "Collaborative custody provider. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "ms-same-vendor",
@@ -2162,7 +2936,8 @@
           "nextNodeId": "multisig-same-vendor",
           "addsVulnIds": [
             "same-vendor-multisig"
-          ]
+          ],
+          "description": "All keys on the same vendor hardware — correlated firmware/supply risk."
         }
       ]
     },
@@ -2175,12 +2950,14 @@
         {
           "id": "msc-geo",
           "label": "Spread across cities / countries",
-          "nextNodeId": "distributed-multisig"
+          "nextNodeId": "distributed-multisig",
+          "description": "Spread across cities / countries. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "msc-vendor",
           "label": "Also diversify device vendors",
-          "nextNodeId": "multisig-diverse"
+          "nextNodeId": "multisig-diverse",
+          "description": "Also diversify device vendors. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "msc-end",
@@ -2189,7 +2966,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Open the path summary to review risks and apply mitigations."
         }
       ]
     },
@@ -2202,7 +2980,8 @@
         {
           "id": "mss-fix",
           "label": "Switch to multi-vendor",
-          "nextNodeId": "multisig-diverse"
+          "nextNodeId": "multisig-diverse",
+          "description": "Switch to multi-vendor. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "mss-anyway",
@@ -2211,7 +2990,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Continue anyway (not recommended). This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2224,12 +3004,14 @@
         {
           "id": "msd-dist",
           "label": "Yes — distribute locations / parties",
-          "nextNodeId": "distributed-multisig"
+          "nextNodeId": "distributed-multisig",
+          "description": "Yes — distribute locations / parties. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "msd-backup",
           "label": "Focus on backup & inheritance",
-          "nextNodeId": "backup-multisig"
+          "nextNodeId": "backup-multisig",
+          "description": "Document how trusted people can recover without careless secret exposure."
         },
         {
           "id": "msd-end",
@@ -2238,7 +3020,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Move toward an m-of-n multisignature structure."
         }
       ]
     },
@@ -2254,7 +3037,8 @@
           "nextNodeId": "independent-multisig",
           "addsVulnIds": [
             "collusion-multisig"
-          ]
+          ],
+          "description": "Independent humans or organizations hold different keys."
         },
         {
           "id": "dm-end",
@@ -2263,7 +3047,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Move toward an m-of-n multisignature structure."
         }
       ]
     },
@@ -2279,12 +3064,14 @@
           "nextNodeId": "multisig-key-agent",
           "addsVulnIds": [
             "key-agent-custody"
-          ]
+          ],
+          "description": "Include a key-agent / cosigner firm (more convenience, more trust)."
         },
         {
           "id": "im-peers",
           "label": "Only peer humans (no firm)",
-          "nextNodeId": "multisig-peers"
+          "nextNodeId": "multisig-peers",
+          "description": "Only peer humans — no corporate key agent."
         },
         {
           "id": "im-end",
@@ -2293,7 +3080,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Move toward an m-of-n multisignature structure."
         }
       ]
     },
@@ -2310,7 +3098,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Yes — I retain spending threshold. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "mka-no",
@@ -2322,7 +3111,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Skip stronger authentication for now. Only appropriate for tiny balances you can afford to lose."
         }
       ]
     },
@@ -2339,7 +3129,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Schedule a recovery drill so the quorum actually works under stress."
         },
         {
           "id": "mp-skip",
@@ -2351,7 +3142,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Skip drills for now — discover broken recovery when it is too late."
         }
       ]
     },
@@ -2368,7 +3160,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Seeds + descriptor + playbook. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "bm-partial",
@@ -2380,7 +3173,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Seeds only (no descriptor). This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2394,28 +3188,33 @@
         {
           "id": "pe-ms-harden-backup",
           "label": "Harden backups & inheritance",
-          "nextNodeId": "backup-root"
+          "nextNodeId": "backup-root",
+          "description": "Document how trusted people can recover without careless secret exposure."
         },
         {
           "id": "pe-ms-harden-sign",
           "label": "Harden signing & address checks",
-          "nextNodeId": "signing-root"
+          "nextNodeId": "signing-root",
+          "description": "Harden signing & address checks. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "pe-ms-harden-pass",
           "label": "Add or review passphrase",
-          "nextNodeId": "passphrase"
+          "nextNodeId": "passphrase",
+          "description": "Add or review passphrase. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "pe-ms-harden-ms",
           "label": "Consider multisig",
-          "nextNodeId": "multisig"
+          "nextNodeId": "multisig",
+          "description": "Move toward an m-of-n multisignature structure."
         },
         {
           "id": "pe-ms-explore",
           "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional — leave this path"
+          "subtitle": "Optional — leave this path",
+          "description": "Optional detour: start over with a different custody structure."
         }
       ]
     },
@@ -2431,17 +3230,20 @@
           "nextNodeId": "glacier-ceremony",
           "addsVulnIds": [
             "glacier-complexity"
-          ]
+          ],
+          "description": "Yes — max assurance ceremony. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "gl-ms",
           "label": "Combine with multisig instead",
-          "nextNodeId": "independent-multisig"
+          "nextNodeId": "independent-multisig",
+          "description": "Move toward an m-of-n multisignature structure."
         },
         {
           "id": "gl-back",
           "label": "Return to manual entropy options",
-          "nextNodeId": "tool-manual"
+          "nextNodeId": "tool-manual",
+          "description": "Return to manual entropy options. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2454,7 +3256,8 @@
         {
           "id": "gc-seed",
           "label": "Detail seed generation next",
-          "nextNodeId": "tool-manual"
+          "nextNodeId": "tool-manual",
+          "description": "Detail seed generation next. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "gc-done",
@@ -2463,7 +3266,8 @@
           "setsFlags": [
             "privateKey",
             "publicKey"
-          ]
+          ],
+          "description": "Mark ceremony path complete. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2477,28 +3281,33 @@
         {
           "id": "pe-g-harden-backup",
           "label": "Harden backups & inheritance",
-          "nextNodeId": "backup-root"
+          "nextNodeId": "backup-root",
+          "description": "Document how trusted people can recover without careless secret exposure."
         },
         {
           "id": "pe-g-harden-sign",
           "label": "Harden signing & address checks",
-          "nextNodeId": "signing-root"
+          "nextNodeId": "signing-root",
+          "description": "Harden signing & address checks. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "pe-g-harden-pass",
           "label": "Add or review passphrase",
-          "nextNodeId": "passphrase"
+          "nextNodeId": "passphrase",
+          "description": "Add or review passphrase. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "pe-g-harden-ms",
           "label": "Consider multisig",
-          "nextNodeId": "multisig"
+          "nextNodeId": "multisig",
+          "description": "Move toward an m-of-n multisignature structure."
         },
         {
           "id": "pe-g-explore",
           "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional — leave this path"
+          "subtitle": "Optional — leave this path",
+          "description": "Optional detour: start over with a different custody structure."
         }
       ]
     },
@@ -2516,12 +3325,14 @@
             "dice-sort-bias",
             "biased-dice",
             "unsafe-dice-instructions"
-          ]
+          ],
+          "description": "Casino dice + trusted table + no sorting. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "sd-back",
           "label": "Other entropy methods",
-          "nextNodeId": "tool-manual"
+          "nextNodeId": "tool-manual",
+          "description": "Other entropy methods. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2534,12 +3345,14 @@
         {
           "id": "sc-ok",
           "label": "Reviewed card procedure → checksum",
-          "nextNodeId": "seed-checksum"
+          "nextNodeId": "seed-checksum",
+          "description": "Reviewed card procedure → checksum. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "sc-back",
           "label": "Other entropy methods",
-          "nextNodeId": "tool-manual"
+          "nextNodeId": "tool-manual",
+          "description": "Other entropy methods. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2557,12 +3370,14 @@
             "intermediate-math-online",
             "speaking-seed",
             "camera-seed"
-          ]
+          ],
+          "description": "Paper backup — keep it dry, hidden, and away from cameras."
         },
         {
           "id": "so-checksum",
           "label": "Proceed to checksum word",
-          "nextNodeId": "seed-checksum"
+          "nextNodeId": "seed-checksum",
+          "description": "Proceed to checksum word. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2583,7 +3398,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Hardware wallet. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "scs-phone",
@@ -2595,7 +3411,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Air-gapped phone. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "scs-pc",
@@ -2609,7 +3426,8 @@
           ],
           "setsFlags": [
             "privateKey"
-          ]
+          ],
+          "description": "Air-gapped PC. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2622,22 +3440,26 @@
         {
           "id": "sa-xpub",
           "label": "Export / verify xpub (public side)",
-          "nextNodeId": "xpub-root"
+          "nextNodeId": "xpub-root",
+          "description": "Export or verify the public side (xpub / addresses) so you can receive without exposing the seed."
         },
         {
           "id": "sa-backup",
           "label": "Backup & inheritance",
-          "nextNodeId": "backup-root"
+          "nextNodeId": "backup-root",
+          "description": "Focus on durable backups and inheritance notes."
         },
         {
           "id": "sa-sign",
           "label": "Signing & address safety",
-          "nextNodeId": "signing-root"
+          "nextNodeId": "signing-root",
+          "description": "Signing & address safety. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "sa-summary",
           "label": "Open path summary",
-          "nextNodeId": "path-end-single"
+          "nextNodeId": "path-end-single",
+          "description": "Open the path summary to review risks and apply mitigations."
         }
       ]
     },
@@ -2655,22 +3477,26 @@
             "xpub-privacy",
             "watch-only-malware",
             "hot-malware"
-          ]
+          ],
+          "description": "Export watch-only data to a phone wallet."
         },
         {
           "id": "xp-hw",
           "label": "Hardware export (QR / USB)",
-          "nextNodeId": "xpub-hardware"
+          "nextNodeId": "xpub-hardware",
+          "description": "Export xpub / descriptors from hardware via QR or USB."
         },
         {
           "id": "xp-air",
           "label": "Air-gapped export + verify",
-          "nextNodeId": "xpub-airgap"
+          "nextNodeId": "xpub-airgap",
+          "description": "Export from an air-gapped workflow and verify carefully."
         },
         {
           "id": "xp-back",
           "label": "Back to aftercare",
-          "nextNodeId": "seed-aftercare"
+          "nextNodeId": "seed-aftercare",
+          "description": "Back to aftercare. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2687,12 +3513,14 @@
           "setsFlags": [
             "publicKey",
             "xpub"
-          ]
+          ],
+          "description": "Verify the phone watch-only wallet against a cold device."
         },
         {
           "id": "xph-hw",
           "label": "Use hardware export instead",
-          "nextNodeId": "xpub-hardware"
+          "nextNodeId": "xpub-hardware",
+          "description": "Use hardware export instead. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2709,7 +3537,8 @@
           "setsFlags": [
             "publicKey",
             "xpub"
-          ]
+          ],
+          "description": "Confirm hardware-derived addresses match the watch-only wallet."
         },
         {
           "id": "xhw-sign",
@@ -2718,7 +3547,8 @@
           "setsFlags": [
             "publicKey",
             "xpub"
-          ]
+          ],
+          "description": "Next: signing hygiene. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2735,7 +3565,8 @@
           "setsFlags": [
             "publicKey",
             "xpub"
-          ]
+          ],
+          "description": "Confirm air-gapped export matches the watcher."
         },
         {
           "id": "xa-sign",
@@ -2744,7 +3575,8 @@
           "setsFlags": [
             "publicKey",
             "xpub"
-          ]
+          ],
+          "description": "Next: signing hygiene. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2757,17 +3589,20 @@
         {
           "id": "xv-backup",
           "label": "Backup & inheritance",
-          "nextNodeId": "backup-root"
+          "nextNodeId": "backup-root",
+          "description": "Document how trusted people can recover without careless secret exposure."
         },
         {
           "id": "xv-sign",
           "label": "Signing & address safety",
-          "nextNodeId": "signing-root"
+          "nextNodeId": "signing-root",
+          "description": "Signing & address safety. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "xv-summary",
           "label": "Open path summary",
-          "nextNodeId": "path-end-single"
+          "nextNodeId": "path-end-single",
+          "description": "Open the end-of-path summary and continue mitigating risks."
         }
       ]
     },
@@ -2786,7 +3621,8 @@
             "fire-flood-backup",
             "seed-screenshot",
             "no-backup"
-          ]
+          ],
+          "description": "Improve how backups are created, stored, and tested."
         },
         {
           "id": "br-inh",
@@ -2794,17 +3630,20 @@
           "nextNodeId": "backup-inheritance",
           "addsVulnIds": [
             "inheritance-unclear"
-          ]
+          ],
+          "description": "Document how trusted people can recover without careless secret exposure."
         },
         {
           "id": "br-pass",
           "label": "Passphrase considerations",
-          "nextNodeId": "passphrase"
+          "nextNodeId": "passphrase",
+          "description": "Passphrase considerations. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "br-summary",
           "label": "Open path summary",
-          "nextNodeId": "path-end-single"
+          "nextNodeId": "path-end-single",
+          "description": "Open the path summary to review risks and apply mitigations."
         }
       ]
     },
@@ -2817,12 +3656,14 @@
         {
           "id": "bp-ok",
           "label": "Metal + geographic diversity",
-          "nextNodeId": "backup-done"
+          "nextNodeId": "backup-done",
+          "description": "Use a durable metal backup and verify that a restore works."
         },
         {
           "id": "bp-inh",
           "label": "Add inheritance docs",
-          "nextNodeId": "backup-inheritance"
+          "nextNodeId": "backup-inheritance",
+          "description": "Document how trusted people can recover without careless secret exposure."
         }
       ]
     },
@@ -2835,12 +3676,14 @@
         {
           "id": "bi-ok",
           "label": "Yes — write playbook",
-          "nextNodeId": "backup-done"
+          "nextNodeId": "backup-done",
+          "description": "Yes — write playbook. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "bi-ms",
           "label": "Use multi-party multisig for inheritance",
-          "nextNodeId": "independent-multisig"
+          "nextNodeId": "independent-multisig",
+          "description": "Document how trusted people can recover without careless secret exposure."
         }
       ]
     },
@@ -2853,17 +3696,20 @@
         {
           "id": "bd-sign",
           "label": "Signing & address safety",
-          "nextNodeId": "signing-root"
+          "nextNodeId": "signing-root",
+          "description": "Signing & address safety. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "bd-summary",
           "label": "Open path summary",
-          "nextNodeId": "path-end-single"
+          "nextNodeId": "path-end-single",
+          "description": "Return to summary after backup work."
         },
         {
           "id": "bd-glacier",
           "label": "Explore Glacier-style protocol",
-          "nextNodeId": "glacier"
+          "nextNodeId": "glacier",
+          "description": "Explore Glacier-style protocol. This option continues the path and may add specific risks shown under the button."
         }
       ]
     },
@@ -2879,12 +3725,14 @@
           "nextNodeId": "seed-aftercare",
           "addsVulnIds": [
             "passphrase-lost"
-          ]
+          ],
+          "description": "Enable a BIP39 passphrase and test recovery of the hidden wallet."
         },
         {
           "id": "pp-no",
           "label": "No — simpler recovery",
-          "nextNodeId": "seed-aftercare"
+          "nextNodeId": "seed-aftercare",
+          "description": "Do not use a passphrase — simpler, but one seed backup is enough to spend."
         }
       ]
     },
@@ -2902,12 +3750,14 @@
             "address-poisoning",
             "watch-only-malware",
             "seed-phishing-support"
-          ]
+          ],
+          "description": "Harden how you verify addresses and sign transactions."
         },
         {
           "id": "sr-summary",
           "label": "Open path summary",
-          "nextNodeId": "path-end-single"
+          "nextNodeId": "path-end-single",
+          "description": "Open the path summary to review risks and apply mitigations."
         }
       ]
     },
@@ -2920,12 +3770,14 @@
         {
           "id": "sh-ms",
           "label": "Explore multisig",
-          "nextNodeId": "multisig"
+          "nextNodeId": "multisig",
+          "description": "Move toward an m-of-n multisignature structure."
         },
         {
           "id": "sh-summary",
           "label": "Open path summary",
-          "nextNodeId": "path-end-single"
+          "nextNodeId": "path-end-single",
+          "description": "Open the path summary to review risks and apply mitigations."
         }
       ]
     },
@@ -2939,38 +3791,45 @@
         {
           "id": "pe-s-harden-backup",
           "label": "Harden backups & inheritance",
-          "nextNodeId": "backup-root"
+          "nextNodeId": "backup-root",
+          "description": "Add backup and inheritance procedure steps."
         },
         {
           "id": "pe-s-harden-sign",
           "label": "Harden signing & address checks",
-          "nextNodeId": "signing-root"
+          "nextNodeId": "signing-root",
+          "description": "Harden signing and on-device address checks."
         },
         {
           "id": "pe-s-harden-pass",
           "label": "Add or review passphrase",
-          "nextNodeId": "passphrase"
+          "nextNodeId": "passphrase",
+          "description": "Add or review a BIP39 passphrase."
         },
         {
           "id": "pe-s-harden-ms",
           "label": "Consider multisig",
-          "nextNodeId": "multisig"
+          "nextNodeId": "multisig",
+          "description": "Consider upgrading this setup to multisig."
         },
         {
           "id": "pe-s-xpub",
           "label": "Complete public / xpub side",
-          "nextNodeId": "xpub-root"
+          "nextNodeId": "xpub-root",
+          "description": "Complete the public / xpub receive side if missing."
         },
         {
           "id": "pe-s-tool",
           "label": "Change single-key tool",
-          "nextNodeId": "single-key"
+          "nextNodeId": "single-key",
+          "description": "Change which single-key tool you are modeling."
         },
         {
           "id": "pe-s-explore",
           "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional — leave this path"
+          "subtitle": "Optional — leave this path",
+          "description": "Optional: leave this path and explore another structure."
         }
       ]
     }

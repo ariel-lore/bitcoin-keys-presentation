@@ -14,17 +14,26 @@ export interface Vulnerability {
   defaultMitigationId?: string;
 }
 
+export interface ProcedureStepDef {
+  title: string;
+  description: string;
+}
+
 export interface Mitigation {
   id: string;
   title: string;
   description: string;
   addressesVulnIds: string[];
+  /** When applied, append this step to the user's procedure / setup document */
+  procedureStep?: ProcedureStepDef;
 }
 
 export interface Choice {
   id: string;
   label: string;
   nextNodeId: string;
+  /** Human-readable explanation shown under the label (1–3 short sentences) */
+  description?: string;
   /** Risks introduced by taking this choice */
   addsVulnIds?: string[];
   /** @deprecated Prefer click-to-apply mitigations paired with vulns; ignored by adventure state */
@@ -79,10 +88,27 @@ export interface TreeFile {
   nodes: TreeNode[];
 }
 
+export type TrailStepKind = 'start' | 'choice' | 'mitigation';
+
 export interface TrailStep {
   nodeId: string;
   choiceId: string | null;
   choiceLabel: string | null;
+  choiceDescription?: string | null;
+  /** Risks introduced by this decision (step-scoped) */
+  addsVulnIds?: string[];
+  kind?: TrailStepKind;
+  /** For mitigation steps appended to the procedure */
+  mitigationId?: string | null;
+}
+
+/** A procedure / setup step added when a mitigation is applied (or mirrored from trail). */
+export interface ProcedureStep {
+  id: string;
+  title: string;
+  description: string;
+  fromMitigationId?: string;
+  mitigatesVulnIds?: string[];
 }
 
 export interface AdventureState {
@@ -98,6 +124,8 @@ export interface AdventureState {
   hasPrivateKey: boolean;
   hasPublicKey: boolean;
   hasXpub: boolean;
+  /** Procedure steps appended when mitigations with procedureStep are applied */
+  procedureSteps: ProcedureStep[];
 }
 
 /** Derived: private present AND (public or xpub) — operable even if vulnerable */

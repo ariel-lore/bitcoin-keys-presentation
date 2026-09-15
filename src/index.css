@@ -74,12 +74,32 @@ button {
 
 .topbar {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 0.75rem 1rem;
   min-height: 0;
   overflow: visible;
   z-index: 5;
+}
+
+.app-body {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 0.65rem;
+  overflow: hidden;
+}
+
+.app-operable .app-body {
+  grid-template-columns: minmax(260px, 320px) 1fr;
+}
+
+.path-aside {
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .brand {
@@ -369,7 +389,7 @@ button {
 
 .slide {
   min-height: 0;
-  overflow: visible;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   background: var(--bg-elevated);
@@ -378,6 +398,16 @@ button {
   padding: 1.25rem 1.75rem 1.35rem;
   position: relative;
   z-index: 1;
+}
+
+.slide-procedure {
+  background: linear-gradient(180deg, #12161e 0%, #141820 40%);
+  border-color: #2f3d2a;
+  box-shadow: inset 0 0 0 1px rgba(34, 197, 94, 0.08);
+}
+
+.slide-procedure .node-header h1 {
+  max-width: 32ch;
 }
 
 .node-view {
@@ -735,18 +765,8 @@ button {
 /* ——— Responsive ——— */
 
 @media (max-width: 1100px) {
-  .topbar {
-    grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto auto;
-  }
-
-  .status-cluster {
-    grid-column: 1 / -1;
-    justify-content: flex-start;
-  }
-
-  .trail-strip {
-    justify-self: stretch;
+  .app-body {
+    grid-template-columns: minmax(200px, 240px) 1fr;
   }
 }
 
@@ -763,8 +783,9 @@ button {
     display: none;
   }
 
-  .trail-strip {
-    display: none;
+  .app-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(120px, 32%) 1fr;
   }
 
   .path-list {
@@ -1204,16 +1225,9 @@ button {
 }
 
 @media (max-width: 1100px) {
-  .summary-grid {
+  .summary-grid,
+  .summary-view.procedure-doc .summary-grid.procedure-grid {
     grid-template-columns: 1fr;
-  }
-
-  .topbar {
-    grid-template-columns: auto 1fr auto;
-  }
-
-  .status-cluster {
-    grid-column: 1 / -1;
   }
 }
 
@@ -1329,4 +1343,363 @@ button {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+
+/* ——— Choice descriptions ——— */
+
+.choice-description {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 450;
+  color: var(--muted);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.choices[data-count="11"] .choice-description,
+.choices[data-count="12"] .choice-description,
+.choices[data-count="5"] .choice-description,
+.choices[data-count="6"] .choice-description {
+  -webkit-line-clamp: 2;
+  font-size: 0.68rem;
+}
+
+.choice-btn {
+  align-items: flex-start;
+}
+
+.choice-btn .brand-icon {
+  margin-top: 0.15rem;
+}
+
+/* ——— Unified PathRiskList (vertical) ——— */
+
+.path-risk-list {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.55rem 0.55rem 0.65rem;
+  overflow: hidden;
+}
+
+.path-risk-list.operable {
+  border-color: #2f3d2a;
+  background: #101612;
+}
+
+.prl-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem;
+  padding: 0.15rem 0.35rem 0.45rem;
+  flex-shrink: 0;
+}
+
+.prl-head h2 {
+  margin: 0;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--orange);
+  font-weight: 700;
+}
+
+.path-risk-list.operable .prl-head h2 {
+  color: #86efac;
+}
+
+.prl-hint {
+  font-size: 0.62rem;
+  color: var(--muted);
+}
+
+.prl-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-height: 0;
+  overflow: auto;
+  flex: 1;
+}
+
+.prl-step {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-panel);
+  overflow: hidden;
+}
+
+.prl-step.current {
+  border-color: var(--orange-dim);
+}
+
+.prl-step.prl-procedure {
+  border-color: #166534;
+  background: #0c1a12;
+}
+
+.prl-step-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  padding: 0.4rem 0.45rem;
+}
+
+.prl-idx {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  background: #0a0c10;
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.prl-idx-proc {
+  border-color: #166534;
+  color: #86efac;
+  font-size: 0.7rem;
+}
+
+.prl-step-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.prl-label {
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prl-risk-count,
+.prl-badge {
+  font-size: 0.62rem;
+  color: #fca5a5;
+  font-weight: 600;
+}
+
+.prl-badge {
+  color: #86efac;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.prl-chevron {
+  color: var(--muted);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+.prl-step-body {
+  padding: 0 0.5rem 0.5rem 1.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.prl-desc {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.prl-jump {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  color: var(--orange);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0;
+}
+
+.prl-jump:hover {
+  text-decoration: underline;
+}
+
+.prl-risks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.prl-risk {
+  border-left: 3px solid var(--border);
+  padding: 0.25rem 0.35rem 0.35rem 0.45rem;
+  background: #0a0c10;
+  border-radius: 0 6px 6px 0;
+}
+
+.prl-risk.sev-critical { border-left-color: #ef4444; }
+.prl-risk.sev-high { border-left-color: #f97316; }
+.prl-risk.sev-medium { border-left-color: #eab308; }
+.prl-risk.sev-low { border-left-color: #64748b; }
+.prl-risk.mitigated {
+  opacity: 0.75;
+  border-left-color: #166534;
+}
+
+.prl-risk-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.35rem;
+  align-items: baseline;
+}
+
+.prl-risk-head strong {
+  font-size: 0.72rem;
+  color: #fecaca;
+}
+
+.prl-risk.mitigated .prl-risk-head strong {
+  color: #bbf7d0;
+}
+
+.prl-risk .sev-tag {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-style: normal;
+}
+
+.prl-risk > p {
+  margin: 0.15rem 0 0;
+  font-size: 0.68rem;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+.prl-mit {
+  margin-top: 0.35rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--border);
+}
+
+.prl-mit .detail-heading {
+  display: block;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--green);
+  margin-bottom: 0.15rem;
+}
+
+.prl-mit .mit-title {
+  display: block;
+  font-size: 0.72rem;
+  color: #bbf7d0;
+  margin-bottom: 0.1rem;
+}
+
+.prl-mit p {
+  margin: 0;
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+
+.prl-orphans {
+  margin-top: 0.35rem;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 0.15rem;
+  flex-shrink: 0;
+  max-height: 40%;
+  overflow: auto;
+}
+
+.prl-orphans .prl-risks {
+  padding: 0 0.4rem 0.4rem 1.85rem;
+}
+
+/* Incomplete: compact collapsed rows */
+.path-risk-list.incomplete .prl-step.collapsed .prl-step-body {
+  display: none;
+}
+
+/* Operable: denser open procedure */
+.path-risk-list.operable .prl-label {
+  white-space: normal;
+}
+
+.status-cluster {
+  justify-self: end;
+}
+
+/* Procedure document feel */
+.procedure-doc .node-header h1 {
+  letter-spacing: -0.02em;
+}
+
+.summary-view.procedure-doc .summary-grid.procedure-grid {
+  grid-template-columns: 1.2fr 1fr;
+}
+
+.procedure-steps .proc-desc {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 0.15rem;
+}
+
+.procedure-steps .proc-step-risks {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.procedure-steps .proc-step-risks li {
+  font-size: 0.7rem;
+  color: #fca5a5;
+}
+
+.procedure-steps .proc-step-risks li.secured {
+  color: #86efac;
+}
+
+.procedure-steps .proc-mitigation-step {
+  border-left: 2px solid #166534;
+  padding-left: 0.45rem;
+  margin-top: 0.35rem;
+}
+
+.node-view {
+  overflow: auto;
 }

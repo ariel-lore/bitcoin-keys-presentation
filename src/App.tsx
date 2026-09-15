@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useAdventure } from './hooks/useAdventure';
 import { DemoBanner } from './components/DemoBanner';
-import { TrailStrip } from './components/Trail';
-import { RiskMitigationStrip } from './components/ChipLists';
+import { PathRiskList } from './components/PathRiskList';
 import { PathPanel } from './components/PathPanel';
 import { NodeView } from './components/NodeView';
 import { SummaryView } from './components/SummaryView';
@@ -17,9 +16,10 @@ export default function App() {
   }
 
   const isSummary = !!adventure.currentNode.isSummary;
+  const operable = adventure.sufficientToOperate;
 
   return (
-    <div className="app">
+    <div className={`app ${operable ? 'app-operable' : 'app-picking'}`}>
       <header className="topbar">
         <div className="brand">
           <span className="btc-mark" aria-hidden>
@@ -27,19 +27,12 @@ export default function App() {
           </span>
           <div>
             <h1 className="app-title">Bitcoin Custody</h1>
-            <p className="app-sub">Interactive presentation</p>
+            <p className="app-sub">{operable ? 'Setup procedure' : 'Interactive presentation'}</p>
           </div>
         </div>
 
-        <TrailStrip trail={adventure.state.trail} onJump={adventure.jumpToNode} />
-
         <div className="status-cluster">
           <SetupStatus state={adventure.state} />
-          <RiskMitigationStrip
-            vulnIds={adventure.state.vulnIds}
-            mitigatedVulnIds={adventure.state.mitigatedVulnIds}
-            onApplyMitigation={adventure.applyMitigationForVuln}
-          />
         </div>
 
         <div className="top-actions">
@@ -55,24 +48,37 @@ export default function App() {
         </div>
       </header>
 
-      <main className="slide">
-        {isSummary ? (
-          <SummaryView
-            node={adventure.currentNode}
+      <div className="app-body">
+        <aside className="path-aside">
+          <PathRiskList
             state={adventure.state}
-            openVulnIds={adventure.openVulnIds}
-            onChoose={adventure.choose}
+            sufficientToOperate={operable}
+            onJump={adventure.jumpToNode}
             onApplyMitigation={adventure.applyMitigationForVuln}
           />
-        ) : (
-          <NodeView
-            node={adventure.currentNode}
-            onChoose={adventure.choose}
-            mitigatedVulnIds={adventure.state.mitigatedVulnIds}
-            onApplyPreMitigation={adventure.applyPreMitigation}
-          />
-        )}
-      </main>
+        </aside>
+
+        <main className={`slide ${operable ? 'slide-procedure' : 'slide-question'}`}>
+          {isSummary ? (
+            <SummaryView
+              node={adventure.currentNode}
+              state={adventure.state}
+              openVulnIds={adventure.openVulnIds}
+              onChoose={adventure.choose}
+              onApplyMitigation={adventure.applyMitigationForVuln}
+              procedureMode={operable}
+            />
+          ) : (
+            <NodeView
+              node={adventure.currentNode}
+              onChoose={adventure.choose}
+              mitigatedVulnIds={adventure.state.mitigatedVulnIds}
+              onApplyPreMitigation={adventure.applyPreMitigation}
+              procedureMode={operable}
+            />
+          )}
+        </main>
+      </div>
 
       <footer className="slide-footer">
         <DemoBanner />

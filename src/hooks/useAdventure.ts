@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { AdventureState, Choice, KeyFlag, RecommendedPath, TrailStep } from '../types/schema';
+import type {
+  AdventureState,
+  Choice,
+  KeyFlag,
+  ProcedureStep,
+  RecommendedPath,
+  TrailStep,
+} from '../types/schema';
 import { isSufficientToOperate } from '../types/schema';
-import { tree, nodeById, uniquePush, mitigationById } from '../lib/data';
+import { tree, nodeById, uniquePush, mitigationById, mitigationForVuln } from '../lib/data';
 
 /** Survives React Strict Mode remount so we only bootstrap history once. */
 let historyBootstrapped = false;
@@ -27,10 +34,20 @@ function applyFlags(
 function initialState(): AdventureState {
   return {
     currentNodeId: tree.startNodeId,
-    trail: [{ nodeId: tree.startNodeId, choiceId: null, choiceLabel: null }],
+    trail: [
+      {
+        nodeId: tree.startNodeId,
+        choiceId: null,
+        choiceLabel: null,
+        choiceDescription: null,
+        addsVulnIds: [],
+        kind: 'start',
+      },
+    ],
     vulnIds: [],
     mitigatedVulnIds: [],
     tags: [],
+    procedureSteps: [],
     ...emptyKeys(),
   };
 }
@@ -54,36 +71,65 @@ function applyChoice(prev: AdventureState, choice: Choice): AdventureState | nul
         nodeId: choice.nextNodeId,
         choiceId: choice.id,
         choiceLabel: choice.label,
+        choiceDescription: choice.description ?? null,
+        addsVulnIds: choice.addsVulnIds ? [...choice.addsVulnIds] : [],
+        kind: 'choice',
       },
     ],
     vulnIds: uniquePush(prev.vulnIds, choice.addsVulnIds),
     mitigatedVulnIds: prev.mitigatedVulnIds,
     tags: uniquePush(prev.tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]),
+    procedureSteps: prev.procedureSteps,
     ...keys,
   };
 }
 
-function replayTrail(kept: TrailStep[], mitigatedVulnIds: string[]): AdventureState {
+function replayTrail(
+  kept: TrailStep[],
+  mitigatedVulnIds: string[],
+  procedureSteps: ProcedureStep[],
+): AdventureState {
   let vulnIds: string[] = [];
   let tags: string[] = [];
   let currentNodeId = tree.startNodeId;
   let keys = emptyKeys();
+  const trail: TrailStep[] = kept.length
+    ? [{ ...kept[0], kind: kept[0].kind ?? 'start', addsVulnIds: kept[0].addsVulnIds ?? [] }]
+    : [
+        {
+          nodeId: tree.startNodeId,
+          choiceId: null,
+          choiceLabel: null,
+          choiceDescription: null,
+          addsVulnIds: [],
+          kind: 'start',
+        },
+      ];
+
+  if (kept.length) currentNodeId = kept[0].nodeId;
 
   for (let i = 1; i < kept.length; i++) {
     const step = kept[i];
-    const prevNode = nodeById[kept[i - 1].nodeId];
+    const prevNode = nodeById[trail[trail.length - 1].nodeId];
     const choice = prevNode?.choices.find((c) => c.id === step.choiceId);
     if (!choice) continue;
     currentNodeId = choice.nextNodeId;
     vulnIds = uniquePush(vulnIds, choice.addsVulnIds);
     tags = uniquePush(tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]);
     keys = applyFlags(keys, choice.setsFlags);
+    trail.push({
+      nodeId: currentNodeId,
+      choiceId: choice.id,
+      choiceLabel: choice.label,
+      choiceDescription: choice.description ?? null,
+      addsVulnIds: choice.addsVulnIds ? [...choice.addsVulnIds] : [],
+      kind: 'choice',
+    });
   }
 
   const vulnSet = new Set(vulnIds);
   let keptMitigated = mitigatedVulnIds.filter((id) => vulnSet.has(id));
 
-  // Restore pre-mitigations that were applied on the restored node.
   const finalNode = nodeById[currentNodeId];
   if (finalNode?.preMitigationIds?.length) {
     for (const mid of finalNode.preMitigationIds) {
@@ -100,12 +146,19 @@ function replayTrail(kept: TrailStep[], mitigatedVulnIds: string[]): AdventureSt
     }
   }
 
+  const keptProcedure = procedureSteps.filter(
+    (ps) =>
+      !ps.mitigatesVulnIds?.length ||
+      ps.mitigatesVulnIds.some((id) => keptMitigated.includes(id)),
+  );
+
   return {
     currentNodeId,
-    trail: kept,
+    trail,
     vulnIds,
     mitigatedVulnIds: keptMitigated,
     tags,
+    procedureSteps: keptProcedure,
     ...keys,
   };
 }
@@ -115,7 +168,16 @@ function walkPath(path: RecommendedPath): AdventureState {
   let tags: string[] = [];
   let currentNodeId = path.startNodeId ?? tree.startNodeId;
   let keys = emptyKeys();
-  const trail: TrailStep[] = [{ nodeId: currentNodeId, choiceId: null, choiceLabel: null }];
+  const trail: TrailStep[] = [
+    {
+      nodeId: currentNodeId,
+      choiceId: null,
+      choiceLabel: null,
+      choiceDescription: null,
+      addsVulnIds: [],
+      kind: 'start',
+    },
+  ];
 
   for (const choiceId of path.choiceSequence) {
     const node = nodeById[currentNodeId];
@@ -129,10 +191,21 @@ function walkPath(path: RecommendedPath): AdventureState {
       nodeId: currentNodeId,
       choiceId: choice.id,
       choiceLabel: choice.label,
+      choiceDescription: choice.description ?? null,
+      addsVulnIds: choice.addsVulnIds ? [...choice.addsVulnIds] : [],
+      kind: 'choice',
     });
   }
 
-  return { currentNodeId, trail, vulnIds, mitigatedVulnIds: [], tags, ...keys };
+  return {
+    currentNodeId,
+    trail,
+    vulnIds,
+    mitigatedVulnIds: [],
+    tags,
+    procedureSteps: [],
+    ...keys,
+  };
 }
 
 function urlFor(nodeId: string): string {
@@ -162,14 +235,44 @@ function snapshotValid(s: unknown): s is AdventureState {
 function normalizeLegacy(s: AdventureState & { mitigationIds?: string[] }): AdventureState {
   return {
     currentNodeId: s.currentNodeId,
-    trail: s.trail,
+    trail: (s.trail ?? []).map((t) => ({
+      ...t,
+      choiceDescription: t.choiceDescription ?? null,
+      addsVulnIds: t.addsVulnIds ?? [],
+      kind: t.kind ?? (t.choiceId ? 'choice' : 'start'),
+    })),
     vulnIds: s.vulnIds ?? [],
     mitigatedVulnIds: s.mitigatedVulnIds ?? [],
     tags: s.tags ?? [],
     hasPrivateKey: !!s.hasPrivateKey,
     hasPublicKey: !!s.hasPublicKey,
     hasXpub: !!s.hasXpub,
+    procedureSteps: s.procedureSteps ?? [],
   };
+}
+
+function appendProcedureFromMitigation(
+  prev: AdventureState,
+  mitigationId: string,
+  vulnIds: string[],
+): ProcedureStep[] {
+  const mit = mitigationById[mitigationId];
+  if (!mit?.procedureStep) return prev.procedureSteps;
+  const stepId = `${mit.id}:${vulnIds.sort().join(',')}`;
+  if (prev.procedureSteps.some((p) => p.id === stepId || p.fromMitigationId === mit.id)) {
+    // Still allow same mitigation for different vuln sets if id differs
+    if (prev.procedureSteps.some((p) => p.id === stepId)) return prev.procedureSteps;
+  }
+  return [
+    ...prev.procedureSteps,
+    {
+      id: stepId,
+      title: mit.procedureStep.title,
+      description: mit.procedureStep.description,
+      fromMitigationId: mit.id,
+      mitigatesVulnIds: [...vulnIds],
+    },
+  ];
 }
 
 export function useAdventure() {
@@ -178,10 +281,20 @@ export function useAdventure() {
     if (fromUrl && fromUrl !== tree.startNodeId) {
       return {
         currentNodeId: fromUrl,
-        trail: [{ nodeId: fromUrl, choiceId: null, choiceLabel: null }],
+        trail: [
+          {
+            nodeId: fromUrl,
+            choiceId: null,
+            choiceLabel: null,
+            choiceDescription: null,
+            addsVulnIds: [],
+            kind: 'start',
+          },
+        ],
         vulnIds: [],
         mitigatedVulnIds: [],
         tags: [],
+        procedureSteps: [],
         ...emptyKeys(),
       };
     }
@@ -203,11 +316,9 @@ export function useAdventure() {
         setState(normalizeLegacy(e.state));
         return;
       }
-      // Never restore a truncated URL-only trail mid-session.
-      // If history entry is null/invalid, step back one via trail replay.
       const cur = stateRef.current;
       if (cur.trail.length > 1) {
-        const next = replayTrail(cur.trail.slice(0, -1), cur.mitigatedVulnIds);
+        const next = replayTrail(cur.trail.slice(0, -1), cur.mitigatedVulnIds, cur.procedureSteps);
         setState(next);
         window.history.replaceState(next, '', urlFor(next.currentNodeId));
       } else {
@@ -233,9 +344,14 @@ export function useAdventure() {
     if (!prev.vulnIds.includes(vulnId) || prev.mitigatedVulnIds.includes(vulnId)) {
       return;
     }
+    const mit = mitigationForVuln(vulnId);
+    const procedureSteps = mit
+      ? appendProcedureFromMitigation(prev, mit.id, [vulnId])
+      : prev.procedureSteps;
     const next: AdventureState = {
       ...prev,
       mitigatedVulnIds: uniquePush(prev.mitigatedVulnIds, [vulnId]),
+      procedureSteps,
     };
     setState(next);
     window.history.replaceState(next, '', urlFor(next.currentNodeId));
@@ -243,7 +359,7 @@ export function useAdventure() {
 
   /**
    * Apply a node pre-mitigation while staying on the same question.
-   * Adds addressed vulns (so they appear in the risk strip) and marks them mitigated.
+   * Adds addressed vulns (so they appear nested under ceremony steps) and marks them mitigated.
    */
   const applyPreMitigation = useCallback((mitigationId: string) => {
     const mit = mitigationById[mitigationId];
@@ -253,11 +369,13 @@ export function useAdventure() {
     if (!addressed.length) return;
     const already = addressed.every((id) => prev.mitigatedVulnIds.includes(id));
     if (already) return;
+    const procedureSteps = appendProcedureFromMitigation(prev, mitigationId, addressed);
     const next: AdventureState = {
       ...prev,
       vulnIds: uniquePush(prev.vulnIds, addressed),
       mitigatedVulnIds: uniquePush(prev.mitigatedVulnIds, addressed),
       tags: uniquePush(prev.tags, ['ceremony-opsec', mitigationId]),
+      procedureSteps,
     };
     setState(next);
     window.history.replaceState(next, '', urlFor(next.currentNodeId));
@@ -277,18 +395,13 @@ export function useAdventure() {
   const jumpToNode = useCallback((nodeId: string) => {
     if (!nodeById[nodeId]) return;
     const prev = stateRef.current;
-    const idx = prev.trail.findIndex((t) => t.nodeId === nodeId);
+    const idx = prev.trail.findIndex((t) => t.nodeId === nodeId && t.kind !== 'mitigation');
     let next: AdventureState;
     if (idx >= 0) {
-      next = replayTrail(prev.trail.slice(0, idx + 1), prev.mitigatedVulnIds);
-      const stepsBack = prev.trail.length - 1 - idx;
+      next = replayTrail(prev.trail.slice(0, idx + 1), prev.mitigatedVulnIds, prev.procedureSteps);
       setState(next);
-      if (stepsBack > 0) {
-        // Prefer walking history so Back/Forward stay consistent.
-        // replaceState after go would race; push a fresh snapshot instead when
-        // jumping mid-trail via UI (trail click) — one entry for the restored step.
-        window.history.pushState(next, '', urlFor(next.currentNodeId));
-      }
+      // Jumping backward: replaceState only — never push a duplicate history entry.
+      window.history.replaceState(next, '', urlFor(next.currentNodeId));
       return;
     }
     next = {
@@ -296,7 +409,14 @@ export function useAdventure() {
       currentNodeId: nodeId,
       trail: [
         ...prev.trail,
-        { nodeId, choiceId: null, choiceLabel: `Jump → ${nodeById[nodeId].title}` },
+        {
+          nodeId,
+          choiceId: null,
+          choiceLabel: `Jump → ${nodeById[nodeId].title}`,
+          choiceDescription: null,
+          addsVulnIds: [],
+          kind: 'choice',
+        },
       ],
     };
     setState(next);

@@ -27,38 +27,53 @@ All narrative lives under **`src/data/`**:
 |------|---------|
 | `tree.json` | Decision nodes + choices (`title` = question; `isSummary` = end slide) |
 | `vulnerabilities.json` | Risk catalog (`defaultMitigationId` pairs a mitigation) |
-| `mitigations.json` | Hardening catalog (`addressesVulnIds`) |
+| `mitigations.json` | Hardening catalog (`addressesVulnIds`, optional `procedureStep`) |
 | `paths.json` | Recommended walkthroughs |
 
 Brand icons live in **`public/brands/`**.
 
 ### Choice fields
 
-- `addsVulnIds` — risks introduced by the choice (also shown **under** the option button)
+- `description` — human-readable explanation (1–3 short sentences) shown under the label
+- `addsVulnIds` — risks introduced by the choice (shown under the option **and** nested under that step in Path & risks)
 - `icon` — optional path like `/brands/ledger.svg`
 - `subtitle` — optional service line (e.g. `Hardware · USB`)
 - `setsFlags` — `privateKey` / `publicKey` / `xpub` (educational labels only)
 - `enables` / `capabilities` — tool capability tags for differentiated follow-ups
 - `addsMitigationIds` — deprecated / ignored (mitigations are click-to-apply)
 
+### Hardware product selection
+
+Brand picks (Ledger, Trezor, Coldcard, Bitkey, Seedsigner, Jade, …) go to a **"Which [brand] product?"** slide listing current models with short descriptions, then into that product’s seed / storage / PIN path.
+
 ### Node fields
 
 - `title` — the question on the slide (large, centered)
-- `preMitigationIds` — optional mitigations apply-able **on this slide before choosing** (e.g. ceremony OPSEC on manual entropy). Apply adds addressed vulns and marks them secured.
+- `preMitigationIds` — optional mitigations apply-able **on this slide before choosing**
 - `isSummary` — end-of-path summary slide
+
+### Mitigations & procedure steps
+
+Mitigations may include `procedureStep: { title, description }`. Applying a mitigation marks the risk secured **and** appends that step to `state.procedureSteps` (e.g. backup, inheritance instructions).
 
 ### Key accumulation & sufficiency
 
 Adventure state tracks `hasPrivateKey`, `hasPublicKey`, `hasXpub`.  
-**Sufficient to operate** when private material is present **and** a public/xpub side is ready — even if risks remain. The top bar shows setup status + Priv/Pub badges (labels only, never real keys).
+**Sufficient to operate** when private material is present **and** a public/xpub side is ready — even if risks remain.
 
-### End of path = summary
+When operable, the UI switches to a **procedure / setup** feel: the unified Path & risks list is expanded, and applying mitigations adds visible procedure steps.
 
-When a path reaches an operable setup, the slide is a **summary** (`isSummary: true`): path trail, open vulns with Apply, applied mitigations, and hardening choices. There is **no** bounce back to “Wallet structure” — only a discreet optional “Explore another structure…”. Default is stay and mitigate.
+### Unified path + risks
 
-### Mitigation UX
+`PathRiskList` replaces the old left-to-right trail + separate risk strip:
 
-Choices add vulnerabilities (titles/descriptions always visible under the option). The top strip shows each open risk with its paired mitigation. Click **Apply** to mark that risk secured (`mitigatedVulnIds`).
+- Vertical list of decisions (top → bottom)
+- Risks nest under the step that introduced them
+- Collapsible while setup is incomplete; open when operable
+
+### Browser history
+
+**Browser Back / Forward** (History API + `?node=` deep-link): exactly one history entry per adventure choice; jumping backward in the path uses `replaceState` (no double-push). Back restores the previous full snapshot.
 
 ### Recommended paths (`paths.json`)
 
@@ -68,13 +83,11 @@ TypeScript types live in `src/types/schema.ts`.
 
 ## UX features
 
-- **True slides**: each view fits the viewport; no page scrollbars
-- **Question titles**: every node asks a question (large, centered); choices are the answers
-- **Full choice trail**: every choice label so far in a compact wrapping strip (hover shows the node question)
-- **Self-custody → single key → tools** (Ledger, Trezor, Coldcard, Bitkey, Seedsigner, Jade, Tails, phone, air-gapped phone, BlueWallet, Bitcoin Core, manual) with logos and differentiated follow-ups
-- Manual entropy: ceremony OPSEC as on-slide pre-mitigations; dice → manual map or hardware assist; entropy+hardware device list
-- Setup status + paired risk/mitigation icons; details on hover; click to secure
-- **Browser Back / Forward** (History API + `?node=` deep-link): exactly one history entry per adventure step; Back restores the previous full snapshot in one click
+- **True slides**: each view fits the viewport; no page scrollbars when possible
+- **Question titles**: every node asks a question (large, centered); choices are the answers with descriptions
+- **Product lineup** after brand selection for major hardware vendors
+- **Click-to-apply mitigations** that can append procedure steps
+- Setup status + Priv/Pub badges (labels only, never real keys)
 
 ## Stack
 
