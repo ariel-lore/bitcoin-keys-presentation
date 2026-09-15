@@ -420,18 +420,37 @@ button {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  overflow: visible;
+  gap: 0.75rem;
+  overflow: hidden;
+}
+
+.node-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-right: 0.15rem;
 }
 
 .node-header {
   flex-shrink: 0;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   justify-content: center;
+  background: var(--bg-elevated);
+  padding-bottom: 0.35rem;
+}
+
+.slide-procedure .node-header {
+  background: linear-gradient(180deg, #12161e 0%, #141820 100%);
 }
 
 .node-header h1 {
@@ -522,11 +541,11 @@ button {
 /* ——— Choices (hero) ——— */
 
 .choices {
-  flex: 1;
+  flex: 1 0 auto;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: visible;
 }
 
@@ -1034,6 +1053,10 @@ button {
   overflow: hidden;
 }
 
+.summary-view .node-scroll {
+  gap: 0.75rem;
+}
+
 .summary-risk-line {
   margin: 0.35rem 0 0;
   font-size: 0.88rem;
@@ -1063,7 +1086,9 @@ button {
   border-radius: 10px;
   padding: 0.65rem 0.75rem;
   min-height: 0;
-  overflow: hidden;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -1091,7 +1116,10 @@ button {
   margin: 0;
   padding-left: 1.1rem;
   font-size: 0.82rem;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1;
 }
 
 .summary-trail li {
@@ -1106,8 +1134,10 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   min-height: 0;
+  flex: 1;
 }
 
 .summary-vuln {
@@ -1732,7 +1762,7 @@ button {
 }
 
 .node-view {
-  overflow: auto;
+  overflow: hidden;
 }
 
 .prl-mit .btn-choose-other {
@@ -1742,4 +1772,47 @@ button {
 }
 .prl-mit .btn-choose-other:hover {
   background: rgba(247, 147, 26, 0.12);
+}
+
+
+/* ——— Checklist / introduction locus ——— */
+
+.prl-idx-check {
+  border-color: #166534;
+  color: #86efac;
+  font-size: 0.7rem;
+}
+
+.prl-step.done:not(.current) .prl-label {
+  color: var(--text);
+}
+
+.prl-introduced-label,
+.proc-introduced-label {
+  list-style: none;
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 700;
+  margin: 0 0 0.1rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.proc-introduced-label {
+  color: #94a3b8;
+  margin-top: 0.15rem;
+}
+
+.choice-vulns::before {
+  content: "Unavoidable on this path";
+  display: block;
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 700;
+  margin: 0.1rem 0 0.15rem 0.15rem;
 }

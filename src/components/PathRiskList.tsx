@@ -17,9 +17,8 @@ function switchButtonLabel(mitTitle: string, choiceLabel?: string): string {
 }
 
 /**
- * Unified vertical path + risks list.
+ * Unified vertical path checklist + risks introduced at each step.
  * Entire panel expands/collapses as one unit; content scrolls when expanded.
- * Per-step accordion removed — steps always show their body when the panel is open.
  */
 export function PathRiskList({
   state,
@@ -47,7 +46,6 @@ export function PathRiskList({
     [state.vulnIds, stepScopedVulnIds],
   );
 
-  // Whole panel: collapsed by default while incomplete; expanded when operable (user can toggle).
   const [panelOpen, setPanelOpen] = useState(sufficientToOperate);
 
   useEffect(() => {
@@ -59,7 +57,7 @@ export function PathRiskList({
   return (
     <nav
       className={`path-risk-list ${sufficientToOperate ? 'operable' : 'incomplete'} ${panelOpen ? 'panel-open' : 'panel-collapsed'}`}
-      aria-label={sufficientToOperate ? 'Setup procedure' : 'Path and risks'}
+      aria-label={sufficientToOperate ? 'Setup checklist' : 'Path checklist'}
     >
       <header className="prl-head">
         <button
@@ -68,7 +66,7 @@ export function PathRiskList({
           onClick={() => setPanelOpen((o) => !o)}
           aria-expanded={panelOpen}
         >
-          <h2>{sufficientToOperate ? 'Procedure' : 'Path & risks'}</h2>
+          <h2>{sufficientToOperate ? 'Checklist' : 'Path checklist'}</h2>
           <span className="prl-panel-meta">
             {openRiskCount > 0 ? `${openRiskCount} open` : 'clear'}
             <span className="prl-chevron" aria-hidden>
@@ -90,28 +88,29 @@ export function PathRiskList({
               const description = isStart
                 ? 'Starting question'
                 : (step.choiceDescription || (node ? `Leads to: ${node.title}` : null));
-              // Hide risks cleared by later choices (e.g. enabling 2FA)
+              // Intrinsic risks introduced at this step (hide ones later cleared off the path)
               const vulns = (step.addsVulnIds ?? [])
                 .filter((id) => state.vulnIds.includes(id) || mitigated.has(id))
                 .map((id) => vulnById[id])
                 .filter(Boolean);
               const isLast = i === state.trail.length - 1;
+              const done = !isLast || sufficientToOperate;
 
               return (
                 <li
                   key={`${step.nodeId}-${i}`}
-                  className={`prl-step open ${isLast ? 'current' : ''}`}
+                  className={`prl-step open ${isLast ? 'current' : ''} ${done ? 'done' : ''}`}
                 >
                   <div className="prl-step-head">
-                    <span className="prl-idx" aria-hidden>
-                      {i + 1}
+                    <span className={`prl-idx ${done && !isLast ? 'prl-idx-check' : ''}`} aria-hidden>
+                      {done && !isLast ? '✓' : i + 1}
                     </span>
                     <span className="prl-step-main">
                       <span className="prl-label">{label}</span>
                       {vulns.length > 0 && (
-                        <span className="prl-risk-count" title={`${vulns.length} risk(s)`}>
+                        <span className="prl-risk-count" title={`${vulns.length} introduced here`}>
                           {vulns.filter((v) => !mitigated.has(v.id)).length > 0
-                            ? `${vulns.filter((v) => !mitigated.has(v.id)).length} open`
+                            ? `${vulns.filter((v) => !mitigated.has(v.id)).length} introduced`
                             : 'secured'}
                         </span>
                       )}
@@ -130,7 +129,10 @@ export function PathRiskList({
                       </button>
                     )}
                     {vulns.length > 0 && (
-                      <ul className="prl-risks" aria-label={`Risks from ${label}`}>
+                      <ul className="prl-risks" aria-label={`Risks introduced at ${label}`}>
+                        <li className="prl-introduced-label" aria-hidden>
+                          Introduced at this step
+                        </li>
                         {vulns.map((v) => (
                           <RiskRow
                             key={v.id}
@@ -184,7 +186,7 @@ export function PathRiskList({
 
 function ProcedureRow({ step }: { step: ProcedureStep }) {
   return (
-    <li className="prl-step prl-procedure open">
+    <li className="prl-step prl-procedure open done">
       <div className="prl-step-head">
         <span className="prl-idx prl-idx-proc" aria-hidden>
           ✓

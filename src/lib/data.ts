@@ -12,6 +12,7 @@ import type {
   CustodianDef,
 } from '../types/schema';
 import { buildCustodianFlowNodes, buildStartNode } from './buildCustodianNodes';
+import { buildUnavoidableRiskCache } from './unavoidableRisks';
 
 const custodians = custodiansData as CustodianDef[];
 
@@ -20,8 +21,8 @@ function mergeTree(raw: TreeFile): TreeFile {
   const generated = buildCustodianFlowNodes(custodians);
   const start = buildStartNode();
   const replaceIds = new Set([start.id, ...generated.map((n) => n.id), 'custodian-mode']);
-  // Drop obsolete custodian-mode and any auth-* / single-custodian / path-end-custodial from static JSON
-  const obsoletePrefixes = ['auth-'];
+  // Drop obsolete generated / static custodian nodes from tree.json
+  const obsoletePrefixes = ['auth-', 'creds-', 'kyc-'];
   const kept = raw.nodes.filter((n) => {
     if (replaceIds.has(n.id)) return false;
     if (n.id === 'custodian-mode') return false;
@@ -50,6 +51,10 @@ export const vulnById: Record<string, Vulnerability> = Object.fromEntries(
 export const mitigationById: Record<string, Mitigation> = Object.fromEntries(
   mitigations.map((m) => [m.id, m]),
 );
+
+/** choiceId → unavoidable vuln ids (intersection of all continuations ∪ intrinsic adds). */
+export const unavoidableRiskByChoiceId: Record<string, string[]> =
+  buildUnavoidableRiskCache(tree.nodes);
 
 /** First mitigation that addresses a vuln, preferring defaultMitigationId. */
 export function mitigationForVuln(vulnId: string): Mitigation | undefined {

@@ -1,7 +1,7 @@
 # Bitcoin Custody
 
 Data-driven **interactive presentation** about Bitcoin custody and keys.
-Each screen is a slide: pick a path; open **risks** accumulate under each choice with **mitigations** underneath (guidance text and/or **Choose another option** — not a magic “Apply” that pretends to erase structural risk).
+Each screen is a slide: pick a path; **unavoidable** risks preview under each upcoming choice; the path sidebar is a **checklist** showing where each risk was introduced.
 
 **Educational demo only — not financial, legal, or investment advice.**
 
@@ -39,10 +39,26 @@ The **custodian user story** is rebuilt end-to-end. Federated / collaborative (a
 
 1. **Which custody model?** — Custodian / Federated / Self-custodied / Collaborative  
    Selecting **Custodian** attaches intrinsic risks: government seizure, insolvency, external hack, rogue employee, debasement.
-2. **Which custodian?** — Driven by `custodians.json`: Wallet of Satoshi, Bitcoin Well, Coinos, Bull Bitcoin, Kraken.
-3. **What 2FA method?** — Conditional on that custodian’s `twoFactor` tags (skipped when mandatory + exactly one method, or when methods are empty).
+2. **Which custodian?** — Driven by `custodians.json` (brand pick usually has **empty** `addsVulnIds`; unavoidable preview still shows risks every mandatory downstream step forces).
+3. **Mandatory single-option steps** (one page each — click to progress):
+   - **Provide email and password** (or email for Wallet of Satoshi) — owns credential risks (`loss-of-credentials`, `phish-creds`, `compromised-creds`, `credential-stuffing`).
+   - **Provide personal information (KYC)** when `kyc` is required / for buy limits — owns `government-subpoena`, `withdrawal-freeze`, `data-breach`.
+   - **2FA** — mandatory multi-method chooser, mandatory single-method page, or optional enable/skip when methods exist.
+4. **Completion** — `hasPublicKey: true`, `hasPrivateKey: false`.
 
-**Completion:** `hasPublicKey: true`, `hasPrivateKey: false` — can receive & send via the account claim; you do not hold private keys.
+**Example — Bull Bitcoin:** email/password → KYC → optional 2FA → complete.  
+**Example — Kraken:** email/password → KYC → What 2FA method? → complete (mandatory 2FA **clears** `compromised-creds` / `credential-stuffing` via `clearsVulnIds`).  
+**Example — Coinos:** email/password → optional 2FA (no KYC). **WoS:** email auth step → complete.
+
+### Unavoidable risk previews
+
+Choice cards no longer dump raw `addsVulnIds`. At load time `src/lib/unavoidableRisks.ts` builds a cache:
+
+- For each choice C → node `next`, enumerate all paths from `next` to a terminal/summary.
+- Net risk set per path = C’s intrinsic adds plus downstream adds, minus `clearsVulnIds`.
+- **Unavoidable preview** = intersection across those paths (∪ C’s intrinsic adds).
+
+Avoidable branch-only risks stay off the preview under C.
 
 ### Research assumptions (KYC / 2FA tags)
 
@@ -50,18 +66,16 @@ Tags in `custodians.json` are **educational snapshots**, not live compliance gua
 
 | Custodian | KYC (modeled) | 2FA (modeled) |
 |-----------|---------------|---------------|
-| **Kraken** | Required | **Mandatory** for continued sign-in on many accounts; methods: authenticator, passkey, hardware key (not SMS/email sign-in) |
-| **Bull Bitcoin** | Generally required for full services | **Optional** (encouraged); authenticator |
+| **Kraken** | Required | **Mandatory**; authenticator, passkey, hardware key |
+| **Bull Bitcoin** | Required | **Optional**; authenticator |
 | **Bitcoin Well** | For buy / higher limits | **Optional**; authenticator |
-| **Coinos** | None (username/password) | **Optional**; authenticator |
-| **Wallet of Satoshi** (custodial LN) | Typically none | N/A / email login — no mandatory 2FA method list |
-
-When `twoFactor.mandatory === true`, password-only takeover risks (`compromised-creds`, `credential-stuffing`) are **not** attached. Enabling an optional 2FA method **clears** those risks from the path; skipping 2FA leaves them.
+| **Coinos** | None | **Optional**; authenticator |
+| **Wallet of Satoshi** | Typically none | Email login — no 2FA method list |
 
 ### Choice fields
 
 - `description` — plain-English explanation under the label
-- `addsVulnIds` — risks introduced (shown under the option **and** nested under that step in Path & risks)
+- `addsVulnIds` — risks **introduced at this step** (checklist locus; also feed the unavoidable cache)
 - `clearsVulnIds` — risks removed from accumulation (e.g. enabling 2FA)
 - `icon` / `subtitle` / `setsFlags` / `enables` / `capabilities` — as before
 
@@ -79,13 +93,18 @@ When `twoFactor.mandatory === true`, password-only takeover risks (`compromised-
 - **Self-custody:** private + (public \| xpub) → operable  
 - **Custodial:** `publicKey` alone (no private key) → setup complete / can receive & send through the venue
 
-### Unified path + risks
+### Layout / scroll
+
+- Slide **title stays fixed** at the top of the main pane; choices / summary body scroll underneath (`overflow-y: auto`).
+- Path sidebar and “Open risks” panels scroll internally; prefer not scrolling the whole window.
+
+### Unified path checklist
 
 `PathRiskList`:
 
-- Vertical list of decisions; risks nest under the introducing step; mitigations under each risk
-- **Entire** sidebar expands/collapses as one unit
-- When collapsed, the main slide expands; when expanded and long, the sidebar body scrolls
+- Checklist of steps taken; risks nest under the **introducing** step
+- Unavoidable previews appear only on **upcoming** choice buttons
+- Entire sidebar expands/collapses; when expanded and long, the sidebar body scrolls
 
 ### Browser history
 

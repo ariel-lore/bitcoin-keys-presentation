@@ -8,6 +8,28 @@ const INTRINSIC_CUSTODIAN_VULNS = [
   'debasement',
 ] as const;
 
+const PASSWORD_CREDS_VULNS = [
+  'loss-of-credentials',
+  'phish-creds',
+  'compromised-creds',
+  'credential-stuffing',
+] as const;
+
+const EMAIL_AUTH_VULNS = [
+  'loss-of-credentials',
+  'phish-creds',
+  'email-credential-compromise',
+] as const;
+
+const KYC_VULNS = [
+  'government-subpoena',
+  'withdrawal-freeze',
+  'data-breach',
+] as const;
+
+/** Password-only takeover risks cleared when a 2FA method is enabled. */
+const CLEARED_BY_2FA = ['compromised-creds', 'credential-stuffing'] as const;
+
 const METHOD_META: Record<
   TwoFactorMethod,
   { id: string; label: string; description: string; vulnId: string }
@@ -76,38 +98,15 @@ function kycRequired(c: CustodianDef): boolean {
   return c.kyc === 'required' || c.kyc === 'for_buy_limits';
 }
 
-/** Auth-related risks attached when picking this custodian. */
-export function authVulnsForCustodian(c: CustodianDef): string[] {
-  const vulns: string[] = [
-    'loss-of-credentials',
-    'phish-creds',
-    'withdrawal-freeze',
-    'government-subpoena',
-  ];
-  if (kycRequired(c)) vulns.push('privacy-leak-kyc');
-  // Password-only takeover risks only when 2FA is NOT mandatory
-  if (!c.twoFactor.mandatory) {
-    vulns.push('compromised-creds', 'credential-stuffing');
-  }
-  return vulns;
+function isEmailAuth(c: CustodianDef): boolean {
+  return c.authModel === 'email';
 }
 
-function needsAuthChooser(c: CustodianDef): boolean {
-  const methods = c.twoFactor.methods;
-  if (c.twoFactor.mandatory && methods.length === 1) return false;
-  if (c.twoFactor.mandatory && methods.length > 1) return true;
-  // Optional: still offer enabling a method (and continue-without)
-  if (!c.twoFactor.mandatory && methods.length >= 1) return true;
-  return false;
-}
-
-function impliedMethodVulns(c: CustodianDef): string[] {
-  // Mandatory + exactly one method: attach that method's risk on custodian pick
-  if (c.twoFactor.mandatory && c.twoFactor.methods.length === 1) {
-    const m = METHOD_META[c.twoFactor.methods[0]];
-    return m ? [m.vulnId] : [];
-  }
-  return [];
+/** Whether this custodian gets a 2FA step page (mandatory or optional with methods). */
+function needsTwoFactorStep(c: CustodianDef): boolean {
+  if (c.twoFactor.methods.length === 0) return false;
+  // Mandatory always; optional when at least one method (clean enable / skip page)
+  return true;
 }
 
 function custodianDescription(c: CustodianDef): string {
@@ -117,41 +116,122 @@ function custodianDescription(c: CustodianDef): string {
   return `${base}.`;
 }
 
+function credsNodeId(c: CustodianDef): string {
+  return `creds-${c.id}`;
+}
+
+function kycNodeId(c: CustodianDef): string {
+  return `kyc-${c.id}`;
+}
+
+function authNodeId(c: CustodianDef): string {
+  return `auth-${c.id}`;
+}
+
+/** Next node after credentials (KYC → 2FA → complete). */
+function afterCreds(c: CustodianDef): string {
+  if (kycRequired(c)) return kycNodeId(c);
+  if (needsTwoFactorStep(c)) return authNodeId(c);
+  return 'path-end-custodial';
+}
+
+/** Next node after KYC. */
+function afterKyc(c: CustodianDef): string {
+  if (needsTwoFactorStep(c)) return authNodeId(c);
+  return 'path-end-custodial';
+}
+
 function buildCustodianChoice(c: CustodianDef): Choice {
-  const chooser = needsAuthChooser(c);
-  const adds = [...authVulnsForCustodian(c), ...impliedMethodVulns(c)];
   return {
     id: `sc-${c.id}`,
     label: c.name,
     icon: c.icon,
     subtitle: serviceSubtitle(c),
-    nextNodeId: chooser ? `auth-${c.id}` : 'path-end-custodial',
-    addsVulnIds: adds,
+    nextNodeId: credsNodeId(c),
+    // Brand pick: risks live on mandatory downstream steps (unavoidable preview computes them)
+    addsVulnIds: [],
     tags: [c.id, 'custodial', 'custodian-pick'],
-    // Completes here only when no 2FA chooser is needed
-    setsFlags: chooser ? undefined : ['publicKey'],
     description: custodianDescription(c),
+  };
+}
+
+function buildCredsNode(c: CustodianDef): TreeNode {
+  const email = isEmailAuth(c);
+  const next = afterCreds(c);
+  const completes = next === 'path-end-custodial';
+  const vulns: string[] = email ? [...EMAIL_AUTH_VULNS] : [...PASSWORD_CREDS_VULNS];
+  // Non-KYC venues can still freeze withdrawals — attach here when no KYC page
+  if (!kycRequired(c)) {
+    vulns.push('withdrawal-freeze');
+  }
+
+  const choice: Choice = {
+    id: `creds-${c.id}-provide`,
+    label: email ? 'Provide email' : 'Provide email and password',
+    nextNodeId: next,
+    description: email
+      ? `Sign in / recover ${c.name} with an email address. Losing the inbox or falling for phishing can cost the account.`
+      : `Create login credentials for ${c.name}. Password reuse, phishing, and stuffing attacks become relevant until stronger auth is in place.`,
+    addsVulnIds: vulns,
+    tags: ['custodial', 'auth-creds', c.id],
+    setsFlags: completes ? ['publicKey'] : undefined,
+  };
+
+  return {
+    id: credsNodeId(c),
+    title: email ? `Sign in to ${c.name}` : `Create ${c.name} login`,
+    body: email
+      ? `**Mandatory step.** ${c.name} uses email-oriented login / recovery. Click continue after providing an email (educational — no real account).\n`
+      : `**Mandatory step.** Register with an email and password. Click continue once credentials are “provided” (educational — no real account).\n`,
+    category: 'Custodial · Auth',
+    tags: ['custodial', 'auth-creds', c.id],
+    choices: [choice],
+  };
+}
+
+function buildKycNode(c: CustodianDef): TreeNode {
+  const next = afterKyc(c);
+  const completes = next === 'path-end-custodial';
+  const choice: Choice = {
+    id: `kyc-${c.id}-provide`,
+    label: 'Provide personal information (KYC)',
+    nextNodeId: next,
+    description: `Submit identity documents and personal data required by ${c.name}. This ties your legal identity (and often balances) to the account.`,
+    addsVulnIds: [...KYC_VULNS],
+    tags: ['custodial', 'kyc', c.id],
+    setsFlags: completes ? ['publicKey'] : undefined,
+  };
+
+  return {
+    id: kycNodeId(c),
+    title: `KYC for ${c.name}`,
+    body: `**Mandatory step.** ${c.name} requires personal information (KYC) for this path. Click continue after “providing” documents (educational — no real upload).\n`,
+    category: 'Custodial · KYC',
+    tags: ['custodial', 'kyc', c.id],
+    choices: [choice],
   };
 }
 
 function buildAuthNode(c: CustodianDef): TreeNode {
   const methods = c.twoFactor.methods;
+  const mandatory = c.twoFactor.mandatory;
+  const single = mandatory && methods.length === 1;
+
   const choices: Choice[] = methods.map((mid) => {
     const meta = METHOD_META[mid];
     return {
       id: `auth-${c.id}-${meta.id}`,
-      label: meta.label,
+      label: single ? `Enable ${meta.label}` : meta.label,
       nextNodeId: 'path-end-custodial',
       description: meta.description,
       addsVulnIds: [meta.vulnId],
-      // Enabling 2FA clears password-only takeover risks left from optional-2FA pick
-      clearsVulnIds: ['compromised-creds', 'credential-stuffing'],
+      clearsVulnIds: [...CLEARED_BY_2FA],
       tags: ['2fa-enabled', mid],
       setsFlags: ['publicKey'],
     };
   });
 
-  if (!c.twoFactor.mandatory) {
+  if (!mandatory) {
     choices.push({
       id: `auth-${c.id}-skip`,
       label: 'Continue without 2FA',
@@ -164,14 +244,24 @@ function buildAuthNode(c: CustodianDef): TreeNode {
     });
   }
 
-  const tfaNote = c.twoFactor.mandatory
-    ? `${c.name} treats sign-in 2FA as required. Pick one of the methods this service offers.`
-    : `${c.name} makes 2FA optional. Enabling a method reduces password-only takeover risk; skipping leaves those risks on the path.`;
+  let title: string;
+  let body: string;
+  if (single) {
+    const meta = METHOD_META[methods[0]];
+    title = `Enable 2FA for ${c.name}`;
+    body = `**Mandatory step.** ${c.name} requires ${meta.label}. Click continue to enable it (educational).\n`;
+  } else if (mandatory) {
+    title = `What 2FA method for ${c.name}?`;
+    body = `${c.name} treats sign-in 2FA as required. Pick one of the methods this service offers.\n\nEducational labels only — verify current options on the live product.\n`;
+  } else {
+    title = `Enable 2FA for ${c.name}?`;
+    body = `${c.name} makes 2FA optional. Enabling a method reduces password-only takeover risk; skipping leaves those risks on the path.\n\nEducational labels only — verify current options on the live product.\n`;
+  }
 
   return {
-    id: `auth-${c.id}`,
-    title: `What 2FA method for ${c.name}?`,
-    body: `${tfaNote}\n\nEducational labels only — verify current options on the live product.\n`,
+    id: authNodeId(c),
+    title,
+    body,
     category: 'Custodial · Auth',
     tags: ['custodial', '2fa', c.id],
     choices,
@@ -192,7 +282,9 @@ export function buildCustodianFlowNodes(custodians: CustodianDef[]): TreeNode[] 
     choices: custodians.map(buildCustodianChoice),
   };
 
-  const authNodes = custodians.filter(needsAuthChooser).map(buildAuthNode);
+  const credsNodes = custodians.map(buildCredsNode);
+  const kycNodes = custodians.filter(kycRequired).map(buildKycNode);
+  const authNodes = custodians.filter(needsTwoFactorStep).map(buildAuthNode);
 
   const summary: TreeNode = {
     id: 'path-end-custodial',
@@ -258,7 +350,15 @@ export function buildCustodianFlowNodes(custodians: CustodianDef[]): TreeNode[] 
     ],
   };
 
-  return [singleCustodian, ...authNodes, summary, stubFederated, stubCollaborative];
+  return [
+    singleCustodian,
+    ...credsNodes,
+    ...kycNodes,
+    ...authNodes,
+    summary,
+    stubFederated,
+    stubCollaborative,
+  ];
 }
 
 export function buildStartNode(): TreeNode {

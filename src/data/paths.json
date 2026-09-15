@@ -2,10 +2,12 @@
   {
     "id": "path-custodial",
     "name": "Custodian (Kraken)",
-    "summary": "Hosted custodian with mandatory 2FA (authenticator). Account claim only \u2014 no private key. Counterparty and auth risks remain on the path.",
+    "summary": "Hosted custodian: email/password \u2192 KYC \u2192 mandatory 2FA (authenticator). Account claim only \u2014 no private key. Counterparty and auth risks remain on the path.",
     "choiceSequence": [
       "start-custodian",
       "sc-kraken",
+      "creds-kraken-provide",
+      "kyc-kraken-provide",
       "auth-kraken-authenticator"
     ],
     "highlightColor": "#f7931a"
@@ -13,10 +15,11 @@
   {
     "id": "path-custodial-wos",
     "name": "Custodian (Wallet of Satoshi)",
-    "summary": "Custodial Lightning with email-style login and no KYC (typical). Completes without a 2FA chooser.",
+    "summary": "Custodial Lightning with email-style login and no KYC (typical). Completes after the email auth step.",
     "choiceSequence": [
       "start-custodian",
-      "sc-walletofsatoshi"
+      "sc-walletofsatoshi",
+      "creds-walletofsatoshi-provide"
     ],
     "highlightColor": "#fb923c"
   },

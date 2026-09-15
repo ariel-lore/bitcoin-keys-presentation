@@ -713,5 +713,17 @@
       "recovery"
     ],
     "defaultMitigationId": "choose-other-2fa-method"
+  },
+  {
+    "id": "data-breach",
+    "title": "Custodian data breach (PII + balances)",
+    "description": "Hackers or malicious employees who access the custodian's databases can obtain your personal information (KYC) and how much bitcoin you hold \u2014 enabling targeting, extortion, or identity abuse.",
+    "severity": "high",
+    "categories": [
+      "custodial",
+      "privacy",
+      "breach"
+    ],
+    "defaultMitigationId": "choose-other-custodian"
   }
 ]

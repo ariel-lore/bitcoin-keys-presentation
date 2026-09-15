@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import type { TreeNode, Choice } from '../types/schema';
 import { Markdown } from '../lib/markdown';
-import { bodyTeaser, vulnById, brandInitials, mitigationById } from '../lib/data';
+import {
+  bodyTeaser,
+  vulnById,
+  brandInitials,
+  mitigationById,
+  unavoidableRiskByChoiceId,
+} from '../lib/data';
 
 export function NodeView({
   node,
@@ -23,7 +29,7 @@ export function NodeView({
   const mitigated = new Set(mitigatedVulnIds);
 
   return (
-    <article className={`node-view ${procedureMode ? "procedure-doc" : ""}`}>
+    <article className={`node-view ${procedureMode ? 'procedure-doc' : ''}`}>
       <header className="node-header">
         {(procedureMode || node.category) && (
           <span className="badge">{procedureMode ? 'Setup' : node.category}</span>
@@ -39,65 +45,68 @@ export function NodeView({
         )}
       </header>
 
-      {preMits.length > 0 && onApplyPreMitigation && (
-        <section className="pre-mits" aria-label="Apply before choosing">
-          <h2 className="pre-mits-heading">Ceremony OPSEC — apply before choosing</h2>
-          <ul className="pre-mits-list">
-            {preMits.map((m) => {
-              const done = (m.addressesVulnIds ?? []).every((id) => mitigated.has(id));
+      <div className="node-scroll">
+        {preMits.length > 0 && onApplyPreMitigation && (
+          <section className="pre-mits" aria-label="Apply before choosing">
+            <h2 className="pre-mits-heading">Ceremony OPSEC — apply before choosing</h2>
+            <ul className="pre-mits-list">
+              {preMits.map((m) => {
+                const done = (m.addressesVulnIds ?? []).every((id) => mitigated.has(id));
+                return (
+                  <li key={m.id} className={done ? 'applied' : ''}>
+                    <div className="pre-mit-text">
+                      <strong>{m.title}</strong>
+                      <span>{m.description}</span>
+                    </div>
+                    {done ? (
+                      <span className="mit-applied">Applied</span>
+                    ) : (
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-primary"
+                        onClick={() => onApplyPreMitigation(m.id)}
+                      >
+                        Apply
+                      </button>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        )}
+
+        <div className="choices" data-count={node.choices.length}>
+          <ul>
+            {node.choices.map((c) => {
+              const previewIds = unavoidableRiskByChoiceId[c.id] ?? [];
+              const vulns = previewIds.map((id) => vulnById[id]).filter(Boolean);
               return (
-                <li key={m.id} className={done ? 'applied' : ''}>
-                  <div className="pre-mit-text">
-                    <strong>{m.title}</strong>
-                    <span>{m.description}</span>
-                  </div>
-                  {done ? (
-                    <span className="mit-applied">Applied</span>
-                  ) : (
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-primary"
-                      onClick={() => onApplyPreMitigation(m.id)}
-                    >
-                      Apply
-                    </button>
+                <li key={c.id} className="choice-item">
+                  <button type="button" className="choice-btn" onClick={() => onChoose(c)}>
+                    {(c.icon || c.subtitle) && <BrandIcon choice={c} />}
+                    <span className="choice-text">
+                      <span className="choice-label">{c.label}</span>
+                      {c.subtitle && <span className="choice-subtitle">{c.subtitle}</span>}
+                      {c.description && <span className="choice-description">{c.description}</span>}
+                    </span>
+                    <ChoiceDetail choice={c} />
+                  </button>
+                  {vulns.length > 0 && (
+                    <ul className="choice-vulns" aria-label={`Unavoidable risks from ${c.label}`}>
+                      {vulns.map((v) => (
+                        <li key={v.id} className={`choice-vuln sev-${v.severity}`}>
+                          <strong>{v.title}</strong>
+                          <span>{v.description}</span>
+                        </li>
+                      ))}
+                    </ul>
                   )}
                 </li>
               );
             })}
           </ul>
-        </section>
-      )}
-
-      <div className="choices" data-count={node.choices.length}>
-        <ul>
-          {node.choices.map((c) => {
-            const vulns = (c.addsVulnIds ?? []).map((id) => vulnById[id]).filter(Boolean);
-            return (
-              <li key={c.id} className="choice-item">
-                <button type="button" className="choice-btn" onClick={() => onChoose(c)}>
-                  {(c.icon || c.subtitle) && <BrandIcon choice={c} />}
-                  <span className="choice-text">
-                    <span className="choice-label">{c.label}</span>
-                    {c.subtitle && <span className="choice-subtitle">{c.subtitle}</span>}
-                    {c.description && <span className="choice-description">{c.description}</span>}
-                  </span>
-                  <ChoiceDetail choice={c} />
-                </button>
-                {vulns.length > 0 && (
-                  <ul className="choice-vulns" aria-label={`Risks from ${c.label}`}>
-                    {vulns.map((v) => (
-                      <li key={v.id} className={`choice-vuln sev-${v.severity}`}>
-                        <strong>{v.title}</strong>
-                        <span>{v.description}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+        </div>
       </div>
     </article>
   );
