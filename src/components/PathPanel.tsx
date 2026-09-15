@@ -2,45 +2,46 @@ import { recommendedPaths } from '../lib/data';
 import type { RecommendedPath } from '../types/schema';
 
 export function PathPanel({
-  activePathId,
+  open,
+  onClose,
   onApply,
-  onSelectCompare,
 }: {
-  activePathId: string | null;
+  open: boolean;
+  onClose: () => void;
   onApply: (path: RecommendedPath) => void;
-  onSelectCompare: (path: RecommendedPath | null) => void;
 }) {
+  if (!open) return null;
+
   return (
-    <div className="paths">
-      <h2>Recommended paths</h2>
-      <p className="muted small">Jump to a curated walkthrough, or select to compare metric targets.</p>
-      <ul className="path-list">
-        {recommendedPaths.map((p) => (
-          <li key={p.id} className={activePathId === p.id ? 'active' : ''}>
-            <button
-              type="button"
-              className="path-card"
-              style={{ borderLeftColor: p.highlightColor }}
-              onClick={() => onSelectCompare(p)}
-            >
-              <strong>{p.name}</strong>
-              <span className="path-summary">{p.summary}</span>
-              <span className="path-actions">
-                <button
-                  type="button"
-                  className="btn btn-sm btn-primary"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onApply(p);
-                  }}
-                >
-                  Walk path
-                </button>
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className="path-overlay" role="dialog" aria-modal="true" aria-label="Recommended paths">
+      <button type="button" className="path-backdrop" aria-label="Close" onClick={onClose} />
+      <div className="path-sheet">
+        <header className="path-sheet-head">
+          <h2>Recommended paths</h2>
+          <button type="button" className="btn btn-sm" onClick={onClose}>
+            Close
+          </button>
+        </header>
+        <ul className="path-list">
+          {recommendedPaths.map((p) => (
+            <li key={p.id}>
+              <button
+                type="button"
+                className="path-card"
+                style={{ borderLeftColor: p.highlightColor }}
+                onClick={() => {
+                  onApply(p);
+                  onClose();
+                }}
+              >
+                <strong>{p.name}</strong>
+                <span className="path-summary">{p.summary}</span>
+                <span className="path-cta">Walk this path →</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

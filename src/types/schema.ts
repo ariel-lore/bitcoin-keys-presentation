@@ -1,24 +1,6 @@
-/** Schema for the Bitcoin custody choose-your-own-adventure data files. */
+/** Schema for the Bitcoin custody interactive presentation data files. */
 
 export type Severity = 'low' | 'medium' | 'high' | 'critical';
-
-export type MetricKey = 'convenience' | 'security' | 'complexity' | 'recoverability';
-
-export interface MetricDeltas {
-  convenience?: number;
-  security?: number;
-  complexity?: number;
-  recoverability?: number;
-}
-
-export interface MetricDef {
-  id: MetricKey;
-  label: string;
-  description: string;
-  /** Higher is "better" for the user experience of this metric. */
-  higherIsBetter: boolean;
-  color: string;
-}
 
 export interface Vulnerability {
   id: string;
@@ -41,7 +23,6 @@ export interface Choice {
   nextNodeId: string;
   addsVulnIds?: string[];
   addsMitigationIds?: string[];
-  metricDeltas?: MetricDeltas;
   tags?: string[];
 }
 
@@ -59,8 +40,6 @@ export interface RecommendedPath {
   id: string;
   name: string;
   summary: string;
-  /** Ideal metric targets (0–100) for comparison */
-  metricTargets: Record<MetricKey, number>;
   /** Ordered choice ids to auto-walk from start, OR ordered node ids */
   choiceSequence: string[];
   /** First node if not walking from root */
@@ -68,22 +47,22 @@ export interface RecommendedPath {
   highlightColor: string;
 }
 
-export interface MetricsFile {
-  initial: Record<MetricKey, number>;
-  metrics: MetricDef[];
-}
-
 export interface TreeFile {
   startNodeId: string;
   nodes: TreeNode[];
 }
 
+export interface TrailStep {
+  nodeId: string;
+  choiceId: string | null;
+  choiceLabel: string | null;
+}
+
 export interface AdventureState {
   currentNodeId: string;
-  /** History of {nodeId, choiceId} for trail + undo */
-  trail: { nodeId: string; choiceId: string | null; choiceLabel: string | null }[];
+  /** History of steps for trail + undo */
+  trail: TrailStep[];
   vulnIds: string[];
   mitigationIds: string[];
-  metrics: Record<MetricKey, number>;
   tags: string[];
 }

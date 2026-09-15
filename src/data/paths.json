@@ -3,12 +3,6 @@
     "id": "path-custodial",
     "name": "Custodial",
     "summary": "Exchange / hosted wallet: max convenience & support recovery; accept counterparty, phishing, seizure, and insolvency risk. Harden with hardware 2FA, allowlists, and limited balances.",
-    "metricTargets": {
-      "convenience": 85,
-      "security": 35,
-      "complexity": 20,
-      "recoverability": 80
-    },
     "choiceSequence": [
       "start-ladder",
       "lad-cust",
@@ -22,12 +16,6 @@
     "id": "path-hot",
     "name": "Single-sig hot wallet",
     "summary": "Phone/desktop wallet you control: convenient spending and better privacy than KYC exchanges, but malware and seed handling dominate risk.",
-    "metricTargets": {
-      "convenience": 70,
-      "security": 40,
-      "complexity": 35,
-      "recoverability": 45
-    },
     "choiceSequence": [
       "start-ladder",
       "lad-hot",
@@ -40,12 +28,6 @@
     "id": "path-cold",
     "name": "Single-sig cold wallet",
     "summary": "Hardware or air-gapped single signature: strong malware resistance when used correctly; supply-chain, entropy, and backup discipline matter. Still one seed to rule them all.",
-    "metricTargets": {
-      "convenience": 40,
-      "security": 75,
-      "complexity": 55,
-      "recoverability": 50
-    },
     "choiceSequence": [
       "start-ladder",
       "lad-hw",
@@ -59,12 +41,6 @@
     "id": "path-multisig",
     "name": "Multisig (distributed / multi-party)",
     "summary": "m-of-n with diverse vendors and locations/parties: removes single points of failure; higher complexity; watch for same-vendor correlation and key-agent custody risk.",
-    "metricTargets": {
-      "convenience": 30,
-      "security": 88,
-      "complexity": 75,
-      "recoverability": 70
-    },
     "choiceSequence": [
       "start-ladder",
       "lad-ms",

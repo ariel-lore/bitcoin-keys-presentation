@@ -3,19 +3,13 @@
   "nodes": [
     {
       "id": "start",
-      "title": "Bitcoin Custody Adventure",
-      "body": "**Educational demo \u2014 not financial advice.**\n\nThis is a choose-your-own-adventure about how people hold Bitcoin keys.\nYour choices accumulate in the trail. **Vulnerabilities** and **mitigations** stack up.\nMeters track **convenience**, **security**, **complexity**, and **recoverability**.\n\nJump to a recommended path anytime, or explore freely from the custody ladder.\n",
+      "title": "Bitcoin Custody",
+      "body": "**Educational presentation \u2014 not financial advice.**\n\nExplore how people hold Bitcoin keys through interactive decisions.\nYour path accumulates in the trail. **Risks** and **hardening** stack as you go.\n\nOpen **Paths** for a curated walkthrough, or explore freely from the custody ladder.\n",
       "choices": [
         {
           "id": "start-ladder",
           "label": "Explore the custody ladder",
-          "nextNodeId": "ladder",
-          "metricDeltas": {
-            "convenience": 0,
-            "security": 0,
-            "complexity": 0,
-            "recoverability": 0
-          }
+          "nextNodeId": "ladder"
         },
         {
           "id": "start-demo",
@@ -44,18 +38,12 @@
     {
       "id": "ladder",
       "title": "The custody ladder",
-      "body": "Climb from maximum convenience / counterparty trust toward maximum sovereignty and operational burden:\n\n1. **Custodian** (exchange)\n2. **Federation**\n3. **Single-key hot wallet**\n4. **Single-key hardware wallet**\n5. **Air-gapped / cold storage**\n6. **Multisignature**\n7. **Distributed multisig**\n8. **Multisig with independent parties**\n9. **High-security protocols** (e.g. Glacier-style)\n\nEach rung trades convenience and recoverability against security and complexity differently.\nPick a rung to dive in \u2014 or use the recommended paths panel.\n",
+      "body": "Climb from maximum convenience and counterparty trust toward maximum sovereignty and operational burden:\n\n1. **Custodian** (exchange)\n2. **Federation**\n3. **Single-key hot wallet**\n4. **Single-key hardware wallet**\n5. **Air-gapped / cold storage**\n6. **Multisignature**\n7. **Distributed multisig**\n8. **Multisig with independent parties**\n9. **High-security protocols** (e.g. Glacier-style)\n\nEach rung trades day-to-day ease and recoverability against security and operational burden.\nPick a rung to dive in \u2014 or open **Paths** for a curated walkthrough.\n",
       "choices": [
         {
           "id": "lad-cust",
           "label": "1. Custodian",
           "nextNodeId": "custodian",
-          "metricDeltas": {
-            "convenience": 25,
-            "security": -15,
-            "complexity": -15,
-            "recoverability": 20
-          },
           "tags": [
             "custodial"
           ]
@@ -64,12 +52,6 @@
           "id": "lad-fed",
           "label": "2. Federation",
           "nextNodeId": "federation",
-          "metricDeltas": {
-            "convenience": 15,
-            "security": -5,
-            "complexity": -5,
-            "recoverability": -10
-          },
           "tags": [
             "federation"
           ]
@@ -78,12 +60,6 @@
           "id": "lad-hot",
           "label": "3. Single-key hot wallet",
           "nextNodeId": "hot-wallet",
-          "metricDeltas": {
-            "convenience": 10,
-            "security": -10,
-            "complexity": -5,
-            "recoverability": -5
-          },
           "tags": [
             "single-sig",
             "hot"
@@ -93,12 +69,6 @@
           "id": "lad-hw",
           "label": "4. Single-key hardware wallet",
           "nextNodeId": "hardware-wallet",
-          "metricDeltas": {
-            "convenience": -5,
-            "security": 15,
-            "complexity": 10,
-            "recoverability": 0
-          },
           "tags": [
             "single-sig",
             "hardware"
@@ -108,12 +78,6 @@
           "id": "lad-air",
           "label": "5. Air-gapped / cold storage",
           "nextNodeId": "airgap",
-          "metricDeltas": {
-            "convenience": -20,
-            "security": 25,
-            "complexity": 20,
-            "recoverability": -5
-          },
           "tags": [
             "cold",
             "airgap"
@@ -123,12 +87,6 @@
           "id": "lad-ms",
           "label": "6. Multisignature",
           "nextNodeId": "multisig",
-          "metricDeltas": {
-            "convenience": -15,
-            "security": 20,
-            "complexity": 25,
-            "recoverability": 10
-          },
           "tags": [
             "multisig"
           ]
@@ -137,12 +95,6 @@
           "id": "lad-dms",
           "label": "7. Distributed multisig",
           "nextNodeId": "distributed-multisig",
-          "metricDeltas": {
-            "convenience": -20,
-            "security": 25,
-            "complexity": 30,
-            "recoverability": 15
-          },
           "tags": [
             "multisig",
             "distributed"
@@ -152,12 +104,6 @@
           "id": "lad-ind",
           "label": "8. Independent multi-party multisig",
           "nextNodeId": "independent-multisig",
-          "metricDeltas": {
-            "convenience": -25,
-            "security": 30,
-            "complexity": 35,
-            "recoverability": 15
-          },
           "tags": [
             "multisig",
             "multi-party"
@@ -167,12 +113,6 @@
           "id": "lad-gla",
           "label": "9. Glacier-style high-security",
           "nextNodeId": "glacier",
-          "metricDeltas": {
-            "convenience": -40,
-            "security": 40,
-            "complexity": 45,
-            "recoverability": -10
-          },
           "tags": [
             "glacier"
           ]
@@ -198,10 +138,7 @@
           "nextNodeId": "custodian-benefits",
           "addsMitigationIds": [
             "strong-unique-password"
-          ],
-          "metricDeltas": {
-            "convenience": 5
-          }
+          ]
         },
         {
           "id": "cust-explore-risks",
@@ -218,10 +155,7 @@
             "privacy-leak-kyc",
             "sim-swap",
             "compromised-creds"
-          ],
-          "metricDeltas": {
-            "security": -10
-          }
+          ]
         },
         {
           "id": "cust-mitigate",
@@ -253,10 +187,7 @@
           "addsVulnIds": [
             "phish-creds",
             "sim-swap"
-          ],
-          "metricDeltas": {
-            "security": -5
-          }
+          ]
         },
         {
           "id": "cb-mits",
@@ -288,11 +219,7 @@
           "addsMitigationIds": [
             "self-custody-withdrawal",
             "split-holdings"
-          ],
-          "metricDeltas": {
-            "security": 10,
-            "convenience": -10
-          }
+          ]
         },
         {
           "id": "cr-ladder",
@@ -318,12 +245,7 @@
             "split-holdings",
             "proof-of-reserves",
             "self-custody-withdrawal"
-          ],
-          "metricDeltas": {
-            "security": 12,
-            "complexity": 5,
-            "convenience": -5
-          }
+          ]
         },
         {
           "id": "cm-ladder",
@@ -359,7 +281,7 @@
     {
       "id": "path-end-custodial",
       "title": "Path summary \u2014 Custodial",
-      "body": "**Profile:** maximum convenience, institutional recovery, Lightning & trading \u2014 with counterparty, phishing, seizure, and insolvency risk.\n\n**Typical meters:** high convenience & recoverability (via support), lower security against systemic custodian failure, low personal complexity.\n\nRemember: educational framing only \u2014 not advice.\n",
+      "body": "**Profile:** maximum convenience, institutional recovery, Lightning & trading \u2014 with counterparty, phishing, seizure, and insolvency risk.\n\n**Profile notes:** high day-to-day ease and recoverability via support; lower resilience to systemic custodian failure; low personal operational burden.\n\nRemember: educational framing only \u2014 not advice.\n",
       "choices": [
         {
           "id": "pe-c-ladder",
@@ -390,10 +312,7 @@
             "fed-key-loss",
             "custodian-hack",
             "gov-seizure"
-          ],
-          "metricDeltas": {
-            "security": -5
-          }
+          ]
         },
         {
           "id": "fed-mits",
@@ -440,12 +359,7 @@
             "fed-threshold-docs",
             "never-enter-seed-online",
             "offline-seed-backup"
-          ],
-          "metricDeltas": {
-            "security": 10,
-            "complexity": 8,
-            "recoverability": 5
-          }
+          ]
         },
         {
           "id": "fm-ladder",
@@ -486,10 +400,7 @@
             "hot-malware",
             "single-point-key",
             "seed-phishing-support"
-          ],
-          "metricDeltas": {
-            "security": -5
-          }
+          ]
         },
         {
           "id": "hot-backup",
@@ -508,11 +419,7 @@
             "offline-seed-backup",
             "never-enter-seed-online",
             "verify-address-on-device"
-          ],
-          "metricDeltas": {
-            "security": 5,
-            "complexity": 5
-          }
+          ]
         },
         {
           "id": "hot-ladder",
@@ -535,12 +442,7 @@
         {
           "id": "hh-hw",
           "label": "Graduate to hardware wallet",
-          "nextNodeId": "hardware-wallet",
-          "metricDeltas": {
-            "security": 15,
-            "convenience": -10,
-            "complexity": 10
-          }
+          "nextNodeId": "hardware-wallet"
         },
         {
           "id": "hh-ladder",
@@ -583,10 +485,7 @@
           ],
           "addsMitigationIds": [
             "tamper-evident-seal"
-          ],
-          "metricDeltas": {
-            "security": 5
-          }
+          ]
         },
         {
           "id": "hw-supply",
@@ -624,11 +523,7 @@
             "tamper-evident-seal",
             "verify-signatures",
             "user-entropy-dice"
-          ],
-          "metricDeltas": {
-            "security": 8,
-            "complexity": 5
-          }
+          ]
         },
         {
           "id": "hsc-seed",
@@ -665,12 +560,7 @@
           "addsMitigationIds": [
             "multisig-threshold",
             "diversify-vendors"
-          ],
-          "metricDeltas": {
-            "security": 10,
-            "complexity": 15,
-            "recoverability": 10
-          }
+          ]
         }
       ],
       "category": "Hardware"
@@ -696,25 +586,17 @@
     {
       "id": "airgap",
       "title": "Air-gapped / cold storage",
-      "body": "Keys live on a device that **never** connects to the internet. Transactions move via QR, SD card, or USB as PSBTs.\n\n**Security\u2191 Complexity\u2191 Convenience\u2193**\nAir-gaps fail when people \"just quickly\" plug in Wi\u2011Fi to install software.\n",
+      "body": "Keys live on a device that **never** connects to the internet. Transactions move via QR, SD card, or USB as PSBTs.\n\n**Tradeoff:** stronger malware resistance; higher operational burden; less day-to-day ease.\nAir-gaps fail when people \"just quickly\" plug in Wi\u2011Fi to install software.\n",
       "choices": [
         {
           "id": "ag-phone",
           "label": "Air-gapped phone",
-          "nextNodeId": "airgap-phone",
-          "metricDeltas": {
-            "complexity": 5,
-            "security": 5
-          }
+          "nextNodeId": "airgap-phone"
         },
         {
           "id": "ag-pc",
           "label": "Air-gapped PC / live OS",
-          "nextNodeId": "airgap-pc",
-          "metricDeltas": {
-            "complexity": 10,
-            "security": 8
-          }
+          "nextNodeId": "airgap-pc"
         },
         {
           "id": "ag-seed",
@@ -751,11 +633,7 @@
             "verify-signatures",
             "airgap-signing",
             "no-cameras"
-          ],
-          "metricDeltas": {
-            "security": 10,
-            "complexity": 8
-          }
+          ]
         },
         {
           "id": "ap-seed",
@@ -781,10 +659,7 @@
           "nextNodeId": "seed-gen-electrum",
           "addsVulnIds": [
             "electrum-not-bip39"
-          ],
-          "metricDeltas": {
-            "complexity": 5
-          }
+          ]
         },
         {
           "id": "apc-bip39",
@@ -793,11 +668,7 @@
           "addsMitigationIds": [
             "usb-ferry-software",
             "trustworthy-cli-guide"
-          ],
-          "metricDeltas": {
-            "security": 8,
-            "complexity": 10
-          }
+          ]
         },
         {
           "id": "apc-ladder",
@@ -841,10 +712,7 @@
           "nextNodeId": "multisig-same-vendor",
           "addsVulnIds": [
             "same-vendor-multisig"
-          ],
-          "metricDeltas": {
-            "security": -15
-          }
+          ]
         },
         {
           "id": "ms-div",
@@ -854,11 +722,7 @@
             "multisig-threshold",
             "diversify-vendors",
             "user-entropy-dice"
-          ],
-          "metricDeltas": {
-            "security": 15,
-            "complexity": 10
-          }
+          ]
         },
         {
           "id": "ms-dist",
@@ -885,11 +749,7 @@
           "addsMitigationIds": [
             "diversify-vendors",
             "migrate-after-rng-bug"
-          ],
-          "metricDeltas": {
-            "security": 20,
-            "complexity": 5
-          }
+          ]
         },
         {
           "id": "mss-ladder",
@@ -910,12 +770,7 @@
           "nextNodeId": "distributed-multisig",
           "addsMitigationIds": [
             "multi-party-locations"
-          ],
-          "metricDeltas": {
-            "security": 8,
-            "recoverability": 8,
-            "complexity": 8
-          }
+          ]
         },
         {
           "id": "msd-backup",
@@ -949,12 +804,7 @@
           ],
           "addsMitigationIds": [
             "multi-party-locations"
-          ],
-          "metricDeltas": {
-            "security": 5,
-            "complexity": 10,
-            "recoverability": 5
-          }
+          ]
         },
         {
           "id": "dm-end",
@@ -980,12 +830,7 @@
           "nextNodeId": "multisig-key-agent",
           "addsVulnIds": [
             "key-agent-custody"
-          ],
-          "metricDeltas": {
-            "convenience": 10,
-            "security": -5,
-            "recoverability": 10
-          }
+          ]
         },
         {
           "id": "im-peers",
@@ -994,11 +839,7 @@
           "addsMitigationIds": [
             "multi-party-locations",
             "inheritance-playbook"
-          ],
-          "metricDeltas": {
-            "complexity": 5,
-            "recoverability": 8
-          }
+          ]
         },
         {
           "id": "im-end",
@@ -1067,11 +908,7 @@
             "record-derivation-path",
             "inheritance-playbook",
             "reload-seed-twice"
-          ],
-          "metricDeltas": {
-            "recoverability": 15,
-            "complexity": 5
-          }
+          ]
         },
         {
           "id": "bm-ladder",
@@ -1118,12 +955,7 @@
             "never-speak-seed",
             "no-cameras",
             "user-entropy-dice"
-          ],
-          "metricDeltas": {
-            "security": 15,
-            "complexity": 15,
-            "convenience": -10
-          }
+          ]
         },
         {
           "id": "gl-ms",
@@ -1132,11 +964,7 @@
           "addsMitigationIds": [
             "multisig-threshold",
             "diversify-vendors"
-          ],
-          "metricDeltas": {
-            "security": 10,
-            "complexity": 10
-          }
+          ]
         },
         {
           "id": "gl-ladder",
@@ -1241,12 +1069,7 @@
           "nextNodeId": "seed-gen-brain",
           "addsVulnIds": [
             "brain-wallet-weak"
-          ],
-          "metricDeltas": {
-            "security": -40,
-            "complexity": -10,
-            "recoverability": -20
-          }
+          ]
         },
         {
           "id": "sgd-root",
@@ -1271,10 +1094,7 @@
           "addsMitigationIds": [
             "offline-seed-backup",
             "record-derivation-path"
-          ],
-          "metricDeltas": {
-            "complexity": 5
-          }
+          ]
         },
         {
           "id": "sge-bip39",
@@ -1308,11 +1128,7 @@
             "tamper-evident-seal",
             "user-entropy-dice",
             "follow-provider-instructions"
-          ],
-          "metricDeltas": {
-            "security": 12,
-            "complexity": 10
-          }
+          ]
         },
         {
           "id": "sgh-trust",
@@ -1323,11 +1139,7 @@
             "insufficient-entropy",
             "firmware-rng-defect",
             "supply-chain-device"
-          ],
-          "metricDeltas": {
-            "security": -10,
-            "complexity": -5
-          }
+          ]
         },
         {
           "id": "sgh-back",
@@ -1361,11 +1173,7 @@
             "verify-signatures",
             "diversify-vendors",
             "migrate-after-rng-bug"
-          ],
-          "metricDeltas": {
-            "security": 10,
-            "complexity": 12
-          }
+          ]
         },
         {
           "id": "sghe-back",
@@ -1421,11 +1229,7 @@
             "reload-seed-twice",
             "offline-seed-backup",
             "no-cameras"
-          ],
-          "metricDeltas": {
-            "security": 10,
-            "complexity": 10
-          }
+          ]
         },
         {
           "id": "sgap-back",
@@ -1443,11 +1247,7 @@
         {
           "id": "sgb-leave",
           "label": "Choose a real entropy method instead",
-          "nextNodeId": "seed-gen-device",
-          "metricDeltas": {
-            "security": 30,
-            "recoverability": 15
-          }
+          "nextNodeId": "seed-gen-device"
         },
         {
           "id": "sgb-ladder",
@@ -1470,11 +1270,7 @@
             "usb-ferry-software",
             "trustworthy-cli-guide",
             "pencil-paper-only"
-          ],
-          "metricDeltas": {
-            "security": 8,
-            "complexity": 8
-          }
+          ]
         },
         {
           "id": "sgpc-back",
@@ -1500,10 +1296,7 @@
           "nextNodeId": "seed-own-mapping",
           "addsVulnIds": [
             "biased-word-mapping"
-          ],
-          "metricDeltas": {
-            "security": -8
-          }
+          ]
         },
         {
           "id": "diy-cards",
@@ -1546,11 +1339,7 @@
             "casino-dice",
             "trustworthy-dice-guide",
             "pencil-paper-only"
-          ],
-          "metricDeltas": {
-            "security": 12,
-            "complexity": 12
-          }
+          ]
         },
         {
           "id": "sd-opsec",
@@ -1576,10 +1365,7 @@
           "nextNodeId": "seed-dice",
           "addsMitigationIds": [
             "trustworthy-dice-guide"
-          ],
-          "metricDeltas": {
-            "security": 10
-          }
+          ]
         },
         {
           "id": "som-anyway",
@@ -1605,11 +1391,7 @@
             "trustworthy-dice-guide",
             "pencil-paper-only",
             "never-speak-seed"
-          ],
-          "metricDeltas": {
-            "security": 8,
-            "complexity": 12
-          }
+          ]
         },
         {
           "id": "sc-back",
@@ -1639,10 +1421,7 @@
           ],
           "addsMitigationIds": [
             "pencil-paper-only"
-          ],
-          "metricDeltas": {
-            "complexity": 10
-          }
+          ]
         }
       ],
       "category": "Seed generation"
@@ -1665,11 +1444,7 @@
             "pencil-paper-only",
             "never-speak-seed",
             "no-cameras"
-          ],
-          "metricDeltas": {
-            "security": 10,
-            "complexity": 5
-          }
+          ]
         },
         {
           "id": "so-checksum",
@@ -1698,11 +1473,7 @@
             "reload-seed-twice",
             "record-derivation-path",
             "xpub-watcher-match"
-          ],
-          "metricDeltas": {
-            "security": 5,
-            "complexity": 5
-          }
+          ]
         },
         {
           "id": "scs-phone",
@@ -1716,11 +1487,7 @@
             "usb-ferry-software",
             "reload-seed-twice",
             "record-derivation-path"
-          ],
-          "metricDeltas": {
-            "security": 5,
-            "complexity": 8
-          }
+          ]
         },
         {
           "id": "scs-pc",
@@ -1738,11 +1505,7 @@
             "reload-seed-twice",
             "record-derivation-path",
             "xpub-watcher-match"
-          ],
-          "metricDeltas": {
-            "security": 8,
-            "complexity": 10
-          }
+          ]
         }
       ],
       "category": "Seed generation"
@@ -1788,11 +1551,7 @@
             "xpub-privacy",
             "watch-only-malware",
             "hot-malware"
-          ],
-          "metricDeltas": {
-            "security": -5,
-            "convenience": 5
-          }
+          ]
         },
         {
           "id": "xp-hw",
@@ -1802,10 +1561,7 @@
             "limit-xpub-share",
             "verify-address-on-device",
             "xpub-watcher-match"
-          ],
-          "metricDeltas": {
-            "security": 5
-          }
+          ]
         },
         {
           "id": "xp-air",
@@ -1816,11 +1572,7 @@
             "verify-address-on-device",
             "xpub-watcher-match",
             "limit-xpub-share"
-          ],
-          "metricDeltas": {
-            "security": 10,
-            "complexity": 8
-          }
+          ]
         },
         {
           "id": "xp-back",
@@ -1842,10 +1594,7 @@
           "addsMitigationIds": [
             "verify-address-on-device",
             "limit-xpub-share"
-          ],
-          "metricDeltas": {
-            "security": 8
-          }
+          ]
         },
         {
           "id": "xph-hw",
@@ -1968,12 +1717,7 @@
           "addsMitigationIds": [
             "offline-seed-backup",
             "geographic-backup-diversity"
-          ],
-          "metricDeltas": {
-            "recoverability": 15,
-            "complexity": 5,
-            "security": 5
-          }
+          ]
         },
         {
           "id": "bp-inh",
@@ -1996,20 +1740,12 @@
             "inheritance-playbook",
             "record-derivation-path",
             "passphrase-separate-backup"
-          ],
-          "metricDeltas": {
-            "recoverability": 20,
-            "complexity": 5
-          }
+          ]
         },
         {
           "id": "bi-ms",
           "label": "Use multi-party multisig for inheritance",
-          "nextNodeId": "independent-multisig",
-          "metricDeltas": {
-            "recoverability": 10,
-            "complexity": 15
-          }
+          "nextNodeId": "independent-multisig"
         }
       ],
       "category": "Backup"
@@ -2052,21 +1788,12 @@
           "addsMitigationIds": [
             "passphrase-separate-backup",
             "reload-seed-twice"
-          ],
-          "metricDeltas": {
-            "security": 10,
-            "recoverability": -10,
-            "complexity": 10
-          }
+          ]
         },
         {
           "id": "pp-no",
           "label": "Skip passphrase (simpler recovery)",
-          "nextNodeId": "seed-aftercare",
-          "metricDeltas": {
-            "recoverability": 5,
-            "complexity": -5
-          }
+          "nextNodeId": "seed-aftercare"
         }
       ],
       "category": "Passphrase"
@@ -2089,11 +1816,7 @@
             "verify-address-on-device",
             "never-enter-seed-online",
             "airgap-signing"
-          ],
-          "metricDeltas": {
-            "security": 12,
-            "complexity": 3
-          }
+          ]
         },
         {
           "id": "sr-ladder",
