@@ -1,4 +1,5 @@
 import type { Choice, CustodianDef, TreeNode, TwoFactorMethod } from '../types/schema';
+import { FEDERATED_INTRINSIC_VULNS } from './guides';
 
 const INTRINSIC_CUSTODIAN_VULNS = [
   'gov-seizure',
@@ -310,54 +311,12 @@ export function buildCustodianFlowNodes(custodians: CustodianDef[]): TreeNode[] 
     ],
   };
 
-  const stubFederated: TreeNode = {
-    id: 'stub-federated',
-    title: 'Federated custody',
-    body:
-      'Coming from other user stories — not rebuilt yet.\n\nA federation or community shares custody under threshold rules (e.g. Fedi-style). Explore the older federated branch from Paths, or return to the custody-model question.\n',
-    category: 'Placeholder',
-    tags: ['federation', 'stub'],
-    choices: [
-      {
-        id: 'stub-fed-back',
-        label: 'Choose another custody model',
-        nextNodeId: 'start',
-        description: 'Return to the first question.',
-      },
-      {
-        id: 'stub-fed-legacy',
-        label: 'Open legacy federated flow',
-        nextNodeId: 'federated-custody',
-        description: 'Existing placeholder path (not the rebuilt user story).',
-      },
-    ],
-  };
-
-  const stubCollaborative: TreeNode = {
-    id: 'stub-collaborative',
-    title: 'Collaborative custody',
-    body:
-      'Coming from other user stories — not rebuilt yet.\n\nCollaborative custody usually means you hold keys with a co-signer or key-agent service (not full single-custodian hosting).\n',
-    category: 'Placeholder',
-    tags: ['collaborative', 'stub'],
-    choices: [
-      {
-        id: 'stub-collab-back',
-        label: 'Choose another custody model',
-        nextNodeId: 'start',
-        description: 'Return to the first question.',
-      },
-    ],
-  };
-
   return [
     singleCustodian,
     ...credsNodes,
     ...kycNodes,
     ...authNodes,
     summary,
-    stubFederated,
-    stubCollaborative,
   ];
 }
 
@@ -381,10 +340,11 @@ export function buildStartNode(): TreeNode {
       {
         id: 'start-federated',
         label: 'Federated custody',
-        nextNodeId: 'stub-federated',
+        nextNodeId: 'federated-custody',
         tags: ['federation'],
         description:
-          'A group or federation shares custody under threshold rules. Coming from another user story — stub for now.',
+          'A federation or community shares custody under threshold rules (e.g. Fedi / Fedimint). You hold a claim — not unilateral on-chain keys.',
+        addsVulnIds: [...FEDERATED_INTRINSIC_VULNS],
       },
       {
         id: 'start-self',
@@ -400,7 +360,8 @@ export function buildStartNode(): TreeNode {
         nextNodeId: 'stub-collaborative',
         tags: ['collaborative'],
         description:
-          'You keep keys alongside a co-signer or key-agent. Coming from another user story — stub for now.',
+          'You keep keys alongside a co-signer or key-agent (e.g. Casa-style). Light stub — DIY multisig has the deep walkthrough.',
+        addsVulnIds: ['key-agent-custody', 'collusion-multisig'],
       },
     ],
   };

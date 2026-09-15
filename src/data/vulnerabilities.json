@@ -725,5 +725,205 @@
       "breach"
     ],
     "defaultMitigationId": "choose-other-custodian"
+  },
+  {
+    "id": "fed-halt-availability",
+    "title": "Federation halt / availability",
+    "description": "If guardians stop operating or the federation cannot achieve consensus, members may be unable to send or redeem until guardians recover \u2014 you cannot force an on-chain exit alone.",
+    "severity": "high",
+    "categories": [
+      "federation",
+      "availability"
+    ],
+    "defaultMitigationId": "choose-other-federation"
+  },
+  {
+    "id": "fed-no-unilateral-exit",
+    "title": "Cannot exit unilaterally",
+    "description": "Federated e-cash balances are not ordinary UTXOs you control. Leaving usually requires guardian cooperation or a pre-planned exit path \u2014 unlike self-custody on-chain.",
+    "severity": "high",
+    "categories": [
+      "federation"
+    ],
+    "defaultMitigationId": "choose-other-custody-model"
+  },
+  {
+    "id": "gateway-censorship",
+    "title": "Lightning gateway censorship",
+    "description": "Federations often route Lightning via gateways. A hostile or offline gateway can censor, delay, or surveil payments even if guardians still hold mint keys.",
+    "severity": "medium",
+    "categories": [
+      "federation",
+      "lightning"
+    ],
+    "defaultMitigationId": "choose-other-federation"
+  },
+  {
+    "id": "fake-app-supply-chain",
+    "title": "Fake app / store supply chain",
+    "description": "Lookalike apps in unofficial stores or phishing sites can steal seeds, federation invites, or account credentials on first launch.",
+    "severity": "critical",
+    "categories": [
+      "supply-chain",
+      "hot-wallet",
+      "federation"
+    ],
+    "defaultMitigationId": "verify-official-download"
+  },
+  {
+    "id": "malicious-invite",
+    "title": "Malicious federation invite",
+    "description": "A forged invite link or QR can join you to an attacker-controlled federation that looks legitimate until funds are trapped or stolen.",
+    "severity": "critical",
+    "categories": [
+      "federation",
+      "social-engineering"
+    ],
+    "defaultMitigationId": "verify-federation-invite"
+  },
+  {
+    "id": "social-backup-trustees",
+    "title": "Social-backup trustee risk",
+    "description": "Trusted members who hold social-backup shares can collude, be coerced, or lose their devices \u2014 enabling recovery abuse or blocking recovery.",
+    "severity": "high",
+    "categories": [
+      "federation",
+      "recovery"
+    ],
+    "defaultMitigationId": "choose-trusted-social-backup"
+  },
+  {
+    "id": "weak-device-pin",
+    "title": "Weak device / app PIN",
+    "description": "Short or guessable PINs are easier to shoulder-surf or brute-force (within device wipe limits), especially on phones and hardware wallets.",
+    "severity": "medium",
+    "categories": [
+      "device",
+      "physical"
+    ],
+    "defaultMitigationId": "strong-pin-guidance"
+  },
+  {
+    "id": "shoulder-surfing-pin",
+    "title": "Shoulder-surfing PIN / passphrase",
+    "description": "Observers (cameras, people nearby) can capture PIN or passphrase entry on device screens or keypads.",
+    "severity": "medium",
+    "categories": [
+      "physical",
+      "opsec"
+    ],
+    "defaultMitigationId": "strong-pin-guidance"
+  },
+  {
+    "id": "pin-wipe-lockout",
+    "title": "PIN wipe / lockout",
+    "description": "Too many wrong PIN attempts can wipe the device. Without a tested seed (and passphrase) backup, funds are gone.",
+    "severity": "high",
+    "categories": [
+      "device",
+      "recovery"
+    ],
+    "defaultMitigationId": "offline-seed-backup"
+  },
+  {
+    "id": "wrong-passphrase-empty",
+    "title": "Wrong passphrase \u2192 empty wallet",
+    "description": "Entering a different BIP39 passphrase opens a different empty wallet with no warning. Funds look 'gone' until the exact passphrase is remembered.",
+    "severity": "critical",
+    "categories": [
+      "passphrase",
+      "recovery"
+    ],
+    "defaultMitigationId": "passphrase-separate-backup"
+  },
+  {
+    "id": "digitize-seed-shares",
+    "title": "Photograph / digitize seed shares",
+    "description": "Photos, scans, or cloud copies of Shamir shares or BIP39 words turn offline backups into online theft targets.",
+    "severity": "critical",
+    "categories": [
+      "backup",
+      "shamir"
+    ],
+    "defaultMitigationId": "never-digitize-shares"
+  },
+  {
+    "id": "recombine-host-malware",
+    "title": "Host malware during share recombine",
+    "description": "Reconstructing Shamir shares or entering seeds on a malware-infected computer can exfiltrate the master seed even if the hardware wallet is honest.",
+    "severity": "critical",
+    "categories": [
+      "shamir",
+      "malware"
+    ],
+    "defaultMitigationId": "recombine-on-device-only"
+  },
+  {
+    "id": "descriptor-with-seeds",
+    "title": "Descriptor stored with seeds",
+    "description": "Keeping the multisig wallet descriptor next to seed backups helps recovery but also helps a thief who finds one location reconstruct addresses and know what to steal \u2014 and may worsen privacy if leaked.",
+    "severity": "medium",
+    "categories": [
+      "multisig",
+      "privacy",
+      "backup"
+    ],
+    "defaultMitigationId": "descriptor-storage-tradeoff"
+  },
+  {
+    "id": "paper-backup-degradation",
+    "title": "Paper backup degradation",
+    "description": "Ink fades, paper burns, floods, or gets thrown away. Paper-only seed backups fail more often than metal over long horizons.",
+    "severity": "high",
+    "categories": [
+      "backup"
+    ],
+    "defaultMitigationId": "offline-seed-backup"
+  },
+  {
+    "id": "lndhub-custodial",
+    "title": "Lightning / LNDHub custodial risk",
+    "description": "BlueWallet Lightning via shared LNDHub (or similar) can mean a third party holds channel funds \u2014 closer to custodial than on-chain self-custody.",
+    "severity": "high",
+    "categories": [
+      "lightning",
+      "custodial",
+      "hot-wallet"
+    ],
+    "defaultMitigationId": "choose-other-custody-model"
+  },
+  {
+    "id": "fake-firmware",
+    "title": "Fake / tampered firmware",
+    "description": "Unofficial firmware or a compromised update channel can steal seeds or ignore authenticity checks on hardware wallets.",
+    "severity": "critical",
+    "categories": [
+      "supply-chain",
+      "hardware"
+    ],
+    "defaultMitigationId": "verify-official-firmware"
+  },
+  {
+    "id": "family-storage-coercion",
+    "title": "Family / social storage coercion",
+    "description": "A relative holding a key or Shamir share can be coerced, socially engineered, or become adversarial during disputes.",
+    "severity": "medium",
+    "categories": [
+      "multisig",
+      "shamir",
+      "social"
+    ],
+    "defaultMitigationId": "multi-party-locations"
+  },
+  {
+    "id": "safe-deposit-access",
+    "title": "Safe-deposit / vault access friction",
+    "description": "Bank hours, KYC on the box, probate, or bank failure can delay or block access to a physically stored key or share.",
+    "severity": "medium",
+    "categories": [
+      "backup",
+      "physical"
+    ],
+    "defaultMitigationId": "geographic-backup-diversity"
   }
 ]

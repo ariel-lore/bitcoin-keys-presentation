@@ -728,5 +728,98 @@
       "passkey-device-loss"
     ],
     "kind": "chooseOtherOption"
+  },
+  {
+    "id": "choose-other-federation",
+    "title": "Choose another option",
+    "description": "Federation design risks (collusion, halt, gateways) are structural. Go back and pick a different federation app, invite, or custody model.",
+    "addressesVulnIds": [
+      "fed-halt-availability",
+      "gateway-censorship",
+      "fed-collusion",
+      "fed-jurisdiction",
+      "debasement"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "federated-custody"
+  },
+  {
+    "id": "verify-official-download",
+    "title": "Verify official download",
+    "description": "Only install from the vendor\u2019s official site or store listing you independently verified. Or choose another tool if you cannot verify the binary.",
+    "addressesVulnIds": [
+      "fake-app-supply-chain"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "start"
+  },
+  {
+    "id": "verify-federation-invite",
+    "title": "Verify the invite out-of-band",
+    "description": "Confirm the federation invite with a trusted guardian or community channel before scanning. Or refuse the invite and choose another path.",
+    "addressesVulnIds": [
+      "malicious-invite"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "fedi-how-join"
+  },
+  {
+    "id": "choose-trusted-social-backup",
+    "title": "Choose trusted social-backup members \u2014 or skip",
+    "description": "Only enable social backup with people you trust under coercion. Skipping keeps recovery risk on you alone.",
+    "addressesVulnIds": [
+      "social-backup-trustees"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "fedi-social-backup"
+  },
+  {
+    "id": "strong-pin-guidance",
+    "title": "Use a strong PIN privately",
+    "description": "Prefer a longer unique PIN entered without observers or cameras. Or revisit device protection choices.",
+    "addressesVulnIds": [
+      "weak-device-pin",
+      "shoulder-surfing-pin"
+    ],
+    "kind": "guidance"
+  },
+  {
+    "id": "never-digitize-shares",
+    "title": "Never photograph or digitize shares",
+    "description": "Keep Shamir shares / seed words offline only. If you already digitized them, treat those copies as compromised and rotate.",
+    "addressesVulnIds": [
+      "digitize-seed-shares",
+      "seed-screenshot"
+    ],
+    "kind": "guidance"
+  },
+  {
+    "id": "recombine-on-device-only",
+    "title": "Recombine only on the signing device",
+    "description": "Enter shares on the hardware wallet itself (or air-gapped signer), never into a general-purpose computer keyboard.",
+    "addressesVulnIds": [
+      "recombine-host-malware"
+    ],
+    "kind": "guidance"
+  },
+  {
+    "id": "descriptor-storage-tradeoff",
+    "title": "Understand descriptor + seed colocation",
+    "description": "Storing the descriptor with seeds speeds recovery but helps a thief and leaks wallet structure if any location is compromised. Some guides separate them \u2014 this path follows your recovery story deliberately.",
+    "addressesVulnIds": [
+      "descriptor-with-seeds",
+      "xpub-privacy"
+    ],
+    "kind": "guidance"
+  },
+  {
+    "id": "verify-official-firmware",
+    "title": "Install firmware only from official channels",
+    "description": "Use vendor-signed firmware via the official suite/app and complete authenticity checks when offered.",
+    "addressesVulnIds": [
+      "fake-firmware",
+      "supply-chain-device"
+    ],
+    "kind": "guidance"
   }
 ]

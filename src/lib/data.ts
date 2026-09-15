@@ -12,27 +12,47 @@ import type {
   CustodianDef,
 } from '../types/schema';
 import { buildCustodianFlowNodes, buildStartNode } from './buildCustodianNodes';
+import { buildAllGuideNodes, guideOwnedNodeIds } from './guides';
 import { buildUnavoidableRiskCache } from './unavoidableRisks';
 
 const custodians = custodiansData as CustodianDef[];
 
-/** Replace start + custodian flow nodes with data-driven versions; keep other paths. */
+/**
+ * Merge order:
+ * 1. Generated start + custodian flow
+ * 2. Guide builders (Fedi, BlueWallet, Trezor, multisig, hub, breadth)
+ * 3. Remaining tree.json nodes not owned by (1)/(2)
+ */
 function mergeTree(raw: TreeFile): TreeFile {
-  const generated = buildCustodianFlowNodes(custodians);
+  const custodianNodes = buildCustodianFlowNodes(custodians);
   const start = buildStartNode();
-  const replaceIds = new Set([start.id, ...generated.map((n) => n.id), 'custodian-mode']);
-  // Drop obsolete generated / static custodian nodes from tree.json
+  const guideNodes = buildAllGuideNodes();
+  const owned = new Set<string>([
+    start.id,
+    ...custodianNodes.map((n) => n.id),
+    ...guideOwnedNodeIds(guideNodes),
+    'custodian-mode',
+    'stub-federated',
+  ]);
+
   const obsoletePrefixes = ['auth-', 'creds-', 'kyc-'];
+  // Drop legacy federated stubs replaced by guides
+  const obsoleteExact = new Set([
+    'fed-fedi',
+    'fed-lightning',
+    'custodian-mode',
+  ]);
+
   const kept = raw.nodes.filter((n) => {
-    if (replaceIds.has(n.id)) return false;
-    if (n.id === 'custodian-mode') return false;
-    if (n.id === 'single-custodian' || n.id === 'path-end-custodial') return false;
+    if (owned.has(n.id)) return false;
+    if (obsoleteExact.has(n.id)) return false;
     if (obsoletePrefixes.some((p) => n.id.startsWith(p))) return false;
     return true;
   });
+
   return {
     startNodeId: start.id,
-    nodes: [start, ...generated, ...kept],
+    nodes: [start, ...custodianNodes, ...guideNodes, ...kept],
   };
 }
 
