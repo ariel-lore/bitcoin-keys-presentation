@@ -1,0 +1,63 @@
+[
+  {
+    "id": "walletofsatoshi",
+    "name": "Wallet of Satoshi",
+    "icon": "/brands/walletofsatoshi.svg",
+    "services": ["lightning", "custodial"],
+    "kyc": "none",
+    "twoFactor": {
+      "mandatory": false,
+      "methods": []
+    },
+    "authModel": "email",
+    "notes": "Classic custodial Lightning mode: typically no KYC; login/recovery often email-based. 2FA N/A or email OTP only — modeled as email login without mandatory 2FA methods. Educational snapshot; verify current product."
+  },
+  {
+    "id": "bitcoinwell",
+    "name": "Bitcoin Well",
+    "icon": "/brands/bitcoinwell.svg",
+    "services": ["exchange", "buy-sell"],
+    "kyc": "for_buy_limits",
+    "twoFactor": {
+      "mandatory": false,
+      "methods": ["authenticator"]
+    },
+    "notes": "KYC commonly required for buy/higher limits. 2FA optional (authenticator). Educational snapshot; verify current product."
+  },
+  {
+    "id": "coinos",
+    "name": "Coinos",
+    "icon": "/brands/coinos.svg",
+    "services": ["web-wallet", "lightning"],
+    "kyc": "none",
+    "twoFactor": {
+      "mandatory": false,
+      "methods": ["authenticator"]
+    },
+    "notes": "Typically username/password with no KYC. 2FA optional (authenticator). Educational snapshot; verify current product."
+  },
+  {
+    "id": "bullbitcoin",
+    "name": "Bull Bitcoin",
+    "icon": "/brands/bullbitcoin.svg",
+    "services": ["exchange", "buy-sell"],
+    "kyc": "required",
+    "twoFactor": {
+      "mandatory": false,
+      "methods": ["authenticator"]
+    },
+    "notes": "KYC generally required for full services. 2FA optional but encouraged (authenticator). Educational snapshot; verify current product."
+  },
+  {
+    "id": "kraken",
+    "name": "Kraken",
+    "icon": "/brands/kraken.svg",
+    "services": ["exchange", "lightning"],
+    "kyc": "required",
+    "twoFactor": {
+      "mandatory": true,
+      "methods": ["authenticator", "passkey", "hardware_key"]
+    },
+    "notes": "KYC required. Sign-in 2FA treated as mandatory for continued use on many accounts; methods: authenticator, passkey, hardware key (not SMS/email for sign-in). Educational snapshot; verify current product."
+  }
+]

@@ -9,7 +9,7 @@
       "custodial",
       "hot-wallet"
     ],
-    "defaultMitigationId": "never-enter-seed-online"
+    "defaultMitigationId": "choose-other-custodian"
   },
   {
     "id": "sim-swap",
@@ -20,7 +20,7 @@
       "custodial",
       "2fa"
     ],
-    "defaultMitigationId": "hw-2fa"
+    "defaultMitigationId": "choose-other-2fa-method"
   },
   {
     "id": "compromised-creds",
@@ -30,7 +30,7 @@
     "categories": [
       "custodial"
     ],
-    "defaultMitigationId": "strong-unique-password"
+    "defaultMitigationId": "enable-2fa-or-choose-other"
   },
   {
     "id": "custodian-hack",
@@ -41,7 +41,7 @@
       "custodial",
       "counterparty"
     ],
-    "defaultMitigationId": "self-custody-withdrawal"
+    "defaultMitigationId": "technically-competent-custodian"
   },
   {
     "id": "insider-theft",
@@ -53,18 +53,18 @@
       "federation",
       "counterparty"
     ],
-    "defaultMitigationId": "split-holdings"
+    "defaultMitigationId": "research-custodian-leadership"
   },
   {
     "id": "insolvency",
     "title": "Insolvency / bankruptcy",
-    "description": "If the custodian fails, customer Bitcoin may become unsecured claims—often partially recovered or delayed for years.",
+    "description": "If the custodian fails, customer Bitcoin may become unsecured claims\u2014often partially recovered or delayed for years.",
     "severity": "critical",
     "categories": [
       "custodial",
       "counterparty"
     ],
-    "defaultMitigationId": "self-custody-withdrawal"
+    "defaultMitigationId": "trustworthy-custodian"
   },
   {
     "id": "withdrawal-freeze",
@@ -74,7 +74,7 @@
     "categories": [
       "custodial"
     ],
-    "defaultMitigationId": "self-custody-withdrawal"
+    "defaultMitigationId": "choose-other-custodian"
   },
   {
     "id": "gov-seizure",
@@ -86,7 +86,7 @@
       "federation",
       "jurisdiction"
     ],
-    "defaultMitigationId": "split-holdings"
+    "defaultMitigationId": "trustworthy-jurisdiction"
   },
   {
     "id": "debasement",
@@ -97,7 +97,7 @@
       "custodial",
       "counterparty"
     ],
-    "defaultMitigationId": "proof-of-reserves"
+    "defaultMitigationId": "custodian-proof-of-reserves"
   },
   {
     "id": "privacy-leak-kyc",
@@ -108,7 +108,7 @@
       "custodial",
       "privacy"
     ],
-    "defaultMitigationId": "split-holdings"
+    "defaultMitigationId": "choose-other-custodian"
   },
   {
     "id": "fed-collusion",
@@ -252,7 +252,7 @@
   },
   {
     "id": "binary-source-mismatch",
-    "title": "Audited source ≠ built/signed binary",
+    "title": "Audited source \u2260 built/signed binary",
     "description": "You may run a binary that does not match the audited source (build pipeline compromise).",
     "severity": "critical",
     "categories": [
@@ -275,7 +275,7 @@
   {
     "id": "firmware-rng-defect",
     "title": "Hardware RNG / firmware seed-gen defect",
-    "description": "Weak on-device entropy (historical firmware bugs) can make seeds crackable. Firmware updates do NOT fix existing seeds—you must migrate funds to a new seed.",
+    "description": "Weak on-device entropy (historical firmware bugs) can make seeds crackable. Firmware updates do NOT fix existing seeds\u2014you must migrate funds to a new seed.",
     "severity": "critical",
     "categories": [
       "hardware",
@@ -294,8 +294,8 @@
   },
   {
     "id": "electrum-not-bip39",
-    "title": "Electrum ≠ BIP39 seed incompatibility",
-    "description": "Electrum generates its own mnemonic scheme, not BIP39—restoring into BIP39 wallets fails or produces different keys.",
+    "title": "Electrum \u2260 BIP39 seed incompatibility",
+    "description": "Electrum generates its own mnemonic scheme, not BIP39\u2014restoring into BIP39 wallets fails or produces different keys.",
     "severity": "medium",
     "categories": [
       "compatibility",
@@ -337,7 +337,7 @@
   },
   {
     "id": "biased-word-mapping",
-    "title": "Biased own-randomness→word mapping",
+    "title": "Biased own-randomness\u2192word mapping",
     "description": "Homegrown encoding from bits to BIP39 words often has modular bias or off-by-one errors.",
     "severity": "high",
     "categories": [
@@ -403,7 +403,7 @@
   {
     "id": "checksum-mismatch",
     "title": "Checksum word mismatch vs written seed",
-    "description": "Transcription errors mean the last word you wrote doesn't match the entropy—wallet may reject or derive wrong keys.",
+    "description": "Transcription errors mean the last word you wrote doesn't match the entropy\u2014wallet may reject or derive wrong keys.",
     "severity": "high",
     "categories": [
       "seed-generation",
@@ -491,7 +491,7 @@
   {
     "id": "same-vendor-multisig",
     "title": "Same-vendor multisig is not independent",
-    "description": "Multiple keys from one manufacturer share firmware, entropy source, and supply-chain risk—one bug can hit the signing threshold.",
+    "description": "Multiple keys from one manufacturer share firmware, entropy source, and supply-chain risk\u2014one bug can hit the signing threshold.",
     "severity": "critical",
     "categories": [
       "multisig",
@@ -533,7 +533,7 @@
   },
   {
     "id": "glacier-complexity",
-    "title": "Ceremony complexity → human error",
+    "title": "Ceremony complexity \u2192 human error",
     "description": "High-security dual-computer offline protocols (e.g. Glacier-style) have many steps; mistakes can brick funds or leak entropy.",
     "severity": "medium",
     "categories": [
@@ -571,7 +571,7 @@
       "custodial",
       "auth"
     ],
-    "defaultMitigationId": "strong-unique-password"
+    "defaultMitigationId": "enable-2fa-or-choose-other"
   },
   {
     "id": "account-recovery-se",
@@ -641,5 +641,77 @@
       "malware"
     ],
     "defaultMitigationId": "verify-destination-device"
+  },
+  {
+    "id": "loss-of-credentials",
+    "title": "Loss of credentials",
+    "description": "You forget the password, lose access to the login email, or otherwise cannot sign in. Custodial recovery usually means contacting support and proving identity.",
+    "severity": "high",
+    "categories": [
+      "custodial",
+      "auth",
+      "recovery"
+    ],
+    "defaultMitigationId": "contact-custodian-support"
+  },
+  {
+    "id": "government-subpoena",
+    "title": "Government subpoena / compelled disclosure",
+    "description": "Legal process can compel the custodian to freeze accounts, disclose KYC, or surrender assets without your consent.",
+    "severity": "high",
+    "categories": [
+      "custodial",
+      "jurisdiction",
+      "privacy"
+    ],
+    "defaultMitigationId": "choose-other-custody-model"
+  },
+  {
+    "id": "email-credential-compromise",
+    "title": "Email account compromise",
+    "description": "Attackers who take over the email inbox used for login or recovery can often reset custodial access.",
+    "severity": "critical",
+    "categories": [
+      "custodial",
+      "auth",
+      "2fa"
+    ],
+    "defaultMitigationId": "choose-other-2fa-method"
+  },
+  {
+    "id": "phone-loss",
+    "title": "Phone loss (authenticator)",
+    "description": "Losing the phone that holds your TOTP authenticator (without seed backup) can lock you out of the custodian account.",
+    "severity": "high",
+    "categories": [
+      "custodial",
+      "2fa",
+      "recovery"
+    ],
+    "defaultMitigationId": "choose-other-2fa-method"
+  },
+  {
+    "id": "hardware-key-loss",
+    "title": "Hardware security key loss",
+    "description": "Losing your only FIDO2/U2F key without a registered spare can lock you out until painful recovery.",
+    "severity": "high",
+    "categories": [
+      "custodial",
+      "2fa",
+      "recovery"
+    ],
+    "defaultMitigationId": "choose-other-2fa-method"
+  },
+  {
+    "id": "passkey-device-loss",
+    "title": "Passkey device / sync-account loss",
+    "description": "Passkeys live on a device or in a sync account. Losing the device or that sync account (or having it taken over) can lock you out or enable takeover.",
+    "severity": "high",
+    "categories": [
+      "custodial",
+      "2fa",
+      "recovery"
+    ],
+    "defaultMitigationId": "choose-other-2fa-method"
   }
 ]

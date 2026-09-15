@@ -94,6 +94,11 @@ button {
   grid-template-columns: minmax(260px, 320px) 1fr;
 }
 
+/* Collapsed path sidebar → main slide expands */
+.app-body:has(.path-risk-list.panel-collapsed) {
+  grid-template-columns: minmax(120px, 160px) 1fr;
+}
+
 .path-aside {
   min-height: 0;
   min-width: 0;
@@ -1728,4 +1733,13 @@ button {
 
 .node-view {
   overflow: auto;
+}
+
+.prl-mit .btn-choose-other {
+  background: transparent;
+  border: 1px solid var(--orange-dim, #c47820);
+  color: var(--orange, #f7931a);
+}
+.prl-mit .btn-choose-other:hover {
+  background: rgba(247, 147, 26, 0.12);
 }

@@ -41,10 +41,14 @@ export function SummaryView({
         )}
         <p className={`summary-risk-line ${sufficient ? 'ready' : 'incomplete'}`}>
           {sufficient
-            ? remaining > 0
-              ? `Operable — ${remaining} open risk${remaining === 1 ? '' : 's'} remain. Apply mitigations to add procedure steps.`
-              : 'Operable — open risks cleared (vigilance still required)'
-            : 'Not yet sufficient to operate — complete private + public sides'}
+            ? state.hasPrivateKey
+              ? remaining > 0
+                ? `Operable — ${remaining} open risk${remaining === 1 ? '' : 's'} remain.`
+                : 'Operable — open risks cleared (vigilance still required)'
+              : remaining > 0
+                ? `Setup complete — can receive & send via custodian (no private key). ${remaining} open risk${remaining === 1 ? '' : 's'} remain.`
+                : 'Setup complete — can receive & send via custodian (no private key).'
+            : 'Not yet sufficient to operate — finish auth / key setup'}
         </p>
       </header>
 
@@ -105,23 +109,37 @@ export function SummaryView({
                     {mit && (
                       <div className="summary-mit-row">
                         <span className="summary-mit-label">
-                          {mit.kind === 'switchOption' ? 'Switch: ' : 'Mitigation: '}
+                          {mit.kind === 'switchOption'
+                            ? 'Switch: '
+                            : mit.kind === 'chooseOtherOption'
+                              ? 'Mitigation: '
+                              : mit.kind === 'guidance'
+                                ? 'Guidance: '
+                                : 'Mitigation: '}
                           {mit.title}
                           {mit.kind === 'switchOption'
                             ? ' · changes structure'
-                            : mit.procedureStep
-                              ? ' · adds procedure step'
-                              : ''}
+                            : mit.kind === 'chooseOtherOption'
+                              ? ' · revisit a prior choice'
+                              : mit.kind === 'guidance'
+                                ? ''
+                                : mit.procedureStep
+                                  ? ' · adds procedure step'
+                                  : ''}
                         </span>
-                        <button
-                          type="button"
-                          className="btn btn-sm btn-primary"
-                          onClick={() => onApplyMitigation(v.id)}
-                        >
-                          {mit.kind === 'switchOption'
-                            ? `Switch to ${mit.switchTo?.choiceLabel ?? mit.title}…`
-                            : 'Apply'}
-                        </button>
+                        {mit.kind === 'guidance' ? null : (
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-primary"
+                            onClick={() => onApplyMitigation(v.id)}
+                          >
+                            {mit.kind === 'switchOption'
+                              ? `Switch to ${mit.switchTo?.choiceLabel ?? mit.title}…`
+                              : mit.kind === 'chooseOtherOption'
+                                ? 'Choose another option'
+                                : 'Apply'}
+                          </button>
+                        )}
                       </div>
                     )}
                   </li>

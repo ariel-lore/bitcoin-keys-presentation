@@ -1,25 +1,31 @@
 [
   {
     "id": "path-custodial",
-    "name": "Single custodian",
-    "summary": "Exchange/hosted wallet (e.g. Kraken) with stronger auth. Convenience and support recovery; residual counterparty, phishing, freeze, and insolvency risk.",
+    "name": "Custodian (Kraken)",
+    "summary": "Hosted custodian with mandatory 2FA (authenticator). Account claim only \u2014 no private key. Counterparty and auth risks remain on the path.",
     "choiceSequence": [
       "start-custodian",
-      "cm-single",
       "sc-kraken",
-      "ak-hw"
+      "auth-kraken-authenticator"
     ],
     "highlightColor": "#f7931a"
   },
   {
-    "id": "path-federated",
-    "name": "Federated custody",
-    "summary": "Community/federation custody (e.g. Fedi): payments and privacy tradeoffs; collusion, jurisdiction, and seed-loss risks.",
+    "id": "path-custodial-wos",
+    "name": "Custodian (Wallet of Satoshi)",
+    "summary": "Custodial Lightning with email-style login and no KYC (typical). Completes without a 2FA chooser.",
     "choiceSequence": [
       "start-custodian",
-      "cm-fed",
-      "fc-fedi",
-      "ff-backup"
+      "sc-walletofsatoshi"
+    ],
+    "highlightColor": "#fb923c"
+  },
+  {
+    "id": "path-federated",
+    "name": "Federated custody (stub)",
+    "summary": "Placeholder \u2014 federated user story not rebuilt yet. Opens the stub, then legacy Fedi flow if you continue.",
+    "choiceSequence": [
+      "start-federated"
     ],
     "highlightColor": "#a78bfa"
   },

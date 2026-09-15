@@ -49,14 +49,14 @@
   {
     "id": "proof-of-reserves",
     "title": "Prefer transparent / PoR custodians",
-    "description": "Favor services that publish auditable reserves and liabilities—still not a guarantee.",
+    "description": "Favor services that publish auditable reserves and liabilities\u2014still not a guarantee.",
     "addressesVulnIds": [
       "debasement",
       "insolvency"
     ],
     "procedureStep": {
       "title": "Prefer custodians with transparent reserves",
-      "description": "Treat PoR as one signal among many — not a guarantee against insolvency or freeze risk."
+      "description": "Treat PoR as one signal among many \u2014 not a guarantee against insolvency or freeze risk."
     },
     "kind": "procedure"
   },
@@ -140,7 +140,7 @@
   },
   {
     "id": "user-entropy-dice",
-    "title": "Provide your own entropy (50–100+ dice / flips)",
+    "title": "Provide your own entropy (50\u2013100+ dice / flips)",
     "description": "Follow device docs for external entropy so you do not rely solely on vendor RNG.",
     "addressesVulnIds": [
       "insufficient-entropy",
@@ -149,7 +149,7 @@
     ],
     "procedureStep": {
       "title": "Add user entropy (dice) when generating the seed",
-      "description": "Follow the device vendor’s entropy procedure with fair dice or equivalent. Do not improvise undocumented steps."
+      "description": "Follow the device vendor\u2019s entropy procedure with fair dice or equivalent. Do not improvise undocumented steps."
     },
     "kind": "procedure"
   },
@@ -219,7 +219,7 @@
   {
     "id": "migrate-after-rng-bug",
     "title": "Migrate funds after RNG/firmware seed bugs",
-    "description": "A firmware update does not heal an already-generated weak seed—create a new seed and move coins.",
+    "description": "A firmware update does not heal an already-generated weak seed\u2014create a new seed and move coins.",
     "addressesVulnIds": [
       "firmware-rng-defect"
     ],
@@ -241,8 +241,8 @@
   },
   {
     "id": "trustworthy-dice-guide",
-    "title": "Trustworthy dice → BIP39 instructions",
-    "description": "Use well-reviewed mapping tables (e.g. 5 rolls with 1–4 + coin, or established Seedpicker procedures).",
+    "title": "Trustworthy dice \u2192 BIP39 instructions",
+    "description": "Use well-reviewed mapping tables (e.g. 5 rolls with 1\u20134 + coin, or established Seedpicker procedures).",
     "addressesVulnIds": [
       "unsafe-dice-instructions",
       "biased-word-mapping"
@@ -303,7 +303,7 @@
     ],
     "procedureStep": {
       "title": "Ferry verified software over USB only",
-      "description": "Download and verify builds on an online machine, then move them via USB to the offline environment. Do not enable Wi‑Fi “just this once.”"
+      "description": "Download and verify builds on an online machine, then move them via USB to the offline environment. Do not enable Wi\u2011Fi \u201cjust this once.\u201d"
     },
     "kind": "procedure"
   },
@@ -339,7 +339,7 @@
   {
     "id": "xpub-watcher-match",
     "title": "Load xpub on online watcher; match offline address",
-    "description": "Export xpub carefully; confirm the first addresses match what the cold device shows—then fund.",
+    "description": "Export xpub carefully; confirm the first addresses match what the cold device shows\u2014then fund.",
     "addressesVulnIds": [
       "derivation-path-mismatch",
       "address-poisoning"
@@ -381,7 +381,7 @@
   {
     "id": "inheritance-playbook",
     "title": "Written inheritance playbook",
-    "description": "Document where keys live, passphrase handling, who to trust, and how to verify software—without putting the seed in the will text.",
+    "description": "Document where keys live, passphrase handling, who to trust, and how to verify software\u2014without putting the seed in the will text.",
     "addressesVulnIds": [
       "inheritance-unclear"
     ],
@@ -414,7 +414,7 @@
     ],
     "procedureStep": {
       "title": "Never type the seed into websites or chat support",
-      "description": "Real support will not ask for seed words. Bookmark official domains and reject “verify wallet” pages."
+      "description": "Real support will not ask for seed words. Bookmark official domains and reject \u201cverify wallet\u201d pages."
     },
     "kind": "procedure"
   },
@@ -455,7 +455,7 @@
   {
     "id": "glacier-dual-computer",
     "title": "Glacier-style dual permanently-offline computers",
-    "description": "Two air-gapped machines, printed procedures, and meticulous checklists for maximum seed-gen assurance—at high complexity cost.",
+    "description": "Two air-gapped machines, printed procedures, and meticulous checklists for maximum seed-gen assurance\u2014at high complexity cost.",
     "addressesVulnIds": [
       "hot-malware",
       "break-airgap-install",
@@ -613,5 +613,119 @@
       "title": "Verify destination on the signing device",
       "description": "Before approving a spend, confirm the full destination address and amount on the hardware or air-gapped display."
     }
+  },
+  {
+    "id": "trustworthy-jurisdiction",
+    "title": "Choose a more trustworthy jurisdiction",
+    "description": "Where the custodian is regulated affects seizure and legal-process risk. Research licensing, courts, and historical behavior \u2014 then pick a different custody model or venue if uncomfortable.",
+    "addressesVulnIds": [
+      "gov-seizure"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "start"
+  },
+  {
+    "id": "trustworthy-custodian",
+    "title": "Use a trustworthy custodian",
+    "description": "Insolvency risk never goes to zero with a third party. Prefer transparent, well-capitalized operators \u2014 or choose another custody model if you cannot accept the IOU.",
+    "addressesVulnIds": [
+      "insolvency"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "start"
+  },
+  {
+    "id": "custodian-proof-of-reserves",
+    "title": "Custodian with proof of reserves",
+    "description": "Prefer venues that publish credible proof-of-reserves / liabilities. PoR is a signal, not a guarantee \u2014 you still hold an account claim, not on-chain keys.",
+    "addressesVulnIds": [
+      "debasement"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "start"
+  },
+  {
+    "id": "technically-competent-custodian",
+    "title": "Technically competent custodian",
+    "description": "External hacks target hot wallets and infrastructure. Look for strong security track records and cold-storage practices \u2014 or choose another option if you cannot trust the venue.",
+    "addressesVulnIds": [
+      "custodian-hack"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "start"
+  },
+  {
+    "id": "research-custodian-leadership",
+    "title": "Research leadership for trustworthiness",
+    "description": "Rogue employees and insider abuse are real. Read about ownership, audits, and past incidents \u2014 then pick a different model or venue if trust is thin.",
+    "addressesVulnIds": [
+      "insider-theft"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "start"
+  },
+  {
+    "id": "choose-other-custody-model",
+    "title": "Choose another option",
+    "description": "Custodial structure itself creates counterparty and legal-process exposure. Go back and pick Federated, Self-custodied, or Collaborative if that fits better.",
+    "addressesVulnIds": [
+      "gov-seizure",
+      "insolvency",
+      "custodian-hack",
+      "insider-theft",
+      "debasement",
+      "government-subpoena"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "start"
+  },
+  {
+    "id": "contact-custodian-support",
+    "title": "Contact support (expect to reveal personal info)",
+    "description": "If you lose login access, recovery usually means support tickets, ID documents, and waiting. That is the tradeoff of not holding keys \u2014 there is no seed phrase to restore offline.",
+    "addressesVulnIds": [
+      "loss-of-credentials"
+    ],
+    "kind": "guidance"
+  },
+  {
+    "id": "choose-other-custodian",
+    "title": "Choose another option",
+    "description": "Go back and pick a different custodian (or leave custodial custody entirely) if this venue's auth, KYC, or freeze practices are unacceptable.",
+    "addressesVulnIds": [
+      "phish-creds",
+      "withdrawal-freeze",
+      "privacy-leak-kyc",
+      "compromised-creds",
+      "credential-stuffing",
+      "loss-of-credentials",
+      "government-subpoena"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "single-custodian"
+  },
+  {
+    "id": "enable-2fa-or-choose-other",
+    "title": "Enable 2FA \u2014 or choose another option",
+    "description": "When 2FA is optional, enabling authenticator / passkey / hardware key on the next step reduces password-only takeover. Or go back and pick a different custodian.",
+    "addressesVulnIds": [
+      "compromised-creds",
+      "credential-stuffing"
+    ],
+    "kind": "chooseOtherOption",
+    "returnToNodeId": "single-custodian"
+  },
+  {
+    "id": "choose-other-2fa-method",
+    "title": "Choose another option",
+    "description": "Each 2FA method trades one failure mode for another. Go back and pick a different method (or a different custodian) if this risk is unacceptable.",
+    "addressesVulnIds": [
+      "sim-swap",
+      "email-credential-compromise",
+      "phone-loss",
+      "hardware-key-loss",
+      "passkey-device-loss"
+    ],
+    "kind": "chooseOtherOption"
   }
 ]

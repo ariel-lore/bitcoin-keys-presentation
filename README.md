@@ -1,7 +1,7 @@
 # Bitcoin Custody
 
 Data-driven **interactive presentation** about Bitcoin custody and keys.
-Each screen is a slide: pick a path; open **risks** accumulate with a **paired mitigation** you can click to apply. No scoring meters — serious educational UX, not a game.
+Each screen is a slide: pick a path; open **risks** accumulate under each choice with **mitigations** underneath (guidance text and/or **Choose another option** — not a magic “Apply” that pretends to erase structural risk).
 
 **Educational demo only — not financial, legal, or investment advice.**
 
@@ -25,71 +25,77 @@ All narrative lives under **`src/data/`**:
 
 | File | Purpose |
 |------|---------|
-| `tree.json` | Decision nodes + choices (`title` = question; `isSummary` = end slide) |
+| `tree.json` | Decision nodes + choices (self-custody / legacy branches) |
+| `custodians.json` | **Custodian path source of truth** (KYC / 2FA tags → generated slides) |
 | `vulnerabilities.json` | Risk catalog (`defaultMitigationId` pairs a mitigation) |
-| `mitigations.json` | Hardening catalog (`addressesVulnIds`, optional `procedureStep`) |
+| `mitigations.json` | Hardening catalog (`kind`, `returnToNodeId`, optional `procedureStep`) |
 | `paths.json` | Recommended walkthroughs |
 
 Brand icons live in **`public/brands/`**.
 
+The **custodian user story** is rebuilt end-to-end. Federated / collaborative (and deep self-custody polish) may still be stubs or legacy placeholders.
+
+### Custodian path (implemented)
+
+1. **Which custody model?** — Custodian / Federated / Self-custodied / Collaborative  
+   Selecting **Custodian** attaches intrinsic risks: government seizure, insolvency, external hack, rogue employee, debasement.
+2. **Which custodian?** — Driven by `custodians.json`: Wallet of Satoshi, Bitcoin Well, Coinos, Bull Bitcoin, Kraken.
+3. **What 2FA method?** — Conditional on that custodian’s `twoFactor` tags (skipped when mandatory + exactly one method, or when methods are empty).
+
+**Completion:** `hasPublicKey: true`, `hasPrivateKey: false` — can receive & send via the account claim; you do not hold private keys.
+
+### Research assumptions (KYC / 2FA tags)
+
+Tags in `custodians.json` are **educational snapshots**, not live compliance guarantees. Products change; always verify on the vendor’s site.
+
+| Custodian | KYC (modeled) | 2FA (modeled) |
+|-----------|---------------|---------------|
+| **Kraken** | Required | **Mandatory** for continued sign-in on many accounts; methods: authenticator, passkey, hardware key (not SMS/email sign-in) |
+| **Bull Bitcoin** | Generally required for full services | **Optional** (encouraged); authenticator |
+| **Bitcoin Well** | For buy / higher limits | **Optional**; authenticator |
+| **Coinos** | None (username/password) | **Optional**; authenticator |
+| **Wallet of Satoshi** (custodial LN) | Typically none | N/A / email login — no mandatory 2FA method list |
+
+When `twoFactor.mandatory === true`, password-only takeover risks (`compromised-creds`, `credential-stuffing`) are **not** attached. Enabling an optional 2FA method **clears** those risks from the path; skipping 2FA leaves them.
+
 ### Choice fields
 
-- `description` — human-readable explanation (1–3 short sentences) shown under the label
-- `addsVulnIds` — risks introduced by the choice (shown under the option **and** nested under that step in Path & risks)
-- `icon` — optional path like `/brands/ledger.svg`
-- `subtitle` — optional service line (e.g. `Hardware · USB`)
-- `setsFlags` — `privateKey` / `publicKey` / `xpub` (educational labels only)
-- `enables` / `capabilities` — tool capability tags for differentiated follow-ups
-- `addsMitigationIds` — deprecated / ignored (mitigations are click-to-apply)
+- `description` — plain-English explanation under the label
+- `addsVulnIds` — risks introduced (shown under the option **and** nested under that step in Path & risks)
+- `clearsVulnIds` — risks removed from accumulation (e.g. enabling 2FA)
+- `icon` / `subtitle` / `setsFlags` / `enables` / `capabilities` — as before
 
-### Hardware product selection
+### Mitigations
 
-Brand picks (Ledger, Trezor, Coldcard, Bitkey, Seedsigner, Jade, …) go to a **"Which [brand] product?"** slide listing current models with short descriptions, then into that product’s seed / storage / PIN path.
-
-### Node fields
-
-- `title` — the question on the slide (large, centered)
-- `preMitigationIds` — optional mitigations apply-able **on this slide before choosing**
-- `isSummary` — end-of-path summary slide
-
-### Mitigations & procedure steps
-
-Mitigations may include `procedureStep: { title, description }`. Applying a **procedure** mitigation marks the risk secured **and** appends that step to `state.procedureSteps` (e.g. backup, inheritance, OPSEC).
-
-Structural mitigations use `kind: "switchOption"` with `switchTo: { replaceChoiceTag|replaceChoiceId, targetNodeId, choiceLabel, clearsVulnIds }` — the UI says **Switch to…** and rewrites the trail toward another branch (e.g. single-key → multisig) instead of faking a procedure step.
+| `kind` | UI behavior |
+|--------|-------------|
+| `guidance` | Explanatory text only — **no** Apply |
+| `chooseOtherOption` | **Choose another option** → jumps to `returnToNodeId` or the trail step that introduced the risk (does **not** claim the risk is fixed) |
+| `switchOption` | Structural rewrite (legacy self-custody switches) |
+| `procedure` | Legacy click-to-apply procedure step (still used on some self-custody paths) |
 
 ### Key accumulation & sufficiency
 
-Adventure state tracks `hasPrivateKey`, `hasPublicKey`, `hasXpub`.  
-**Sufficient to operate** when private material is present **and** a public/xpub side is ready — even if risks remain.
-
-When operable, the UI switches to a **procedure / setup** feel. After keys are sufficient, the adventure continues with **Receive → Send**; backup / inheritance / xpub-verify remain click-to-apply mitigations.
+- **Self-custody:** private + (public \| xpub) → operable  
+- **Custodial:** `publicKey` alone (no private key) → setup complete / can receive & send through the venue
 
 ### Unified path + risks
 
 `PathRiskList`:
 
-- Vertical list of decisions (top → bottom); risks nest under the introducing step
-- **Entire** sidebar expands/collapses as one unit (not per-step accordion)
-- When expanded, the panel body is `overflow-y: auto` so it never breaks the slide viewport
+- Vertical list of decisions; risks nest under the introducing step; mitigations under each risk
+- **Entire** sidebar expands/collapses as one unit
+- When collapsed, the main slide expands; when expanded and long, the sidebar body scrolls
 
 ### Browser history
 
-**Browser Back / Forward** (History API + `?node=` deep-link): exactly one history entry per adventure choice; jumping backward in the path uses `replaceState` (no double-push). Back restores the previous full snapshot.
+**Browser Back / Forward** (History API + `?node=` deep-link): one history entry per adventure choice; jumping backward uses `replaceState`.
 
 ### Recommended paths (`paths.json`)
 
-Each path has `choiceSequence`: ordered **choice ids** walked from `start`. Use **Paths** in the UI to auto-apply a walkthrough.
+Each path has `choiceSequence`: ordered **choice ids** walked from `start`.
 
-TypeScript types live in `src/types/schema.ts`.
-
-## UX features
-
-- **True slides**: each view fits the viewport; no page scrollbars when possible
-- **Question titles**: every node asks a question (large, centered); choices are the answers with descriptions
-- **Product lineup** after brand selection for major hardware vendors
-- **Click-to-apply mitigations** that can append procedure steps
-- Setup status + Priv/Pub badges (labels only, never real keys)
+TypeScript types live in `src/types/schema.ts`. Custodian slides are generated in `src/lib/buildCustodianNodes.ts` from `custodians.json`.
 
 ## Stack
 

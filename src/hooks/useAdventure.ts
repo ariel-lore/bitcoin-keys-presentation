@@ -9,7 +9,7 @@ import type {
   TrailStep,
 } from '../types/schema';
 import { isSufficientToOperate } from '../types/schema';
-import { tree, nodeById, uniquePush, mitigationById, mitigationForVuln } from '../lib/data';
+import { tree, nodeById, uniquePush, uniqueRemove, mitigationById, mitigationForVuln } from '../lib/data';
 
 /** Survives React Strict Mode remount so we only bootstrap history once. */
 let historyBootstrapped = false;
@@ -64,6 +64,11 @@ function applyChoice(prev: AdventureState, choice: Choice): AdventureState | nul
     },
     choice.setsFlags,
   );
+  let vulnIds = uniquePush(prev.vulnIds, choice.addsVulnIds);
+  vulnIds = uniqueRemove(vulnIds, choice.clearsVulnIds);
+  // Drop mitigated markers for vulns no longer on the path
+  const vulnSet = new Set(vulnIds);
+  const mitigatedVulnIds = prev.mitigatedVulnIds.filter((id) => vulnSet.has(id));
   return {
     currentNodeId: choice.nextNodeId,
     trail: [
@@ -77,8 +82,8 @@ function applyChoice(prev: AdventureState, choice: Choice): AdventureState | nul
         kind: 'choice',
       },
     ],
-    vulnIds: uniquePush(prev.vulnIds, choice.addsVulnIds),
-    mitigatedVulnIds: prev.mitigatedVulnIds,
+    vulnIds,
+    mitigatedVulnIds,
     tags: uniquePush(prev.tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]),
     procedureSteps: prev.procedureSteps,
     ...keys,
@@ -128,6 +133,7 @@ function replayTrail(
     }
     currentNodeId = choice.nextNodeId;
     vulnIds = uniquePush(vulnIds, choice.addsVulnIds);
+    vulnIds = uniqueRemove(vulnIds, choice.clearsVulnIds);
     tags = uniquePush(tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]);
     keys = applyFlags(keys, choice.setsFlags);
     trail.push({
@@ -198,6 +204,7 @@ function walkPath(path: RecommendedPath): AdventureState {
     if (!choice) break;
     currentNodeId = choice.nextNodeId;
     vulnIds = uniquePush(vulnIds, choice.addsVulnIds);
+    vulnIds = uniqueRemove(vulnIds, choice.clearsVulnIds);
     tags = uniquePush(tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]);
     keys = applyFlags(keys, choice.setsFlags);
     trail.push({
@@ -381,6 +388,50 @@ function applySwitchMitigation(prev: AdventureState, mit: Mitigation, vulnId: st
   return next;
 }
 
+
+/** Navigate back to revisit a prior decision — does NOT mark the risk as fixed. */
+function applyChooseOtherOption(prev: AdventureState, mit: Mitigation, vulnId: string): AdventureState | null {
+  let targetNodeId = mit.returnToNodeId;
+
+  if (!targetNodeId || !nodeById[targetNodeId]) {
+    // Find the trail step that introduced this vuln; land on the parent question node
+    for (let i = 1; i < prev.trail.length; i++) {
+      const step = prev.trail[i];
+      if ((step.addsVulnIds ?? []).includes(vulnId)) {
+        // Parent of this choice is trail[i-1].nodeId (the question where the choice was made)
+        targetNodeId = prev.trail[i - 1].nodeId;
+        break;
+      }
+    }
+  }
+
+  if (!targetNodeId || !nodeById[targetNodeId]) return null;
+
+  const idx = prev.trail.findIndex((t) => t.nodeId === targetNodeId && t.kind !== 'mitigation');
+  if (idx < 0) {
+    // Target not in trail — jump without inventing a fake fix
+    return {
+      ...prev,
+      currentNodeId: targetNodeId,
+      trail: [
+        ...prev.trail,
+        {
+          nodeId: targetNodeId,
+          choiceId: `choose-other:${mit.id}`,
+          choiceLabel: 'Choose another option',
+          choiceDescription: mit.description,
+          addsVulnIds: [],
+          kind: 'choice',
+          mitigationId: mit.id,
+        },
+      ],
+    };
+  }
+
+  // Replay up to and including the target question (drops later choices + their risks)
+  return replayTrail(prev.trail.slice(0, idx + 1), prev.mitigatedVulnIds, prev.procedureSteps);
+}
+
 export function useAdventure() {
   const [state, setState] = useState<AdventureState>(() => {
     const fromUrl = readNodeFromUrl();
@@ -469,6 +520,20 @@ export function useAdventure() {
         window.history.pushState(switched, '', urlFor(switched.currentNodeId));
         return;
       }
+    }
+
+    if (mit.kind === 'chooseOtherOption') {
+      const jumped = applyChooseOtherOption(prev, mit, vulnId);
+      if (jumped) {
+        setState(jumped);
+        window.history.pushState(jumped, '', urlFor(jumped.currentNodeId));
+        return;
+      }
+    }
+
+    // Guidance-only: never claim to fix the risk via Apply
+    if (mit.kind === 'guidance') {
+      return;
     }
 
     // Xpub-verify style mitigations can mark public side ready

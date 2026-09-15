@@ -90,7 +90,11 @@ export function PathRiskList({
               const description = isStart
                 ? 'Starting question'
                 : (step.choiceDescription || (node ? `Leads to: ${node.title}` : null));
-              const vulns = (step.addsVulnIds ?? []).map((id) => vulnById[id]).filter(Boolean);
+              // Hide risks cleared by later choices (e.g. enabling 2FA)
+              const vulns = (step.addsVulnIds ?? [])
+                .filter((id) => state.vulnIds.includes(id) || mitigated.has(id))
+                .map((id) => vulnById[id])
+                .filter(Boolean);
               const isLast = i === state.trail.length - 1;
 
               return (
@@ -209,7 +213,10 @@ function RiskRow({
   const v = vulnById[vulnId];
   if (!v) return null;
   const mit = mitigationForVuln(vulnId);
-  const isSwitch = mit?.kind === 'switchOption';
+  const kind = mit?.kind ?? 'procedure';
+  const isSwitch = kind === 'switchOption';
+  const isChooseOther = kind === 'chooseOtherOption';
+  const isGuidance = kind === 'guidance';
 
   return (
     <li className={`prl-risk ${mitigated ? 'mitigated' : 'open'} ${severityClass[v.severity]}`}>
@@ -223,10 +230,26 @@ function RiskRow({
       <p>{v.description}</p>
       {mit && (
         <div className="prl-mit">
-          <span className="detail-heading">{isSwitch ? 'Structural switch' : 'Mitigation'}</span>
+          <span className="detail-heading">
+            {isSwitch
+              ? 'Structural switch'
+              : isChooseOther || isGuidance
+                ? 'Mitigation'
+                : 'Mitigation'}
+          </span>
           <strong className="mit-title">{mit.title}</strong>
           <p>{mit.description}</p>
-          {!mitigated ? (
+          {mitigated ? (
+            <span className="mit-applied">{isSwitch ? 'Switched' : 'Applied'}</span>
+          ) : isGuidance ? null : isChooseOther ? (
+            <button
+              type="button"
+              className="btn btn-sm btn-primary apply-mit-btn btn-choose-other"
+              onClick={() => onApply(vulnId)}
+            >
+              Choose another option
+            </button>
+          ) : (
             <button
               type="button"
               className={`btn btn-sm btn-primary apply-mit-btn ${isSwitch ? 'btn-switch' : ''}`}
@@ -236,8 +259,6 @@ function RiskRow({
                 ? switchButtonLabel(mit.title, mit.switchTo?.choiceLabel)
                 : 'Apply · add to procedure'}
             </button>
-          ) : (
-            <span className="mit-applied">{isSwitch ? 'Switched' : 'Applied'}</span>
           )}
         </div>
       )}

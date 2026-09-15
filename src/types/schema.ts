@@ -43,12 +43,19 @@ export interface Mitigation {
   description: string;
   addressesVulnIds: string[];
   /**
-   * procedure = append a setup step (default).
-   * switchOption = rewrite the path toward another structural branch (not a fake procedure step).
+   * procedure = append a setup step (legacy Apply).
+   * switchOption = rewrite the path toward another structural branch.
+   * chooseOtherOption = navigate back to revisit a prior decision (does NOT claim to fix the risk).
+   * guidance = explanatory text only — no Apply / no fake fix.
    */
-  kind?: 'procedure' | 'switchOption';
+  kind?: 'procedure' | 'switchOption' | 'chooseOtherOption' | 'guidance';
   /** When kind is switchOption */
   switchTo?: SwitchToSpec;
+  /**
+   * When kind is chooseOtherOption: jump back to this node (replay trail).
+   * If omitted, UI jumps to the trail step that introduced the risk.
+   */
+  returnToNodeId?: string;
   /** When applied as procedure-style, append this step to the user's procedure / setup document */
   procedureStep?: ProcedureStepDef;
 }
@@ -61,6 +68,8 @@ export interface Choice {
   description?: string;
   /** Risks introduced by taking this choice */
   addsVulnIds?: string[];
+  /** Remove these vulns from accumulation (e.g. enabling 2FA clears password-only takeover risks) */
+  clearsVulnIds?: string[];
   /** @deprecated Prefer click-to-apply mitigations paired with vulns; ignored by adventure state */
   addsMitigationIds?: string[];
   tags?: string[];
@@ -153,7 +162,39 @@ export interface AdventureState {
   procedureSteps: ProcedureStep[];
 }
 
-/** Derived: private present AND (public or xpub) — operable even if vulnerable */
-export function isSufficientToOperate(s: Pick<AdventureState, 'hasPrivateKey' | 'hasPublicKey' | 'hasXpub'>): boolean {
-  return s.hasPrivateKey && (s.hasPublicKey || s.hasXpub);
+/**
+ * Operable when:
+ * - self-custody style: private + (public|xpub), OR
+ * - custodial style: publicKey only (account claim; no private key held by user)
+ */
+export function isSufficientToOperate(
+  s: Pick<AdventureState, 'hasPrivateKey' | 'hasPublicKey' | 'hasXpub'>,
+): boolean {
+  if (s.hasPrivateKey && (s.hasPublicKey || s.hasXpub)) return true;
+  if (s.hasPublicKey && !s.hasPrivateKey) return true;
+  return false;
+}
+
+/** Custodian catalog entry (src/data/custodians.json). */
+export type CustodianKyc = 'none' | 'required' | 'for_buy_limits';
+
+export type TwoFactorMethod =
+  | 'authenticator'
+  | 'passkey'
+  | 'hardware_key'
+  | 'sms'
+  | 'email_otp';
+
+export interface CustodianDef {
+  id: string;
+  name: string;
+  icon: string;
+  services: string[];
+  kyc: CustodianKyc;
+  twoFactor: {
+    mandatory: boolean;
+    methods: TwoFactorMethod[];
+  };
+  authModel?: 'email' | 'password' | 'mixed';
+  notes?: string;
 }

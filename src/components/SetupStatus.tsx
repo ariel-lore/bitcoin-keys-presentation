@@ -5,7 +5,9 @@ import { isSufficientToOperate } from '../types/schema';
 export function SetupStatus({ state }: { state: AdventureState }) {
   const sufficient = isSufficientToOperate(state);
   const label = sufficient
-    ? 'Sufficient to operate — risks remain'
+    ? state.hasPrivateKey
+      ? 'Sufficient to operate — risks remain'
+      : 'Setup complete — custodial (no priv key)'
     : 'Setup: incomplete';
 
   return (
