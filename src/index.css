@@ -1396,16 +1396,35 @@ button {
   background: #101612;
 }
 
+.path-risk-list.panel-collapsed {
+  height: auto;
+  flex: 0 0 auto;
+}
+
 .prl-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 0.35rem;
-  padding: 0.15rem 0.35rem 0.45rem;
+  padding: 0;
   flex-shrink: 0;
 }
 
-.prl-head h2 {
+.prl-panel-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  color: inherit;
+  padding: 0.15rem 0.35rem 0.45rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.prl-panel-toggle h2 {
   margin: 0;
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -1414,13 +1433,28 @@ button {
   font-weight: 700;
 }
 
-.path-risk-list.operable .prl-head h2 {
+.path-risk-list.operable .prl-panel-toggle h2 {
   color: #86efac;
 }
 
-.prl-hint {
+.prl-panel-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   font-size: 0.62rem;
   color: var(--muted);
+  font-weight: 600;
+}
+
+.prl-scroll {
+  min-height: 0;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-right: 0.1rem;
 }
 
 .prl-steps {
@@ -1430,9 +1464,6 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  min-height: 0;
-  overflow: auto;
-  flex: 1;
 }
 
 .prl-step {
@@ -1451,15 +1482,12 @@ button {
   background: #0c1a12;
 }
 
-.prl-step-toggle {
+.prl-step-head {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 0.4rem;
   text-align: left;
-  background: transparent;
-  border: none;
-  color: var(--text);
   padding: 0.4rem 0.45rem;
 }
 
@@ -1541,6 +1569,7 @@ button {
   font-size: 0.68rem;
   font-weight: 600;
   padding: 0;
+  cursor: pointer;
 }
 
 .prl-jump:hover {
@@ -1631,26 +1660,23 @@ button {
   color: var(--muted);
 }
 
+.prl-mit .btn-switch {
+  background: #1e3a5f;
+  border-color: #3b82f6;
+}
+
 .prl-orphans {
-  margin-top: 0.35rem;
+  margin-top: 0.15rem;
   border: 1px dashed var(--border);
   border-radius: 8px;
-  padding: 0.15rem;
+  padding: 0.15rem 0.15rem 0.4rem;
   flex-shrink: 0;
-  max-height: 40%;
-  overflow: auto;
 }
 
 .prl-orphans .prl-risks {
-  padding: 0 0.4rem 0.4rem 1.85rem;
+  padding: 0 0.4rem 0.2rem 1.85rem;
 }
 
-/* Incomplete: compact collapsed rows */
-.path-risk-list.incomplete .prl-step.collapsed .prl-step-body {
-  display: none;
-}
-
-/* Operable: denser open procedure */
 .path-risk-list.operable .prl-label {
   white-space: normal;
 }

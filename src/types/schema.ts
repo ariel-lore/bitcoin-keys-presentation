@@ -19,12 +19,37 @@ export interface ProcedureStepDef {
   description: string;
 }
 
+/** Structural switch: replace a prior trail decision and jump into another branch. */
+export interface SwitchToSpec {
+  /** Prefer matching a past choice by id when present */
+  replaceChoiceId?: string;
+  /** Or find the trail step whose choice carried this tag */
+  replaceChoiceTag?: string;
+  /** Node to land on after replacing the conflicting decision */
+  targetNodeId: string;
+  /** Label recorded on the replacement trail step */
+  choiceLabel?: string;
+  /** Synthetic choice id for the replacement step */
+  choiceId?: string;
+  /** Vulns removed (and treated as addressed) by the structural change */
+  clearsVulnIds?: string[];
+  /** Tags to add after the switch */
+  addsTags?: string[];
+}
+
 export interface Mitigation {
   id: string;
   title: string;
   description: string;
   addressesVulnIds: string[];
-  /** When applied, append this step to the user's procedure / setup document */
+  /**
+   * procedure = append a setup step (default).
+   * switchOption = rewrite the path toward another structural branch (not a fake procedure step).
+   */
+  kind?: 'procedure' | 'switchOption';
+  /** When kind is switchOption */
+  switchTo?: SwitchToSpec;
+  /** When applied as procedure-style, append this step to the user's procedure / setup document */
   procedureStep?: ProcedureStepDef;
 }
 

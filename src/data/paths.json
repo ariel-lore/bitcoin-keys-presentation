@@ -34,10 +34,10 @@
       "bw-hot",
       "bw-rng",
       "ph-metal",
-      "sa-xpub",
-      "xp-phone",
-      "xph-harden",
-      "xv-summary"
+      "rcv-hw-verify",
+      "rd-send",
+      "snd-psbt",
+      "sd-summary"
     ],
     "highlightColor": "#38bdf8"
   },
@@ -52,10 +52,10 @@
       "pl-nano-x",
       "led-entropy",
       "led-pin-pass",
-      "sa-xpub",
-      "xp-hw",
-      "xhw-ok",
-      "xv-summary"
+      "rcv-hw-verify",
+      "rd-send",
+      "snd-psbt",
+      "sd-summary"
     ],
     "highlightColor": "#22c55e"
   },
@@ -70,10 +70,10 @@
       "ps-diy",
       "ss-dice",
       "ss-metal",
-      "sa-xpub",
-      "xp-air",
-      "xa-ok",
-      "xv-summary"
+      "rcv-hw-verify",
+      "rd-send",
+      "snd-psbt",
+      "sd-summary"
     ],
     "highlightColor": "#94a3b8"
   },

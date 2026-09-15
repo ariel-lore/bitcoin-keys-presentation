@@ -58,7 +58,7 @@
   {
     "id": "insolvency",
     "title": "Insolvency / bankruptcy",
-    "description": "If the custodian fails, customer Bitcoin may become unsecured claims\u2014often partially recovered or delayed for years.",
+    "description": "If the custodian fails, customer Bitcoin may become unsecured claims—often partially recovered or delayed for years.",
     "severity": "critical",
     "categories": [
       "custodial",
@@ -252,7 +252,7 @@
   },
   {
     "id": "binary-source-mismatch",
-    "title": "Audited source \u2260 built/signed binary",
+    "title": "Audited source ≠ built/signed binary",
     "description": "You may run a binary that does not match the audited source (build pipeline compromise).",
     "severity": "critical",
     "categories": [
@@ -275,7 +275,7 @@
   {
     "id": "firmware-rng-defect",
     "title": "Hardware RNG / firmware seed-gen defect",
-    "description": "Weak on-device entropy (historical firmware bugs) can make seeds crackable. Firmware updates do NOT fix existing seeds\u2014you must migrate funds to a new seed.",
+    "description": "Weak on-device entropy (historical firmware bugs) can make seeds crackable. Firmware updates do NOT fix existing seeds—you must migrate funds to a new seed.",
     "severity": "critical",
     "categories": [
       "hardware",
@@ -294,8 +294,8 @@
   },
   {
     "id": "electrum-not-bip39",
-    "title": "Electrum \u2260 BIP39 seed incompatibility",
-    "description": "Electrum generates its own mnemonic scheme, not BIP39\u2014restoring into BIP39 wallets fails or produces different keys.",
+    "title": "Electrum ≠ BIP39 seed incompatibility",
+    "description": "Electrum generates its own mnemonic scheme, not BIP39—restoring into BIP39 wallets fails or produces different keys.",
     "severity": "medium",
     "categories": [
       "compatibility",
@@ -337,7 +337,7 @@
   },
   {
     "id": "biased-word-mapping",
-    "title": "Biased own-randomness\u2192word mapping",
+    "title": "Biased own-randomness→word mapping",
     "description": "Homegrown encoding from bits to BIP39 words often has modular bias or off-by-one errors.",
     "severity": "high",
     "categories": [
@@ -403,7 +403,7 @@
   {
     "id": "checksum-mismatch",
     "title": "Checksum word mismatch vs written seed",
-    "description": "Transcription errors mean the last word you wrote doesn't match the entropy\u2014wallet may reject or derive wrong keys.",
+    "description": "Transcription errors mean the last word you wrote doesn't match the entropy—wallet may reject or derive wrong keys.",
     "severity": "high",
     "categories": [
       "seed-generation",
@@ -491,7 +491,7 @@
   {
     "id": "same-vendor-multisig",
     "title": "Same-vendor multisig is not independent",
-    "description": "Multiple keys from one manufacturer share firmware, entropy source, and supply-chain risk\u2014one bug can hit the signing threshold.",
+    "description": "Multiple keys from one manufacturer share firmware, entropy source, and supply-chain risk—one bug can hit the signing threshold.",
     "severity": "critical",
     "categories": [
       "multisig",
@@ -533,7 +533,7 @@
   },
   {
     "id": "glacier-complexity",
-    "title": "Ceremony complexity \u2192 human error",
+    "title": "Ceremony complexity → human error",
     "description": "High-security dual-computer offline protocols (e.g. Glacier-style) have many steps; mistakes can brick funds or leak entropy.",
     "severity": "medium",
     "categories": [
@@ -595,5 +595,51 @@
       "jurisdiction"
     ],
     "defaultMitigationId": "multi-party-locations"
+  },
+  {
+    "id": "wrong-network",
+    "title": "Wrong network / asset (BTC vs testnet / alt deposit)",
+    "description": "Sending or receiving on the wrong network (testnet, Lightning invoice confusion, or alt-chain lookalikes) can lose funds permanently.",
+    "severity": "high",
+    "categories": [
+      "receive",
+      "send",
+      "ops"
+    ],
+    "defaultMitigationId": "verify-network-asset"
+  },
+  {
+    "id": "clipboard-malware",
+    "title": "Clipboard malware rewriting addresses",
+    "description": "Malware silently replaces copied bitcoin addresses with attacker-controlled ones.",
+    "severity": "critical",
+    "categories": [
+      "receive",
+      "send",
+      "malware"
+    ],
+    "defaultMitigationId": "avoid-clipboard-qr"
+  },
+  {
+    "id": "fee-urgency",
+    "title": "Fee urgency / under- or overpaying",
+    "description": "Rushing fees under congestion can strand a tx; panic overpaying wastes satoshis. Urgency also increases address-mistake risk.",
+    "severity": "medium",
+    "categories": [
+      "send",
+      "ops"
+    ],
+    "defaultMitigationId": "fee-with-patience"
+  },
+  {
+    "id": "destination-unverified",
+    "title": "Destination address not verified on signing device",
+    "description": "Trusting only the computer/phone display for the spend destination lets malware alter where coins go.",
+    "severity": "critical",
+    "categories": [
+      "send",
+      "malware"
+    ],
+    "defaultMitigationId": "verify-destination-device"
   }
 ]

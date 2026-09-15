@@ -1882,7 +1882,7 @@
         {
           "id": "led-pin-pass",
           "label": "PIN + passphrase (tested)",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "passphrase-lost"
           ],
@@ -1890,25 +1890,34 @@
             "pin",
             "passphrase"
           ],
-          "description": "Set a device PIN and a BIP39 passphrase you have tested in recovery. Passphrase is a second secret."
+          "description": "Set a device PIN and a BIP39 passphrase you have tested in recovery. Passphrase is a second secret.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "led-pin",
           "label": "PIN only",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "tags": [
             "pin"
           ],
-          "description": "Protect the device with a strong PIN only (no BIP39 passphrase)."
+          "description": "Protect the device with a strong PIN only (no BIP39 passphrase).",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "led-none",
           "label": "Skip extra protection",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "physical-theft-seed"
           ],
-          "description": "Skip PIN/passphrase hardening for now — high physical and theft risk."
+          "description": "Skip PIN/passphrase hardening for now — high physical and theft risk.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -1956,26 +1965,35 @@
         {
           "id": "trz-pin-pass",
           "label": "PIN + passphrase (tested)",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "passphrase-lost"
           ],
-          "description": "PIN plus tested BIP39 passphrase on Trezor."
+          "description": "PIN plus tested BIP39 passphrase on Trezor.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "trz-pin",
           "label": "PIN only",
-          "nextNodeId": "seed-aftercare",
-          "description": "Strong PIN only on Trezor."
+          "nextNodeId": "receive-root",
+          "description": "Strong PIN only on Trezor.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "trz-none",
           "label": "Skip extra protection",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "physical-theft-seed"
           ],
-          "description": "Skip extra device protection for now."
+          "description": "Skip extra device protection for now.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -2027,7 +2045,7 @@
         {
           "id": "cc-ondev",
           "label": "Seed on device + PIN / passphrase",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "passphrase-lost"
           ],
@@ -2036,22 +2054,28 @@
             "pin",
             "passphrase"
           ],
-          "description": "Keep the seed on the Coldcard behind PIN/passphrase and treat the device as long-lived."
+          "description": "Keep the seed on the Coldcard behind PIN/passphrase and treat the device as long-lived.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "cc-sd",
           "label": "Encrypted backup on SD + PIN",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "tags": [
             "sd-card",
             "pin"
           ],
-          "description": "Use encrypted SD backup workflows with PIN discipline."
+          "description": "Use encrypted SD backup workflows with PIN discipline.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "cc-wipe",
           "label": "Metal backup then wipe device",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "no-backup",
             "physical-theft-seed"
@@ -2059,7 +2083,10 @@
           "tags": [
             "paper-metal"
           ],
-          "description": "Back up to metal (or equivalent), then wipe the device so it holds no seed at rest."
+          "description": "Back up to metal (or equivalent), then wipe the device so it holds no seed at rest.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -2107,21 +2134,27 @@
         {
           "id": "bk-pin",
           "label": "Strong PIN + app lock",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "tags": [
             "pin"
           ],
-          "description": "Strong device PIN and phone app lock before funding."
+          "description": "Strong device PIN and phone app lock before funding.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "bk-weak",
           "label": "Weak / default protection",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "physical-theft-seed",
             "compromised-creds"
           ],
-          "description": "Weak or default locks — avoid for meaningful balances."
+          "description": "Weak or default locks — avoid for meaningful balances.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -2171,16 +2204,19 @@
         {
           "id": "ss-metal",
           "label": "Metal backup (verified restore)",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "tags": [
             "paper-metal"
           ],
-          "description": "Stamp or engrave the seed on metal and verify a restore. For Seedsigner, the backup is the wallet."
+          "description": "Stamp or engrave the seed on metal and verify a restore. For Seedsigner, the backup is the wallet.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "ss-paper",
           "label": "Paper only",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "fire-flood-backup",
             "physical-theft-seed"
@@ -2188,16 +2224,22 @@
           "tags": [
             "paper-metal"
           ],
-          "description": "Paper backup only — vulnerable to fire, water, and wear."
+          "description": "Paper backup only — vulnerable to fire, water, and wear.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "ss-none",
           "label": "No durable backup yet",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "no-backup"
           ],
-          "description": "No durable backup yet — catastrophic if the seed is lost."
+          "description": "No durable backup yet — catastrophic if the seed is lost.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -2244,26 +2286,35 @@
         {
           "id": "jd-pin-pass",
           "label": "PIN + passphrase (tested)",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "passphrase-lost"
           ],
-          "description": "PIN plus tested passphrase on Jade."
+          "description": "PIN plus tested passphrase on Jade.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "jd-pin",
           "label": "PIN only",
-          "nextNodeId": "seed-aftercare",
-          "description": "PIN only on Jade."
+          "nextNodeId": "receive-root",
+          "description": "PIN only on Jade.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "jd-none",
           "label": "Skip extra protection",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "physical-theft-seed"
           ],
-          "description": "Skip extra protection for now."
+          "description": "Skip extra protection for now.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -2316,21 +2367,27 @@
         {
           "id": "ta-ferry",
           "label": "USB ferry + verified builds only",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "break-airgap-install"
           ],
-          "description": "Move software only via verified USB ferry; never casually enable networking."
+          "description": "Move software only via verified USB ferry; never casually enable networking.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "ta-online",
           "label": "Occasionally connect for updates",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "break-airgap-install",
             "hot-malware"
           ],
-          "description": "Occasionally connect Tails for updates — weakens the air-gap story."
+          "description": "Occasionally connect Tails for updates — weakens the air-gap story.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -2397,30 +2454,39 @@
         {
           "id": "ph-metal",
           "label": "Offline metal / paper (no cloud)",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "physical-theft-seed"
           ],
-          "description": "Offline metal or paper backup; no cloud photos of the seed."
+          "description": "Offline metal or paper backup; no cloud photos of the seed.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "ph-cloud",
           "label": "Cloud / screenshot backup",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "seed-screenshot",
             "hot-malware"
           ],
-          "description": "Cloud or screenshot backup — high leak risk."
+          "description": "Cloud or screenshot backup — high leak risk.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "ph-none",
           "label": "No backup yet",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "no-backup"
           ],
-          "description": "No backup yet."
+          "description": "No backup yet.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -2460,13 +2526,14 @@
         {
           "id": "aps-gen",
           "label": "Generate BIP39 on phone",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "camera-seed",
             "break-airgap-install"
           ],
           "setsFlags": [
-            "privateKey"
+            "privateKey",
+            "publicKey"
           ],
           "description": "Generate BIP39 on the offline phone and write the seed securely."
         }
@@ -2575,7 +2642,7 @@
         {
           "id": "bc-hot",
           "label": "Online PC (hot)",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "hot-malware",
             "seed-phishing-support"
@@ -2583,19 +2650,25 @@
           "tags": [
             "hot"
           ],
-          "description": "This PC stays online with the wallet — hot malware surface."
+          "description": "This PC stays online with the wallet — hot malware surface.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "bc-dedicated",
           "label": "Dedicated / offline machine",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "break-airgap-install"
           ],
           "tags": [
             "cold"
           ],
-          "description": "Use a dedicated or offline machine to reduce malware exposure."
+          "description": "Use a dedicated or offline machine to reduce malware exposure.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -3181,25 +3254,37 @@
     {
       "id": "path-end-multisig",
       "title": "What remains on this multisig path?",
-      "body": "**Profile:** higher security against single theft/loss; complexity rises. Independence (vendors, locations, people) is the point.\n",
+      "body": "**Profile:** higher security against single theft/loss; complexity rises. Independence (vendors, locations, people) is the point.\n\nAfter keys are ready, continue with receive then send. Backup/inheritance/xpub verify remain mitigations.\n",
       "category": "Summary",
       "isSummary": true,
       "choices": [
         {
+          "id": "pe-multisig-receive",
+          "label": "How will you receive?",
+          "nextNodeId": "receive-root",
+          "description": "Primary operational next step: receive safely."
+        },
+        {
+          "id": "pe-multisig-send",
+          "label": "How will you send?",
+          "nextNodeId": "send-root",
+          "description": "Authorize spends with an appropriate signing posture."
+        },
+        {
           "id": "pe-ms-harden-backup",
-          "label": "Harden backups & inheritance",
+          "label": "Optional: backups & inheritance",
           "nextNodeId": "backup-root",
           "description": "Document how trusted people can recover without careless secret exposure."
         },
         {
           "id": "pe-ms-harden-sign",
-          "label": "Harden signing & address checks",
+          "label": "Optional: signing deep-dive",
           "nextNodeId": "signing-root",
           "description": "Harden signing & address checks. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "pe-ms-harden-pass",
-          "label": "Add or review passphrase",
+          "label": "Optional: passphrase review",
           "nextNodeId": "passphrase",
           "description": "Add or review passphrase. This option continues the path and may add specific risks shown under the button."
         },
@@ -3274,25 +3359,37 @@
     {
       "id": "path-end-glacier",
       "title": "What remains on this Glacier-style path?",
-      "body": "**Profile:** maximum procedural security, minimum convenience. Best for infrequent-move cold storage when discipline is maintained.\n",
+      "body": "**Profile:** maximum procedural security, minimum convenience. Best for infrequent-move cold storage when discipline is maintained.\n\nAfter keys are ready, continue with receive then send. Backup/inheritance/xpub verify remain mitigations.\n",
       "category": "Summary",
       "isSummary": true,
       "choices": [
         {
+          "id": "pe-glacier-receive",
+          "label": "How will you receive?",
+          "nextNodeId": "receive-root",
+          "description": "Primary operational next step: receive safely."
+        },
+        {
+          "id": "pe-glacier-send",
+          "label": "How will you send?",
+          "nextNodeId": "send-root",
+          "description": "Authorize spends with an appropriate signing posture."
+        },
+        {
           "id": "pe-g-harden-backup",
-          "label": "Harden backups & inheritance",
+          "label": "Optional: backups & inheritance",
           "nextNodeId": "backup-root",
           "description": "Document how trusted people can recover without careless secret exposure."
         },
         {
           "id": "pe-g-harden-sign",
-          "label": "Harden signing & address checks",
+          "label": "Optional: signing deep-dive",
           "nextNodeId": "signing-root",
           "description": "Harden signing & address checks. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "pe-g-harden-pass",
-          "label": "Add or review passphrase",
+          "label": "Optional: passphrase review",
           "nextNodeId": "passphrase",
           "description": "Add or review passphrase. This option continues the path and may add specific risks shown under the button."
         },
@@ -3390,34 +3487,36 @@
         {
           "id": "scs-hw",
           "label": "Hardware wallet",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "wrong-cli",
             "checksum-mismatch",
             "derivation-path-mismatch"
           ],
           "setsFlags": [
-            "privateKey"
+            "privateKey",
+            "publicKey"
           ],
           "description": "Hardware wallet. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "scs-phone",
           "label": "Air-gapped phone",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "break-airgap-install",
             "checksum-mismatch"
           ],
           "setsFlags": [
-            "privateKey"
+            "privateKey",
+            "publicKey"
           ],
           "description": "Air-gapped phone. This option continues the path and may add specific risks shown under the button."
         },
         {
           "id": "scs-pc",
           "label": "Air-gapped PC",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "wrong-cli",
             "break-airgap-install",
@@ -3425,41 +3524,10 @@
             "derivation-path-mismatch"
           ],
           "setsFlags": [
-            "privateKey"
+            "privateKey",
+            "publicKey"
           ],
           "description": "Air-gapped PC. This option continues the path and may add specific risks shown under the button."
-        }
-      ]
-    },
-    {
-      "id": "seed-aftercare",
-      "title": "What do you need before serious funds?",
-      "body": "Restore-test backup; confirm identical addresses; export xpub to watch-only; decide passphrase, geographic backups, inheritance.\n",
-      "category": "Seed generation",
-      "choices": [
-        {
-          "id": "sa-xpub",
-          "label": "Export / verify xpub (public side)",
-          "nextNodeId": "xpub-root",
-          "description": "Export or verify the public side (xpub / addresses) so you can receive without exposing the seed."
-        },
-        {
-          "id": "sa-backup",
-          "label": "Backup & inheritance",
-          "nextNodeId": "backup-root",
-          "description": "Focus on durable backups and inheritance notes."
-        },
-        {
-          "id": "sa-sign",
-          "label": "Signing & address safety",
-          "nextNodeId": "signing-root",
-          "description": "Signing & address safety. This option continues the path and may add specific risks shown under the button."
-        },
-        {
-          "id": "sa-summary",
-          "label": "Open path summary",
-          "nextNodeId": "path-end-single",
-          "description": "Open the path summary to review risks and apply mitigations."
         }
       ]
     },
@@ -3494,9 +3562,12 @@
         },
         {
           "id": "xp-back",
-          "label": "Back to aftercare",
-          "nextNodeId": "seed-aftercare",
-          "description": "Back to aftercare. This option continues the path and may add specific risks shown under the button."
+          "label": "Back to receiving",
+          "nextNodeId": "receive-root",
+          "description": "Return to how you will receive bitcoin.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -3582,27 +3653,27 @@
     },
     {
       "id": "xpub-verified",
-      "title": "What next after watch-only is ready?",
-      "body": "Monitor balances online without exposing spending keys. Treat the xpub as sensitive.\n",
+      "title": "Watch-only ready — what next?",
+      "body": "Public side verified. Prefer continuing to receiving/sending. Backup and inheritance stay available as mitigations and optional deep-dives.\n",
       "category": "xpub",
       "choices": [
         {
-          "id": "xv-backup",
-          "label": "Backup & inheritance",
-          "nextNodeId": "backup-root",
-          "description": "Document how trusted people can recover without careless secret exposure."
+          "id": "xv-receive",
+          "label": "Continue to receiving",
+          "nextNodeId": "receive-root",
+          "description": "Decide how you will display and verify receive addresses."
         },
         {
-          "id": "xv-sign",
-          "label": "Signing & address safety",
-          "nextNodeId": "signing-root",
-          "description": "Signing & address safety. This option continues the path and may add specific risks shown under the button."
+          "id": "xv-send",
+          "label": "Continue to sending",
+          "nextNodeId": "send-root",
+          "description": "If receive is already clear, move on to spend authorization."
         },
         {
           "id": "xv-summary",
           "label": "Open path summary",
           "nextNodeId": "path-end-single",
-          "description": "Open the end-of-path summary and continue mitigating risks."
+          "description": "Review path and apply mitigations."
         }
       ]
     },
@@ -3689,27 +3760,27 @@
     },
     {
       "id": "backup-done",
-      "title": "What next after backup posture improves?",
+      "title": "Backup posture improved — what next?",
       "body": "Recoverability is up. Re-test restores periodically — especially after software upgrades.\n",
       "category": "Backup",
       "choices": [
         {
-          "id": "bd-sign",
-          "label": "Signing & address safety",
-          "nextNodeId": "signing-root",
-          "description": "Signing & address safety. This option continues the path and may add specific risks shown under the button."
+          "id": "bd-receive",
+          "label": "Continue to receiving",
+          "nextNodeId": "receive-root",
+          "description": "Decide how you will receive bitcoin."
+        },
+        {
+          "id": "bd-send",
+          "label": "Continue to sending",
+          "nextNodeId": "send-root",
+          "description": "Decide how you will send bitcoin."
         },
         {
           "id": "bd-summary",
           "label": "Open path summary",
           "nextNodeId": "path-end-single",
-          "description": "Return to summary after backup work."
-        },
-        {
-          "id": "bd-glacier",
-          "label": "Explore Glacier-style protocol",
-          "nextNodeId": "glacier",
-          "description": "Explore Glacier-style protocol. This option continues the path and may add specific risks shown under the button."
+          "description": "Review path and apply mitigations."
         }
       ]
     },
@@ -3722,17 +3793,23 @@
         {
           "id": "pp-yes",
           "label": "Yes — separate backup + recovery test",
-          "nextNodeId": "seed-aftercare",
+          "nextNodeId": "receive-root",
           "addsVulnIds": [
             "passphrase-lost"
           ],
-          "description": "Enable a BIP39 passphrase and test recovery of the hidden wallet."
+          "description": "Enable a BIP39 passphrase and test recovery of the hidden wallet.",
+          "setsFlags": [
+            "publicKey"
+          ]
         },
         {
           "id": "pp-no",
           "label": "No — simpler recovery",
-          "nextNodeId": "seed-aftercare",
-          "description": "Do not use a passphrase — simpler, but one seed backup is enough to spend."
+          "nextNodeId": "receive-root",
+          "description": "Do not use a passphrase — simpler, but one seed backup is enough to spend.",
+          "setsFlags": [
+            "publicKey"
+          ]
         }
       ]
     },
@@ -3768,68 +3845,238 @@
       "category": "Signing",
       "choices": [
         {
+          "id": "sh-receive",
+          "label": "Continue to receiving",
+          "nextNodeId": "receive-root",
+          "description": "Receive flow with address verification tradeoffs."
+        },
+        {
+          "id": "sh-send",
+          "label": "Continue to sending",
+          "nextNodeId": "send-root",
+          "description": "Send / PSBT tradeoffs."
+        },
+        {
           "id": "sh-ms",
           "label": "Explore multisig",
           "nextNodeId": "multisig",
-          "description": "Move toward an m-of-n multisignature structure."
+          "description": "Structural upgrade to m-of-n."
         },
         {
           "id": "sh-summary",
           "label": "Open path summary",
           "nextNodeId": "path-end-single",
-          "description": "Open the path summary to review risks and apply mitigations."
+          "description": "Review path and apply mitigations."
         }
       ]
     },
     {
       "id": "path-end-single",
       "title": "What remains on this self-custody path?",
-      "body": "If keys are in place, the setup can operate — **risks may still remain**. Apply paired mitigations; continue hardening below rather than restarting the tree.\n",
+      "body": "Natural adventure continue: receive, then send. Export/verify xpub, backup, and inheritance are mitigations you can apply from open risks (they add procedure steps). Optional deep-dives below.\n",
       "category": "Summary",
       "isSummary": true,
       "choices": [
         {
-          "id": "pe-s-harden-backup",
-          "label": "Harden backups & inheritance",
-          "nextNodeId": "backup-root",
-          "description": "Add backup and inheritance procedure steps."
+          "id": "pe-s-receive",
+          "label": "How will you receive?",
+          "nextNodeId": "receive-root",
+          "description": "Primary next step once keys exist: receive safely."
         },
         {
-          "id": "pe-s-harden-sign",
-          "label": "Harden signing & address checks",
-          "nextNodeId": "signing-root",
-          "description": "Harden signing and on-device address checks."
-        },
-        {
-          "id": "pe-s-harden-pass",
-          "label": "Add or review passphrase",
-          "nextNodeId": "passphrase",
-          "description": "Add or review a BIP39 passphrase."
+          "id": "pe-s-send",
+          "label": "How will you send?",
+          "nextNodeId": "send-root",
+          "description": "Authorize spends: PSBT/airgap vs connected vs hot."
         },
         {
           "id": "pe-s-harden-ms",
-          "label": "Consider multisig",
+          "label": "Consider multisig (structural switch)",
           "nextNodeId": "multisig",
-          "description": "Consider upgrading this setup to multisig."
+          "description": "Change structure to m-of-n instead of single key."
         },
         {
           "id": "pe-s-xpub",
-          "label": "Complete public / xpub side",
+          "label": "Optional: xpub export deep-dive",
           "nextNodeId": "xpub-root",
-          "description": "Complete the public / xpub receive side if missing."
+          "description": "Optional walkthrough — also available as a mitigation."
+        },
+        {
+          "id": "pe-s-harden-backup",
+          "label": "Optional: backup & inheritance deep-dive",
+          "nextNodeId": "backup-root",
+          "description": "Optional walkthrough — also available as mitigations."
         },
         {
           "id": "pe-s-tool",
           "label": "Change single-key tool",
           "nextNodeId": "single-key",
-          "description": "Change which single-key tool you are modeling."
+          "description": "Pick a different signing tool."
         },
         {
           "id": "pe-s-explore",
           "label": "Explore another structure…",
           "nextNodeId": "start",
-          "subtitle": "Optional — leave this path",
-          "description": "Optional: leave this path and explore another structure."
+          "description": "Return to the top-level structure question."
+        }
+      ]
+    },
+    {
+      "id": "receive-root",
+      "title": "How will you receive bitcoin?",
+      "body": "Receiving needs a correct address on the right network, shown from keys you control. Verify on a trusted screen; treat xpubs and clipboards as sensitive.\n",
+      "category": "Receive",
+      "choices": [
+        {
+          "id": "rcv-watch-hot",
+          "label": "Watch-only / hot wallet display",
+          "nextNodeId": "receive-done",
+          "setsFlags": [
+            "publicKey",
+            "xpub"
+          ],
+          "description": "Show a receive address from a phone or desktop watch-only wallet. Convenient; malware and clipboard attacks matter.",
+          "addsVulnIds": [
+            "watch-only-malware",
+            "address-poisoning",
+            "clipboard-malware",
+            "xpub-privacy",
+            "wrong-network"
+          ],
+          "tags": [
+            "receive",
+            "hot"
+          ]
+        },
+        {
+          "id": "rcv-hw-verify",
+          "label": "Hardware / air-gap verified address",
+          "nextNodeId": "receive-done",
+          "setsFlags": [
+            "publicKey",
+            "xpub"
+          ],
+          "description": "Derive or confirm the receive address on a hardware or air-gapped screen before sharing it.",
+          "addsVulnIds": [
+            "xpub-privacy",
+            "wrong-network"
+          ],
+          "tags": [
+            "receive",
+            "cold"
+          ]
+        },
+        {
+          "id": "rcv-exchange-dep",
+          "label": "Custodian / exchange deposit address",
+          "nextNodeId": "receive-done",
+          "setsFlags": [
+            "publicKey"
+          ],
+          "description": "Receive to an exchange or hosted wallet deposit. Check network/asset tags carefully; you reintroduce counterparty risk for that UTXO.",
+          "addsVulnIds": [
+            "wrong-network",
+            "custodian-hack",
+            "withdrawal-freeze"
+          ],
+          "tags": [
+            "receive",
+            "custodial-deposit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "receive-done",
+      "title": "Ready to receive — what next?",
+      "body": "You can accept bitcoin once the address is verified. Next: learn how you will send. Backup, inheritance, and xpub hygiene remain available as mitigations in Path & risks.\n",
+      "category": "Receive",
+      "choices": [
+        {
+          "id": "rd-send",
+          "label": "Continue to sending",
+          "nextNodeId": "send-root",
+          "description": "Decide how you will construct and authorize spends."
+        },
+        {
+          "id": "rd-summary",
+          "label": "Open path summary",
+          "nextNodeId": "path-end-single",
+          "description": "Review the path, open risks, and apply mitigations."
+        }
+      ]
+    },
+    {
+      "id": "send-root",
+      "title": "How will you send bitcoin?",
+      "body": "Sending authorizes a spend. Prefer offline / PSBT flows for large amounts; always verify destination and amount on a trusted signing surface.\n",
+      "category": "Send",
+      "choices": [
+        {
+          "id": "snd-psbt",
+          "label": "Air-gapped / PSBT signing",
+          "nextNodeId": "send-done",
+          "description": "Build the transaction online; sign on an air-gapped or hardware device with PSBT/QR/SD. Strong malware resistance when done carefully.",
+          "addsVulnIds": [
+            "destination-unverified",
+            "fee-urgency"
+          ],
+          "tags": [
+            "send",
+            "airgap"
+          ]
+        },
+        {
+          "id": "snd-connected-hw",
+          "label": "Connected hardware wallet",
+          "nextNodeId": "send-done",
+          "description": "USB/Bluetooth hardware signs while a companion app builds the tx. Confirm destination on-device every time.",
+          "addsVulnIds": [
+            "destination-unverified",
+            "fee-urgency",
+            "hot-malware"
+          ],
+          "tags": [
+            "send",
+            "hardware"
+          ]
+        },
+        {
+          "id": "snd-hot",
+          "label": "Hot wallet / connected app",
+          "nextNodeId": "send-done",
+          "description": "Phone or desktop wallet signs online. Convenient for small amounts; malware and clipboard rewrite are primary risks.",
+          "addsVulnIds": [
+            "hot-malware",
+            "clipboard-malware",
+            "destination-unverified",
+            "fee-urgency",
+            "address-poisoning"
+          ],
+          "tags": [
+            "send",
+            "hot"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "send-done",
+      "title": "Sending posture chosen — wrap up?",
+      "body": "You have a receive path and a send path. Keep applying mitigations (backup, inheritance, xpub verify, OPSEC) from open risks — they add procedure steps without changing structure.\n",
+      "category": "Send",
+      "choices": [
+        {
+          "id": "sd-summary",
+          "label": "Open path summary",
+          "nextNodeId": "path-end-single",
+          "description": "Review setup steps, open risks, and harden further."
+        },
+        {
+          "id": "sd-receive",
+          "label": "Revisit receiving",
+          "nextNodeId": "receive-root",
+          "description": "Change how you display or verify receive addresses."
         }
       ]
     }

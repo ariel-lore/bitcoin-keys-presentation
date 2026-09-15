@@ -54,22 +54,24 @@ Brand picks (Ledger, Trezor, Coldcard, Bitkey, Seedsigner, Jade, …) go to a **
 
 ### Mitigations & procedure steps
 
-Mitigations may include `procedureStep: { title, description }`. Applying a mitigation marks the risk secured **and** appends that step to `state.procedureSteps` (e.g. backup, inheritance instructions).
+Mitigations may include `procedureStep: { title, description }`. Applying a **procedure** mitigation marks the risk secured **and** appends that step to `state.procedureSteps` (e.g. backup, inheritance, OPSEC).
+
+Structural mitigations use `kind: "switchOption"` with `switchTo: { replaceChoiceTag|replaceChoiceId, targetNodeId, choiceLabel, clearsVulnIds }` — the UI says **Switch to…** and rewrites the trail toward another branch (e.g. single-key → multisig) instead of faking a procedure step.
 
 ### Key accumulation & sufficiency
 
 Adventure state tracks `hasPrivateKey`, `hasPublicKey`, `hasXpub`.  
 **Sufficient to operate** when private material is present **and** a public/xpub side is ready — even if risks remain.
 
-When operable, the UI switches to a **procedure / setup** feel: the unified Path & risks list is expanded, and applying mitigations adds visible procedure steps.
+When operable, the UI switches to a **procedure / setup** feel. After keys are sufficient, the adventure continues with **Receive → Send**; backup / inheritance / xpub-verify remain click-to-apply mitigations.
 
 ### Unified path + risks
 
-`PathRiskList` replaces the old left-to-right trail + separate risk strip:
+`PathRiskList`:
 
-- Vertical list of decisions (top → bottom)
-- Risks nest under the step that introduced them
-- Collapsible while setup is incomplete; open when operable
+- Vertical list of decisions (top → bottom); risks nest under the introducing step
+- **Entire** sidebar expands/collapses as one unit (not per-step accordion)
+- When expanded, the panel body is `overflow-y: auto` so it never breaks the slide viewport
 
 ### Browser history
 

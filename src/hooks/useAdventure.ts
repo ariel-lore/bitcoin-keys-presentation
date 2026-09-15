@@ -3,6 +3,7 @@ import type {
   AdventureState,
   Choice,
   KeyFlag,
+  Mitigation,
   ProcedureStep,
   RecommendedPath,
   TrailStep,
@@ -112,7 +113,19 @@ function replayTrail(
     const step = kept[i];
     const prevNode = nodeById[trail[trail.length - 1].nodeId];
     const choice = prevNode?.choices.find((c) => c.id === step.choiceId);
-    if (!choice) continue;
+    if (!choice) {
+      // Synthetic switch / jump step: trust recorded nodeId and continue
+      if (step.nodeId && nodeById[step.nodeId]) {
+        currentNodeId = step.nodeId;
+        vulnIds = uniquePush(vulnIds, step.addsVulnIds);
+        trail.push({
+          ...step,
+          kind: step.kind ?? 'choice',
+          addsVulnIds: step.addsVulnIds ? [...step.addsVulnIds] : [],
+        });
+      }
+      continue;
+    }
     currentNodeId = choice.nextNodeId;
     vulnIds = uniquePush(vulnIds, choice.addsVulnIds);
     tags = uniquePush(tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]);
@@ -258,9 +271,9 @@ function appendProcedureFromMitigation(
 ): ProcedureStep[] {
   const mit = mitigationById[mitigationId];
   if (!mit?.procedureStep) return prev.procedureSteps;
+  if (mit.kind === 'switchOption') return prev.procedureSteps;
   const stepId = `${mit.id}:${vulnIds.sort().join(',')}`;
   if (prev.procedureSteps.some((p) => p.id === stepId || p.fromMitigationId === mit.id)) {
-    // Still allow same mitigation for different vuln sets if id differs
     if (prev.procedureSteps.some((p) => p.id === stepId)) return prev.procedureSteps;
   }
   return [
@@ -273,6 +286,99 @@ function appendProcedureFromMitigation(
       mitigatesVulnIds: [...vulnIds],
     },
   ];
+}
+
+/** Find trail index of the structural choice to replace (the step AFTER that choice was taken). */
+function findReplaceTrailIndex(prev: AdventureState, mit: Mitigation): number {
+  const spec = mit.switchTo;
+  if (!spec) return -1;
+
+  for (let i = 1; i < prev.trail.length; i++) {
+    const step = prev.trail[i];
+    if (spec.replaceChoiceId && step.choiceId === spec.replaceChoiceId) return i;
+
+    if (spec.replaceChoiceTag) {
+      const parent = nodeById[prev.trail[i - 1].nodeId];
+      const choice = parent?.choices.find((c) => c.id === step.choiceId);
+      if (choice?.tags?.includes(spec.replaceChoiceTag)) return i;
+      // Also match tags recorded on adventure state via that choice
+      if (step.choiceId && choice?.tags?.includes(spec.replaceChoiceTag)) return i;
+    }
+  }
+
+  // Fallback: scan all nodes' choices by id even if parent replay differs
+  if (spec.replaceChoiceId) {
+    for (let i = 1; i < prev.trail.length; i++) {
+      if (prev.trail[i].choiceId === spec.replaceChoiceId) return i;
+    }
+  }
+  return -1;
+}
+
+function applySwitchMitigation(prev: AdventureState, mit: Mitigation, vulnId: string): AdventureState | null {
+  const spec = mit.switchTo;
+  if (!spec?.targetNodeId || !nodeById[spec.targetNodeId]) return null;
+
+  const replaceIdx = findReplaceTrailIndex(prev, mit);
+  let base: AdventureState;
+  if (replaceIdx > 0) {
+    base = replayTrail(prev.trail.slice(0, replaceIdx), prev.mitigatedVulnIds, prev.procedureSteps);
+  } else {
+    // Could not locate conflicting step — jump forward from current state without inventing a fake procedure step
+    base = { ...prev };
+  }
+
+  const clears = spec.clearsVulnIds ?? mit.addressesVulnIds ?? [];
+  const target = nodeById[spec.targetNodeId];
+  const label = spec.choiceLabel ?? mit.title;
+  const choiceId = spec.choiceId ?? `switch:${mit.id}`;
+
+  // Drop cleared vulns from accumulation; mark addressed ones mitigated
+  const vulnIds = base.vulnIds.filter((id) => !clears.includes(id));
+  const mitigatedVulnIds = uniquePush(
+    base.mitigatedVulnIds.filter((id) => !clears.includes(id)),
+    [vulnId, ...clears.filter((id) => prev.vulnIds.includes(id) || id === vulnId)],
+  ).filter((id) => vulnIds.includes(id) || id === vulnId);
+
+  // If single-point-key etc. already removed from vulnIds, still track mitigation of the clicked vuln
+  // Keep clicked vuln in list only if still present; switch clears structural ones
+  const finalVulns = uniquePush(vulnIds, []);
+  // Ensure we don't re-add cleared ids
+  const cleanedVulns = finalVulns.filter((id) => !clears.includes(id));
+
+  // Tags: remove replaced structural tag if any
+  let tags = base.tags.filter((t) => t !== spec.replaceChoiceTag);
+  tags = uniquePush(tags, [...(spec.addsTags ?? []), mit.id, 'structure-switch']);
+
+  const next: AdventureState = {
+    ...base,
+    currentNodeId: spec.targetNodeId,
+    trail: [
+      ...base.trail,
+      {
+        nodeId: spec.targetNodeId,
+        choiceId,
+        choiceLabel: label,
+        choiceDescription: mit.description,
+        addsVulnIds: [],
+        kind: 'choice',
+        mitigationId: mit.id,
+      },
+    ],
+    vulnIds: cleanedVulns,
+    // Keep mitigated ids that still appear OR were cleared by the switch (show as secured if somehow still listed)
+    mitigatedVulnIds: uniquePush(
+      mitigatedVulnIds.filter((id) => cleanedVulns.includes(id)),
+      [],
+    ),
+    tags,
+    // Do not append procedure step for switches
+    procedureSteps: base.procedureSteps.filter((ps) => ps.fromMitigationId !== mit.id),
+  };
+
+  // Title context: if target has a meaningful first question, we're on it
+  void target;
+  return next;
 }
 
 export function useAdventure() {
@@ -345,11 +451,40 @@ export function useAdventure() {
       return;
     }
     const mit = mitigationForVuln(vulnId);
-    const procedureSteps = mit
-      ? appendProcedureFromMitigation(prev, mit.id, [vulnId])
-      : prev.procedureSteps;
+    if (!mit) {
+      const next: AdventureState = {
+        ...prev,
+        mitigatedVulnIds: uniquePush(prev.mitigatedVulnIds, [vulnId]),
+      };
+      setState(next);
+      window.history.replaceState(next, '', urlFor(next.currentNodeId));
+      return;
+    }
+
+    if (mit.kind === 'switchOption' && mit.switchTo) {
+      const switched = applySwitchMitigation(prev, mit, vulnId);
+      if (switched) {
+        setState(switched);
+        // Structural navigation: push so browser Back restores prior structure
+        window.history.pushState(switched, '', urlFor(switched.currentNodeId));
+        return;
+      }
+    }
+
+    // Xpub-verify style mitigations can mark public side ready
+    let keys = {
+      hasPrivateKey: prev.hasPrivateKey,
+      hasPublicKey: prev.hasPublicKey,
+      hasXpub: prev.hasXpub,
+    };
+    if (mit.id === 'xpub-watcher-match' || mit.id === 'verify-address-on-device') {
+      keys = applyFlags(keys, ['publicKey', 'xpub']);
+    }
+
+    const procedureSteps = appendProcedureFromMitigation(prev, mit.id, [vulnId]);
     const next: AdventureState = {
       ...prev,
+      ...keys,
       mitigatedVulnIds: uniquePush(prev.mitigatedVulnIds, [vulnId]),
       procedureSteps,
     };
@@ -364,6 +499,10 @@ export function useAdventure() {
   const applyPreMitigation = useCallback((mitigationId: string) => {
     const mit = mitigationById[mitigationId];
     if (!mit) return;
+    if (mit.kind === 'switchOption') {
+      // Pre-mits should be procedure-style; ignore switches here
+      return;
+    }
     const prev = stateRef.current;
     const addressed = mit.addressesVulnIds ?? [];
     if (!addressed.length) return;

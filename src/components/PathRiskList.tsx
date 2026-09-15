@@ -10,10 +10,16 @@ const severityClass: Record<Severity, string> = {
   critical: 'sev-critical',
 };
 
+function switchButtonLabel(mitTitle: string, choiceLabel?: string): string {
+  const target = choiceLabel || mitTitle;
+  const short = target.length > 28 ? target.slice(0, 27) + '…' : target;
+  return `Switch to ${short}`;
+}
+
 /**
  * Unified vertical path + risks list.
- * Each decision is a row; risks introduced by that decision nest under it.
- * Collapsed by default while setup is incomplete; expanded when operable.
+ * Entire panel expands/collapses as one unit; content scrolls when expanded.
+ * Per-step accordion removed — steps always show their body when the panel is open.
  */
 export function PathRiskList({
   state,
@@ -41,184 +47,141 @@ export function PathRiskList({
     [state.vulnIds, stepScopedVulnIds],
   );
 
-  // Expand all when operable; otherwise start collapsed (user can expand).
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  // Whole panel: collapsed by default while incomplete; expanded when operable (user can toggle).
+  const [panelOpen, setPanelOpen] = useState(sufficientToOperate);
 
   useEffect(() => {
-    if (sufficientToOperate) {
-      const next: Record<string, boolean> = {};
-      state.trail.forEach((_, i) => {
-        next[`step-${i}`] = true;
-      });
-      state.procedureSteps.forEach((_, i) => {
-        next[`proc-${i}`] = true;
-      });
-      if (orphanVulnIds.length) next['orphans'] = true;
-      setExpanded(next);
-    }
-  }, [sufficientToOperate, state.trail.length, state.procedureSteps.length, orphanVulnIds.length]);
+    if (sufficientToOperate) setPanelOpen(true);
+  }, [sufficientToOperate]);
 
-  const toggle = (key: string) => {
-    if (sufficientToOperate) return; // stay open when operable
-    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  const isOpen = (key: string) => (sufficientToOperate ? true : !!expanded[key]);
+  const openRiskCount = state.vulnIds.filter((id) => !mitigated.has(id)).length;
 
   return (
     <nav
-      className={`path-risk-list ${sufficientToOperate ? 'operable' : 'incomplete'}`}
+      className={`path-risk-list ${sufficientToOperate ? 'operable' : 'incomplete'} ${panelOpen ? 'panel-open' : 'panel-collapsed'}`}
       aria-label={sufficientToOperate ? 'Setup procedure' : 'Path and risks'}
     >
       <header className="prl-head">
-        <h2>{sufficientToOperate ? 'Procedure' : 'Path & risks'}</h2>
-        {!sufficientToOperate && (
-          <span className="prl-hint">Tap a step to expand</span>
-        )}
+        <button
+          type="button"
+          className="prl-panel-toggle"
+          onClick={() => setPanelOpen((o) => !o)}
+          aria-expanded={panelOpen}
+        >
+          <h2>{sufficientToOperate ? 'Procedure' : 'Path & risks'}</h2>
+          <span className="prl-panel-meta">
+            {openRiskCount > 0 ? `${openRiskCount} open` : 'clear'}
+            <span className="prl-chevron" aria-hidden>
+              {panelOpen ? '▾' : '▸'}
+            </span>
+          </span>
+        </button>
       </header>
 
-      <ol className="prl-steps">
-        {state.trail.map((step, i) => {
-          const node = nodeById[step.nodeId];
-          const isStart = i === 0 && !step.choiceLabel;
-          const label = isStart
-            ? (node?.title ?? 'Start')
-            : (step.choiceLabel ?? node?.title ?? step.nodeId);
-          const description = isStart
-            ? 'Starting question'
-            : (step.choiceDescription || (node ? `Leads to: ${node.title}` : null));
-          const vulns = (step.addsVulnIds ?? []).map((id) => vulnById[id]).filter(Boolean);
-          const key = `step-${i}`;
-          const open = isOpen(key);
-          const isLast = i === state.trail.length - 1;
+      {panelOpen && (
+        <div className="prl-scroll">
+          <ol className="prl-steps">
+            {state.trail.map((step, i) => {
+              const node = nodeById[step.nodeId];
+              const isStart = i === 0 && !step.choiceLabel;
+              const label = isStart
+                ? (node?.title ?? 'Start')
+                : (step.choiceLabel ?? node?.title ?? step.nodeId);
+              const description = isStart
+                ? 'Starting question'
+                : (step.choiceDescription || (node ? `Leads to: ${node.title}` : null));
+              const vulns = (step.addsVulnIds ?? []).map((id) => vulnById[id]).filter(Boolean);
+              const isLast = i === state.trail.length - 1;
 
-          return (
-            <li key={`${step.nodeId}-${i}`} className={`prl-step ${isLast ? 'current' : ''} ${open ? 'open' : 'collapsed'}`}>
-              <button
-                type="button"
-                className="prl-step-toggle"
-                onClick={() => toggle(key)}
-                aria-expanded={open}
-              >
+              return (
+                <li
+                  key={`${step.nodeId}-${i}`}
+                  className={`prl-step open ${isLast ? 'current' : ''}`}
+                >
+                  <div className="prl-step-head">
+                    <span className="prl-idx" aria-hidden>
+                      {i + 1}
+                    </span>
+                    <span className="prl-step-main">
+                      <span className="prl-label">{label}</span>
+                      {vulns.length > 0 && (
+                        <span className="prl-risk-count" title={`${vulns.length} risk(s)`}>
+                          {vulns.filter((v) => !mitigated.has(v.id)).length > 0
+                            ? `${vulns.filter((v) => !mitigated.has(v.id)).length} open`
+                            : 'secured'}
+                        </span>
+                      )}
+                    </span>
+                  </div>
+
+                  <div className="prl-step-body">
+                    {description && <p className="prl-desc">{description}</p>}
+                    {node && !isStart && (
+                      <button
+                        type="button"
+                        className="prl-jump"
+                        onClick={() => onJump(step.nodeId)}
+                      >
+                        Go to this step
+                      </button>
+                    )}
+                    {vulns.length > 0 && (
+                      <ul className="prl-risks" aria-label={`Risks from ${label}`}>
+                        {vulns.map((v) => (
+                          <RiskRow
+                            key={v.id}
+                            vulnId={v.id}
+                            mitigated={mitigated.has(v.id)}
+                            onApply={onApplyMitigation}
+                          />
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+
+            {state.procedureSteps.map((ps) => (
+              <ProcedureRow key={ps.id} step={ps} />
+            ))}
+          </ol>
+
+          {orphanVulnIds.length > 0 && (
+            <section className="prl-orphans open">
+              <div className="prl-step-head">
                 <span className="prl-idx" aria-hidden>
-                  {i + 1}
+                  ·
                 </span>
                 <span className="prl-step-main">
-                  <span className="prl-label">{label}</span>
-                  {vulns.length > 0 && (
-                    <span className="prl-risk-count" title={`${vulns.length} risk(s)`}>
-                      {vulns.filter((v) => !mitigated.has(v.id)).length > 0
-                        ? `${vulns.filter((v) => !mitigated.has(v.id)).length} open`
-                        : 'secured'}
-                    </span>
-                  )}
+                  <span className="prl-label">Other open risks</span>
+                  <span className="prl-risk-count">
+                    {orphanVulnIds.filter((id) => !mitigated.has(id)).length} open
+                  </span>
                 </span>
-                <span className="prl-chevron" aria-hidden>
-                  {open ? '▾' : '▸'}
-                </span>
-              </button>
-
-              {open && (
-                <div className="prl-step-body">
-                  {description && <p className="prl-desc">{description}</p>}
-                  {node && !isStart && (
-                    <button
-                      type="button"
-                      className="prl-jump"
-                      onClick={() => onJump(step.nodeId)}
-                    >
-                      Go to this step
-                    </button>
-                  )}
-                  {vulns.length > 0 && (
-                    <ul className="prl-risks" aria-label={`Risks from ${label}`}>
-                      {vulns.map((v) => (
-                        <RiskRow
-                          key={v.id}
-                          vulnId={v.id}
-                          mitigated={mitigated.has(v.id)}
-                          onApply={onApplyMitigation}
-                        />
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              )}
-            </li>
-          );
-        })}
-
-        {state.procedureSteps.map((ps, i) => (
-          <ProcedureRow
-            key={ps.id}
-            step={ps}
-            open={isOpen(`proc-${i}`)}
-            onToggle={() => toggle(`proc-${i}`)}
-            forceOpen={sufficientToOperate}
-          />
-        ))}
-      </ol>
-
-      {orphanVulnIds.length > 0 && (
-        <section className={`prl-orphans ${isOpen('orphans') ? 'open' : 'collapsed'}`}>
-          <button
-            type="button"
-            className="prl-step-toggle"
-            onClick={() => toggle('orphans')}
-            aria-expanded={isOpen('orphans')}
-          >
-            <span className="prl-idx" aria-hidden>
-              ·
-            </span>
-            <span className="prl-step-main">
-              <span className="prl-label">Other open risks</span>
-              <span className="prl-risk-count">
-                {orphanVulnIds.filter((id) => !mitigated.has(id)).length} open
-              </span>
-            </span>
-            <span className="prl-chevron" aria-hidden>
-              {isOpen('orphans') ? '▾' : '▸'}
-            </span>
-          </button>
-          {isOpen('orphans') && (
-            <ul className="prl-risks">
-              {orphanVulnIds.map((id) => (
-                <RiskRow
-                  key={id}
-                  vulnId={id}
-                  mitigated={mitigated.has(id)}
-                  onApply={onApplyMitigation}
-                />
-              ))}
-            </ul>
+              </div>
+              <ul className="prl-risks">
+                {orphanVulnIds.map((id) => (
+                  <RiskRow
+                    key={id}
+                    vulnId={id}
+                    mitigated={mitigated.has(id)}
+                    onApply={onApplyMitigation}
+                  />
+                ))}
+              </ul>
+            </section>
           )}
-        </section>
+        </div>
       )}
     </nav>
   );
 }
 
-function ProcedureRow({
-  step,
-  open,
-  onToggle,
-  forceOpen,
-}: {
-  step: ProcedureStep;
-  open: boolean;
-  onToggle: () => void;
-  forceOpen: boolean;
-}) {
+function ProcedureRow({ step }: { step: ProcedureStep }) {
   return (
-    <li className={`prl-step prl-procedure ${open || forceOpen ? 'open' : 'collapsed'}`}>
-      <button
-        type="button"
-        className="prl-step-toggle"
-        onClick={() => {
-          if (!forceOpen) onToggle();
-        }}
-        aria-expanded={open || forceOpen}
-      >
+    <li className="prl-step prl-procedure open">
+      <div className="prl-step-head">
         <span className="prl-idx prl-idx-proc" aria-hidden>
           ✓
         </span>
@@ -226,15 +189,10 @@ function ProcedureRow({
           <span className="prl-label">{step.title}</span>
           <span className="prl-badge">Procedure</span>
         </span>
-        <span className="prl-chevron" aria-hidden>
-          {open || forceOpen ? '▾' : '▸'}
-        </span>
-      </button>
-      {(open || forceOpen) && (
-        <div className="prl-step-body">
-          <p className="prl-desc">{step.description}</p>
-        </div>
-      )}
+      </div>
+      <div className="prl-step-body">
+        <p className="prl-desc">{step.description}</p>
+      </div>
     </li>
   );
 }
@@ -251,6 +209,7 @@ function RiskRow({
   const v = vulnById[vulnId];
   if (!v) return null;
   const mit = mitigationForVuln(vulnId);
+  const isSwitch = mit?.kind === 'switchOption';
 
   return (
     <li className={`prl-risk ${mitigated ? 'mitigated' : 'open'} ${severityClass[v.severity]}`}>
@@ -264,19 +223,21 @@ function RiskRow({
       <p>{v.description}</p>
       {mit && (
         <div className="prl-mit">
-          <span className="detail-heading">Mitigation</span>
+          <span className="detail-heading">{isSwitch ? 'Structural switch' : 'Mitigation'}</span>
           <strong className="mit-title">{mit.title}</strong>
           <p>{mit.description}</p>
           {!mitigated ? (
             <button
               type="button"
-              className="btn btn-sm btn-primary apply-mit-btn"
+              className={`btn btn-sm btn-primary apply-mit-btn ${isSwitch ? 'btn-switch' : ''}`}
               onClick={() => onApply(vulnId)}
             >
-              Apply · add to procedure
+              {isSwitch
+                ? switchButtonLabel(mit.title, mit.switchTo?.choiceLabel)
+                : 'Apply · add to procedure'}
             </button>
           ) : (
-            <span className="mit-applied">Applied</span>
+            <span className="mit-applied">{isSwitch ? 'Switched' : 'Applied'}</span>
           )}
         </div>
       )}

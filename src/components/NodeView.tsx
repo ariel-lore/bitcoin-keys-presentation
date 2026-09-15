@@ -124,9 +124,9 @@ function BrandIcon({ choice }: { choice: Choice }) {
   );
 }
 
+/** Hover detail: description / services only — risks stay listed under the option. */
 function ChoiceDetail({ choice }: { choice: Choice }) {
-  const vulns = (choice.addsVulnIds ?? []).map((id) => vulnById[id]).filter(Boolean);
-  if (!vulns.length && !choice.subtitle && !choice.description) return null;
+  if (!choice.subtitle && !choice.description) return null;
 
   return (
     <div className="choice-detail hover-detail" role="tooltip">
@@ -140,19 +140,6 @@ function ChoiceDetail({ choice }: { choice: Choice }) {
         <div className="detail-block">
           <span className="detail-heading">Services</span>
           <p style={{ margin: 0, color: 'var(--muted)' }}>{choice.subtitle}</p>
-        </div>
-      )}
-      {vulns.length > 0 && (
-        <div className="detail-block">
-          <span className="detail-heading">Risks introduced</span>
-          <ul>
-            {vulns.map((v) => (
-              <li key={v.id}>
-                <strong>{v.title}</strong>
-                <span>{v.description}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       )}
     </div>

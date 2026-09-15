@@ -105,15 +105,22 @@ export function SummaryView({
                     {mit && (
                       <div className="summary-mit-row">
                         <span className="summary-mit-label">
-                          Mitigation: {mit.title}
-                          {mit.procedureStep ? ' · adds procedure step' : ''}
+                          {mit.kind === 'switchOption' ? 'Switch: ' : 'Mitigation: '}
+                          {mit.title}
+                          {mit.kind === 'switchOption'
+                            ? ' · changes structure'
+                            : mit.procedureStep
+                              ? ' · adds procedure step'
+                              : ''}
                         </span>
                         <button
                           type="button"
                           className="btn btn-sm btn-primary"
                           onClick={() => onApplyMitigation(v.id)}
                         >
-                          Apply
+                          {mit.kind === 'switchOption'
+                            ? `Switch to ${mit.switchTo?.choiceLabel ?? mit.title}…`
+                            : 'Apply'}
                         </button>
                       </div>
                     )}
