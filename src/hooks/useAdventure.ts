@@ -1,6 +1,25 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { AdventureState, Choice, RecommendedPath, TrailStep } from '../types/schema';
+import type { AdventureState, Choice, KeyFlag, RecommendedPath, TrailStep } from '../types/schema';
+import { isSufficientToOperate } from '../types/schema';
 import { tree, nodeById, uniquePush } from '../lib/data';
+
+function emptyKeys() {
+  return { hasPrivateKey: false, hasPublicKey: false, hasXpub: false };
+}
+
+function applyFlags(
+  keys: { hasPrivateKey: boolean; hasPublicKey: boolean; hasXpub: boolean },
+  flags: KeyFlag[] | undefined,
+) {
+  if (!flags?.length) return keys;
+  const next = { ...keys };
+  for (const f of flags) {
+    if (f === 'privateKey') next.hasPrivateKey = true;
+    if (f === 'publicKey') next.hasPublicKey = true;
+    if (f === 'xpub') next.hasXpub = true;
+  }
+  return next;
+}
 
 function initialState(): AdventureState {
   return {
@@ -9,12 +28,21 @@ function initialState(): AdventureState {
     vulnIds: [],
     mitigatedVulnIds: [],
     tags: [],
+    ...emptyKeys(),
   };
 }
 
 function applyChoice(prev: AdventureState, choice: Choice): AdventureState | null {
   const nextNode = nodeById[choice.nextNodeId];
   if (!nextNode) return null;
+  const keys = applyFlags(
+    {
+      hasPrivateKey: prev.hasPrivateKey,
+      hasPublicKey: prev.hasPublicKey,
+      hasXpub: prev.hasXpub,
+    },
+    choice.setsFlags,
+  );
   return {
     currentNodeId: choice.nextNodeId,
     trail: [
@@ -26,9 +54,9 @@ function applyChoice(prev: AdventureState, choice: Choice): AdventureState | nul
       },
     ],
     vulnIds: uniquePush(prev.vulnIds, choice.addsVulnIds),
-    // Mitigations are applied by the user clicking paired mitigations — not auto-added.
     mitigatedVulnIds: prev.mitigatedVulnIds,
-    tags: uniquePush(prev.tags, choice.tags),
+    tags: uniquePush(prev.tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]),
+    ...keys,
   };
 }
 
@@ -36,6 +64,7 @@ function replayTrail(kept: TrailStep[], mitigatedVulnIds: string[]): AdventureSt
   let vulnIds: string[] = [];
   let tags: string[] = [];
   let currentNodeId = tree.startNodeId;
+  let keys = emptyKeys();
 
   for (let i = 1; i < kept.length; i++) {
     const step = kept[i];
@@ -44,10 +73,10 @@ function replayTrail(kept: TrailStep[], mitigatedVulnIds: string[]): AdventureSt
     if (!choice) continue;
     currentNodeId = choice.nextNodeId;
     vulnIds = uniquePush(vulnIds, choice.addsVulnIds);
-    tags = uniquePush(tags, choice.tags);
+    tags = uniquePush(tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]);
+    keys = applyFlags(keys, choice.setsFlags);
   }
 
-  // Keep mitigations that still address vulns present in the replayed path
   const vulnSet = new Set(vulnIds);
   const keptMitigated = mitigatedVulnIds.filter((id) => vulnSet.has(id));
 
@@ -57,6 +86,7 @@ function replayTrail(kept: TrailStep[], mitigatedVulnIds: string[]): AdventureSt
     vulnIds,
     mitigatedVulnIds: keptMitigated,
     tags,
+    ...keys,
   };
 }
 
@@ -64,6 +94,7 @@ function walkPath(path: RecommendedPath): AdventureState {
   let vulnIds: string[] = [];
   let tags: string[] = [];
   let currentNodeId = path.startNodeId ?? tree.startNodeId;
+  let keys = emptyKeys();
   const trail: TrailStep[] = [{ nodeId: currentNodeId, choiceId: null, choiceLabel: null }];
 
   for (const choiceId of path.choiceSequence) {
@@ -72,7 +103,8 @@ function walkPath(path: RecommendedPath): AdventureState {
     if (!choice) break;
     currentNodeId = choice.nextNodeId;
     vulnIds = uniquePush(vulnIds, choice.addsVulnIds);
-    tags = uniquePush(tags, choice.tags);
+    tags = uniquePush(tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]);
+    keys = applyFlags(keys, choice.setsFlags);
     trail.push({
       nodeId: currentNodeId,
       choiceId: choice.id,
@@ -80,7 +112,7 @@ function walkPath(path: RecommendedPath): AdventureState {
     });
   }
 
-  return { currentNodeId, trail, vulnIds, mitigatedVulnIds: [], tags };
+  return { currentNodeId, trail, vulnIds, mitigatedVulnIds: [], tags, ...keys };
 }
 
 function urlFor(nodeId: string): string {
@@ -114,6 +146,9 @@ function normalizeLegacy(s: AdventureState & { mitigationIds?: string[] }): Adve
     vulnIds: s.vulnIds ?? [],
     mitigatedVulnIds: s.mitigatedVulnIds ?? [],
     tags: s.tags ?? [],
+    hasPrivateKey: !!s.hasPrivateKey,
+    hasPublicKey: !!s.hasPublicKey,
+    hasXpub: !!s.hasXpub,
   };
 }
 
@@ -127,6 +162,7 @@ export function useAdventure() {
         vulnIds: [],
         mitigatedVulnIds: [],
         tags: [],
+        ...emptyKeys(),
       };
     }
     return initialState();
@@ -145,7 +181,6 @@ export function useAdventure() {
       if (snapshotValid(e.state)) {
         setState(normalizeLegacy(e.state));
       } else if (e.state && typeof e.state === 'object' && Array.isArray((e.state as AdventureState).vulnIds)) {
-        // Tolerate older snapshots missing mitigatedVulnIds
         setState(normalizeLegacy(e.state as AdventureState));
       } else {
         const fromUrl = readNodeFromUrl();
@@ -157,6 +192,7 @@ export function useAdventure() {
                 vulnIds: [],
                 mitigatedVulnIds: [],
                 tags: [],
+                ...emptyKeys(),
               }
             : initialState(),
         );
@@ -193,7 +229,6 @@ export function useAdventure() {
     });
   }, []);
 
-  /** Mark a vulnerability as mitigated (click-to-apply paired mitigation). */
   const applyMitigationForVuln = useCallback((vulnId: string) => {
     setState((prev) => {
       if (!prev.vulnIds.includes(vulnId) || prev.mitigatedVulnIds.includes(vulnId)) {
@@ -259,6 +294,8 @@ export function useAdventure() {
     [state.vulnIds, state.mitigatedVulnIds],
   );
 
+  const sufficientToOperate = useMemo(() => isSufficientToOperate(state), [state]);
+
   return useMemo(
     () => ({
       state,
@@ -271,6 +308,7 @@ export function useAdventure() {
       applyMitigationForVuln,
       canUndo,
       openVulnIds,
+      sufficientToOperate,
     }),
     [
       state,
@@ -283,6 +321,7 @@ export function useAdventure() {
       applyMitigationForVuln,
       canUndo,
       openVulnIds,
+      sufficientToOperate,
     ],
   );
 }

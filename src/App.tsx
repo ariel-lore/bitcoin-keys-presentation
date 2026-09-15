@@ -5,6 +5,8 @@ import { TrailStrip } from './components/Trail';
 import { RiskMitigationStrip } from './components/ChipLists';
 import { PathPanel } from './components/PathPanel';
 import { NodeView } from './components/NodeView';
+import { SummaryView } from './components/SummaryView';
+import { SetupStatus } from './components/SetupStatus';
 
 export default function App() {
   const adventure = useAdventure();
@@ -13,6 +15,8 @@ export default function App() {
   if (!adventure.currentNode) {
     return <div className="app-error">Missing node data. Check src/data/tree.json.</div>;
   }
+
+  const isSummary = !!adventure.currentNode.isSummary;
 
   return (
     <div className="app">
@@ -30,6 +34,7 @@ export default function App() {
         <TrailStrip trail={adventure.state.trail} onJump={adventure.jumpToNode} />
 
         <div className="status-cluster">
+          <SetupStatus state={adventure.state} />
           <RiskMitigationStrip
             vulnIds={adventure.state.vulnIds}
             mitigatedVulnIds={adventure.state.mitigatedVulnIds}
@@ -51,7 +56,17 @@ export default function App() {
       </header>
 
       <main className="slide">
-        <NodeView node={adventure.currentNode} onChoose={adventure.choose} />
+        {isSummary ? (
+          <SummaryView
+            node={adventure.currentNode}
+            state={adventure.state}
+            openVulnIds={adventure.openVulnIds}
+            onChoose={adventure.choose}
+            onApplyMitigation={adventure.applyMitigationForVuln}
+          />
+        ) : (
+          <NodeView node={adventure.currentNode} onChoose={adventure.choose} />
+        )}
       </main>
 
       <footer className="slide-footer">

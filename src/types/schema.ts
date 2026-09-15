@@ -2,6 +2,8 @@
 
 export type Severity = 'low' | 'medium' | 'high' | 'critical';
 
+export type KeyFlag = 'privateKey' | 'publicKey' | 'xpub';
+
 export interface Vulnerability {
   id: string;
   title: string;
@@ -32,16 +34,28 @@ export interface Choice {
   icon?: string;
   /** Short service line under the label, e.g. "Exchange · Lightning" */
   subtitle?: string;
+  /**
+   * Key-material flags this choice sets (educational labels only — never real keys).
+   * privateKey = can sign/spend; publicKey/xpub = receive/watch ready.
+   */
+  setsFlags?: KeyFlag[];
+  /** Capabilities this tool/choice unlocks for follow-up slides */
+  enables?: string[];
+  /** Descriptive capability tags (hardware, hot, airgap, bip39, …) */
+  capabilities?: string[];
 }
 
 export interface TreeNode {
   id: string;
+  /** Must be the question being asked on this slide */
   title: string;
   body: string;
   choices: Choice[];
   /** Optional category badge shown in UI */
   category?: string;
   tags?: string[];
+  /** When true, render end-of-path SummaryView (trail + vulns + harden) */
+  isSummary?: boolean;
 }
 
 export interface RecommendedPath {
@@ -75,4 +89,13 @@ export interface AdventureState {
   /** Vulns the user has secured by applying paired mitigations */
   mitigatedVulnIds: string[];
   tags: string[];
+  /** Educational key-status labels (never real key material) */
+  hasPrivateKey: boolean;
+  hasPublicKey: boolean;
+  hasXpub: boolean;
+}
+
+/** Derived: private present AND (public or xpub) — operable even if vulnerable */
+export function isSufficientToOperate(s: Pick<AdventureState, 'hasPrivateKey' | 'hasPublicKey' | 'hasXpub'>): boolean {
+  return s.hasPrivateKey && (s.hasPublicKey || s.hasXpub);
 }

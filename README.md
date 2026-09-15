@@ -25,7 +25,7 @@ All narrative lives under **`src/data/`**:
 
 | File | Purpose |
 |------|---------|
-| `tree.json` | Decision nodes + choices |
+| `tree.json` | Decision nodes + choices (`title` = question; `isSummary` = end slide) |
 | `vulnerabilities.json` | Risk catalog (`defaultMitigationId` pairs a mitigation) |
 | `mitigations.json` | Hardening catalog (`addressesVulnIds`) |
 | `paths.json` | Recommended walkthroughs |
@@ -35,13 +35,24 @@ Brand icons live in **`public/brands/`**.
 ### Choice fields
 
 - `addsVulnIds` — risks introduced by the choice
-- `icon` — optional path like `/brands/kraken.svg`
-- `subtitle` — optional service line (e.g. `Exchange · Lightning`)
+- `icon` — optional path like `/brands/ledger.svg`
+- `subtitle` — optional service line (e.g. `Hardware · USB`)
+- `setsFlags` — `privateKey` / `publicKey` / `xpub` (educational labels only)
+- `enables` / `capabilities` — tool capability tags for differentiated follow-ups
 - `addsMitigationIds` — deprecated / ignored (mitigations are click-to-apply)
+
+### Key accumulation & sufficiency
+
+Adventure state tracks `hasPrivateKey`, `hasPublicKey`, `hasXpub`.  
+**Sufficient to operate** when private material is present **and** a public/xpub side is ready — even if risks remain. The top bar shows setup status + Priv/Pub badges (labels only, never real keys).
+
+### End of path = summary
+
+When a path reaches an operable setup, the slide is a **summary** (`isSummary: true`): path trail, open vulns with Apply, applied mitigations, and hardening choices. There is **no** bounce back to “Wallet structure” — only a discreet optional “Explore another structure…”. Default is stay and mitigate.
 
 ### Mitigation UX
 
-Choices add vulnerabilities. The UI shows each open risk with its paired mitigation (via `defaultMitigationId` or `addressesVulnIds`). Click **Apply** on the mitigation to mark that risk secured (`mitigatedVulnIds`).
+Choices add vulnerabilities. The UI shows each open risk with its paired mitigation. Click **Apply** to mark that risk secured (`mitigatedVulnIds`).
 
 ### Recommended paths (`paths.json`)
 
@@ -52,10 +63,10 @@ TypeScript types live in `src/types/schema.ts`.
 ## UX features
 
 - **True slides**: each view fits the viewport; no page scrollbars
-- **Wallet structure** start: Use a custodian · Self-custodied
-- Compact trail + paired risk/mitigation icons; details on hover; click to secure
+- **Question titles**: every node asks a question; choices are the answers
+- **Self-custody → single key → tools** (Ledger, Trezor, Coldcard, Bitkey, Seedsigner, Jade, Tails, phone, air-gapped phone, BlueWallet, Bitcoin Core, manual) with logos and differentiated follow-ups
+- Compact trail + setup status + paired risk/mitigation icons; details on hover; click to secure
 - **Browser Back / Forward** (History API + `?node=` deep-link)
-- Recommended paths: Single custodian · Federated · Hot · Cold · Multisig
 
 ## Stack
 

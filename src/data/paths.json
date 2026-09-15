@@ -7,8 +7,7 @@
       "start-custodian",
       "cm-single",
       "sc-kraken",
-      "ak-hw",
-      "cp-end"
+      "ak-hw"
     ],
     "highlightColor": "#f7931a"
   },
@@ -20,36 +19,61 @@
       "start-custodian",
       "cm-fed",
       "fc-fedi",
-      "ff-end"
+      "ff-backup"
     ],
     "highlightColor": "#a78bfa"
   },
   {
     "id": "path-hot",
-    "name": "Single-key hot wallet",
-    "summary": "Self-custody on an internet-connected device: convenient spending; malware and seed handling dominate risk.",
+    "name": "Single-key hot (BlueWallet)",
+    "summary": "Self-custody on a phone app: convenient spending; malware and seed handling dominate risk.",
     "choiceSequence": [
       "start-self",
       "sf-single",
-      "sk-hot",
-      "hot-seed"
+      "sk-blue",
+      "bw-hot",
+      "bw-rng",
+      "ph-metal",
+      "sa-xpub",
+      "xp-phone",
+      "xph-harden",
+      "xv-summary"
     ],
     "highlightColor": "#38bdf8"
   },
   {
     "id": "path-cold",
-    "name": "Single-key cold wallet",
-    "summary": "Hardware or air-gapped single signature: stronger malware resistance when used correctly; supply-chain, entropy, and backups matter.",
+    "name": "Single-key cold (Ledger)",
+    "summary": "Hardware single signature: stronger malware resistance when used correctly; supply-chain, entropy, and backups matter.",
     "choiceSequence": [
       "start-self",
       "sf-single",
-      "sk-cold",
-      "cw-hw",
-      "hw-supply",
-      "hsc-ok",
-      "hr-end"
+      "sk-ledger",
+      "led-entropy",
+      "led-pin-pass",
+      "sa-xpub",
+      "xp-hw",
+      "xhw-ok",
+      "xv-summary"
     ],
     "highlightColor": "#22c55e"
+  },
+  {
+    "id": "path-seedsigner",
+    "name": "Air-gapped Seedsigner",
+    "summary": "Stateless air-gapped signer with dice entropy; metal backup is the wallet.",
+    "choiceSequence": [
+      "start-self",
+      "sf-single",
+      "sk-seedsigner",
+      "ss-dice",
+      "ss-metal",
+      "sa-xpub",
+      "xp-air",
+      "xa-ok",
+      "xv-summary"
+    ],
+    "highlightColor": "#94a3b8"
   },
   {
     "id": "path-multisig",
@@ -61,7 +85,7 @@
       "ms-geo",
       "dm-parties",
       "im-peers",
-      "mp-end"
+      "mp-drill"
     ],
     "highlightColor": "#c084fc"
   }
