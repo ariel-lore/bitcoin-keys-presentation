@@ -1,0 +1,2130 @@
+{
+  "startNodeId": "start",
+  "nodes": [
+    {
+      "id": "start",
+      "title": "Bitcoin Custody Adventure",
+      "body": "**Educational demo \u2014 not financial advice.**\n\nThis is a choose-your-own-adventure about how people hold Bitcoin keys.\nYour choices accumulate in the trail. **Vulnerabilities** and **mitigations** stack up.\nMeters track **convenience**, **security**, **complexity**, and **recoverability**.\n\nJump to a recommended path anytime, or explore freely from the custody ladder.\n",
+      "choices": [
+        {
+          "id": "start-ladder",
+          "label": "Explore the custody ladder",
+          "nextNodeId": "ladder",
+          "metricDeltas": {
+            "convenience": 0,
+            "security": 0,
+            "complexity": 0,
+            "recoverability": 0
+          }
+        },
+        {
+          "id": "start-demo",
+          "label": "What is 'custody'?",
+          "nextNodeId": "what-is-custody"
+        }
+      ]
+    },
+    {
+      "id": "what-is-custody",
+      "title": "What is custody?",
+      "body": "**Custody** means who can authorize spending your Bitcoin.\n\n- If an exchange holds the keys, **they** custody your coins (you hold an IOU).\n- If you hold the seed/private keys, **you** custody them (self-custody).\n- Hybrids exist: federations, multisig co-signers, collaborative custody.\n\n*Not your keys, not your coins* \u2014 but self-custody also means *your keys, your responsibility*.\n",
+      "choices": [
+        {
+          "id": "wic-ladder",
+          "label": "Continue to custody ladder",
+          "nextNodeId": "ladder"
+        },
+        {
+          "id": "wic-back",
+          "label": "Back to start",
+          "nextNodeId": "start"
+        }
+      ]
+    },
+    {
+      "id": "ladder",
+      "title": "The custody ladder",
+      "body": "Climb from maximum convenience / counterparty trust toward maximum sovereignty and operational burden:\n\n1. **Custodian** (exchange)\n2. **Federation**\n3. **Single-key hot wallet**\n4. **Single-key hardware wallet**\n5. **Air-gapped / cold storage**\n6. **Multisignature**\n7. **Distributed multisig**\n8. **Multisig with independent parties**\n9. **High-security protocols** (e.g. Glacier-style)\n\nEach rung trades convenience and recoverability against security and complexity differently.\nPick a rung to dive in \u2014 or use the recommended paths panel.\n",
+      "choices": [
+        {
+          "id": "lad-cust",
+          "label": "1. Custodian",
+          "nextNodeId": "custodian",
+          "metricDeltas": {
+            "convenience": 25,
+            "security": -15,
+            "complexity": -15,
+            "recoverability": 20
+          },
+          "tags": [
+            "custodial"
+          ]
+        },
+        {
+          "id": "lad-fed",
+          "label": "2. Federation",
+          "nextNodeId": "federation",
+          "metricDeltas": {
+            "convenience": 15,
+            "security": -5,
+            "complexity": -5,
+            "recoverability": -10
+          },
+          "tags": [
+            "federation"
+          ]
+        },
+        {
+          "id": "lad-hot",
+          "label": "3. Single-key hot wallet",
+          "nextNodeId": "hot-wallet",
+          "metricDeltas": {
+            "convenience": 10,
+            "security": -10,
+            "complexity": -5,
+            "recoverability": -5
+          },
+          "tags": [
+            "single-sig",
+            "hot"
+          ]
+        },
+        {
+          "id": "lad-hw",
+          "label": "4. Single-key hardware wallet",
+          "nextNodeId": "hardware-wallet",
+          "metricDeltas": {
+            "convenience": -5,
+            "security": 15,
+            "complexity": 10,
+            "recoverability": 0
+          },
+          "tags": [
+            "single-sig",
+            "hardware"
+          ]
+        },
+        {
+          "id": "lad-air",
+          "label": "5. Air-gapped / cold storage",
+          "nextNodeId": "airgap",
+          "metricDeltas": {
+            "convenience": -20,
+            "security": 25,
+            "complexity": 20,
+            "recoverability": -5
+          },
+          "tags": [
+            "cold",
+            "airgap"
+          ]
+        },
+        {
+          "id": "lad-ms",
+          "label": "6. Multisignature",
+          "nextNodeId": "multisig",
+          "metricDeltas": {
+            "convenience": -15,
+            "security": 20,
+            "complexity": 25,
+            "recoverability": 10
+          },
+          "tags": [
+            "multisig"
+          ]
+        },
+        {
+          "id": "lad-dms",
+          "label": "7. Distributed multisig",
+          "nextNodeId": "distributed-multisig",
+          "metricDeltas": {
+            "convenience": -20,
+            "security": 25,
+            "complexity": 30,
+            "recoverability": 15
+          },
+          "tags": [
+            "multisig",
+            "distributed"
+          ]
+        },
+        {
+          "id": "lad-ind",
+          "label": "8. Independent multi-party multisig",
+          "nextNodeId": "independent-multisig",
+          "metricDeltas": {
+            "convenience": -25,
+            "security": 30,
+            "complexity": 35,
+            "recoverability": 15
+          },
+          "tags": [
+            "multisig",
+            "multi-party"
+          ]
+        },
+        {
+          "id": "lad-gla",
+          "label": "9. Glacier-style high-security",
+          "nextNodeId": "glacier",
+          "metricDeltas": {
+            "convenience": -40,
+            "security": 40,
+            "complexity": 45,
+            "recoverability": -10
+          },
+          "tags": [
+            "glacier"
+          ]
+        },
+        {
+          "id": "lad-seed",
+          "label": "Deep dive: generating a seed phrase",
+          "nextNodeId": "seed-gen-root",
+          "tags": [
+            "seed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "custodian",
+      "title": "Custodian (exchange / hosted wallet)",
+      "body": "A company holds Bitcoin on your behalf. You log in with **username/password** and usually **2FA**.\n\n**Benefits**\n- Exchange trading, fiat on/off ramps\n- Lightning payments (often)\n- Recovery via identity verification / support\n- Withdrawal limits, some inheritance/beneficiary policies\n\n**You can be phished.** You hold an account, not necessarily on-chain keys.\n",
+      "choices": [
+        {
+          "id": "cust-explore-benefits",
+          "label": "Explore benefits in detail",
+          "nextNodeId": "custodian-benefits",
+          "addsMitigationIds": [
+            "strong-unique-password"
+          ],
+          "metricDeltas": {
+            "convenience": 5
+          }
+        },
+        {
+          "id": "cust-explore-risks",
+          "label": "Explore risks & loss scenarios",
+          "nextNodeId": "custodian-risks",
+          "addsVulnIds": [
+            "phish-creds",
+            "custodian-hack",
+            "insider-theft",
+            "insolvency",
+            "withdrawal-freeze",
+            "gov-seizure",
+            "debasement",
+            "privacy-leak-kyc",
+            "sim-swap",
+            "compromised-creds"
+          ],
+          "metricDeltas": {
+            "security": -10
+          }
+        },
+        {
+          "id": "cust-mitigate",
+          "label": "What mitigations help?",
+          "nextNodeId": "custodian-mitigations"
+        },
+        {
+          "id": "cust-to-fed",
+          "label": "Compare: Federation instead",
+          "nextNodeId": "federation"
+        },
+        {
+          "id": "cust-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Custodial"
+    },
+    {
+      "id": "custodian-benefits",
+      "title": "Custodian \u2014 benefits",
+      "body": "- **Exchange services**: spot, often derivatives; easy fiat rails\n- **Lightning**: many custodians offer LN without channel management\n- **Auth model**: password + email/OTP 2FA (upgrade to hardware 2FA!)\n- **Recovery**: KYC / support can reset access if you lose credentials (unlike seed loss)\n- **Withdrawal limits**: can slow attackers who get into your account\n- **Inheritance policies**: some offer beneficiary designation (varies; legal complexity remains)\n\nTradeoff: convenience and institutional recovery come with **counterparty** and **privacy** risk.\n",
+      "choices": [
+        {
+          "id": "cb-risks",
+          "label": "Now see the risks",
+          "nextNodeId": "custodian-risks",
+          "addsVulnIds": [
+            "phish-creds",
+            "sim-swap"
+          ],
+          "metricDeltas": {
+            "security": -5
+          }
+        },
+        {
+          "id": "cb-mits",
+          "label": "Mitigations",
+          "nextNodeId": "custodian-mitigations"
+        },
+        {
+          "id": "cb-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Custodial"
+    },
+    {
+      "id": "custodian-risks",
+      "title": "Custodian \u2014 risks & loss of funds",
+      "body": "**Loss of funds**\n- Debasement / fractional reserves (IOU risk)\n- Seizure (government or civil)\n- Hacks of hot wallets / infrastructure\n- Insider theft\n- Insolvency / bankruptcy \u2192 creditors ahead of you\n\n**Loss of funds or privacy**\n- Rogue employees, database breaches\n- Police / legal process against the custodian\n\n**Access & social attacks**\n- Phishing, social engineering\n- SIM-swap against SMS 2FA\n- Compromised credentials\n- Withdrawal / account freezes\n",
+      "choices": [
+        {
+          "id": "cr-mits",
+          "label": "Apply mitigations",
+          "nextNodeId": "custodian-mitigations"
+        },
+        {
+          "id": "cr-self",
+          "label": "Leave for self-custody savings",
+          "nextNodeId": "hot-wallet",
+          "addsMitigationIds": [
+            "self-custody-withdrawal",
+            "split-holdings"
+          ],
+          "metricDeltas": {
+            "security": 10,
+            "convenience": -10
+          }
+        },
+        {
+          "id": "cr-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Custodial"
+    },
+    {
+      "id": "custodian-mitigations",
+      "title": "Custodian \u2014 mitigations",
+      "body": "Natural mitigations (still not eliminating counterparty risk):\n\n- **Hardware 2FA** (security keys) \u2014 defeat most SIM-swaps\n- **Withdrawal allowlists** + delay on allowlist changes\n- **Split holdings** \u2014 only working capital on exchanges\n- **Proof-of-reserves** awareness (limited assurance)\n- **Periodic withdrawals** to wallets you control\n- Unique passwords; never enter creds on links from email/DM\n",
+      "choices": [
+        {
+          "id": "cm-hw2fa",
+          "label": "Enable hardware 2FA + allowlist",
+          "nextNodeId": "custodian-hardened",
+          "addsMitigationIds": [
+            "hw-2fa",
+            "withdrawal-allowlist",
+            "strong-unique-password",
+            "split-holdings",
+            "proof-of-reserves",
+            "self-custody-withdrawal"
+          ],
+          "metricDeltas": {
+            "security": 12,
+            "complexity": 5,
+            "convenience": -5
+          }
+        },
+        {
+          "id": "cm-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        },
+        {
+          "id": "cm-end",
+          "label": "Finish this path: custodial summary",
+          "nextNodeId": "path-end-custodial"
+        }
+      ],
+      "category": "Custodial"
+    },
+    {
+      "id": "custodian-hardened",
+      "title": "Hardened custodial posture",
+      "body": "You've reduced *account-takeover* risk, but **not** exchange insolvency, hack of their cold storage, or seizure.\n\nMany people use custodians for **trading float** and self-custody for **savings**.\n",
+      "choices": [
+        {
+          "id": "ch-end",
+          "label": "Custodial path summary",
+          "nextNodeId": "path-end-custodial"
+        },
+        {
+          "id": "ch-ladder",
+          "label": "Explore other rungs",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Custodial"
+    },
+    {
+      "id": "path-end-custodial",
+      "title": "Path summary \u2014 Custodial",
+      "body": "**Profile:** maximum convenience, institutional recovery, Lightning & trading \u2014 with counterparty, phishing, seizure, and insolvency risk.\n\n**Typical meters:** high convenience & recoverability (via support), lower security against systemic custodian failure, low personal complexity.\n\nRemember: educational framing only \u2014 not advice.\n",
+      "choices": [
+        {
+          "id": "pe-c-ladder",
+          "label": "Return to ladder",
+          "nextNodeId": "ladder"
+        },
+        {
+          "id": "pe-c-start",
+          "label": "Start over",
+          "nextNodeId": "start"
+        }
+      ],
+      "category": "Summary"
+    },
+    {
+      "id": "federation",
+      "title": "Federation",
+      "body": "A **federation** is a set of servers/operators that jointly custody or mint claims (e.g. federated e-cash / sidechain-style designs).\n\n**Benefits**\n- Exchange-like services; often Lightning\n- **E-cash / confidential transactions** \u2192 stronger privacy than KYC exchanges\n- Often secured by a **seed phrase** you hold for your federation wallet balance claim\n\n**Can be phished.** Recovery/inheritance is **not** like resetting an exchange password \u2014 lose seeds and you may be stuck.\n",
+      "choices": [
+        {
+          "id": "fed-risks",
+          "label": "Federation risks",
+          "nextNodeId": "federation-risks",
+          "addsVulnIds": [
+            "phish-creds",
+            "fed-collusion",
+            "fed-jurisdiction",
+            "fed-key-loss",
+            "custodian-hack",
+            "gov-seizure"
+          ],
+          "metricDeltas": {
+            "security": -5
+          }
+        },
+        {
+          "id": "fed-mits",
+          "label": "Mitigations",
+          "nextNodeId": "federation-mitigations"
+        },
+        {
+          "id": "fed-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Federation"
+    },
+    {
+      "id": "federation-risks",
+      "title": "Federation \u2014 risks",
+      "body": "- **Hacks** of federation infrastructure\n- **Collusion** among enough members to steal or censor\n- **Government seizure** if the federation is **not jurisdictionally dispersed**\n- Seed phishing / loss \u2014 recovery is not KYC-support-shaped\n- Still a form of shared custody \u2014 not unilateral on-chain singlesig control of UTXOs (design-dependent)\n",
+      "choices": [
+        {
+          "id": "fr-mits",
+          "label": "Mitigate",
+          "nextNodeId": "federation-mitigations"
+        },
+        {
+          "id": "fr-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Federation"
+    },
+    {
+      "id": "federation-mitigations",
+      "title": "Federation \u2014 mitigations",
+      "body": "- Prefer **jurisdictionally dispersed** operator sets\n- Read threshold / membership / recovery documentation before sizing deposits\n- Treat federation seeds with same OPSEC as Bitcoin seeds\n- Don't put life savings in an experimental federation without understanding failure modes\n",
+      "choices": [
+        {
+          "id": "fm-apply",
+          "label": "Apply dispersion + docs diligence",
+          "nextNodeId": "federation-hardened",
+          "addsMitigationIds": [
+            "fed-jurisdictional-dispersion",
+            "fed-threshold-docs",
+            "never-enter-seed-online",
+            "offline-seed-backup"
+          ],
+          "metricDeltas": {
+            "security": 10,
+            "complexity": 8,
+            "recoverability": 5
+          }
+        },
+        {
+          "id": "fm-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Federation"
+    },
+    {
+      "id": "federation-hardened",
+      "title": "Federation \u2014 hardened choice",
+      "body": "You've improved legal-dispersion and operational awareness. Residual risk: collusion, novel smart-contract/federation bugs, and seed loss.\n",
+      "choices": [
+        {
+          "id": "fh-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        },
+        {
+          "id": "fh-hot",
+          "label": "Compare single-key hot wallet",
+          "nextNodeId": "hot-wallet"
+        }
+      ],
+      "category": "Federation"
+    },
+    {
+      "id": "hot-wallet",
+      "title": "Single-key hot wallet",
+      "body": "A **hot wallet** keeps keys on an internet-connected phone or computer.\n\n**Benefits:** easy spending, many apps, decent privacy vs KYC exchanges if used carefully.\n**Recovery** depends entirely on **backups / seed handling**.\n**Risk:** malware, clipboard hijack, fake apps, seed phishing.\n",
+      "choices": [
+        {
+          "id": "hot-seed",
+          "label": "How will you create the seed?",
+          "nextNodeId": "seed-gen-root",
+          "addsVulnIds": [
+            "hot-malware",
+            "single-point-key",
+            "seed-phishing-support"
+          ],
+          "metricDeltas": {
+            "security": -5
+          }
+        },
+        {
+          "id": "hot-backup",
+          "label": "Backup & recovery concerns",
+          "nextNodeId": "backup-root",
+          "addsVulnIds": [
+            "no-backup",
+            "seed-screenshot"
+          ]
+        },
+        {
+          "id": "hot-harden",
+          "label": "Harden a hot wallet",
+          "nextNodeId": "hot-hardened",
+          "addsMitigationIds": [
+            "offline-seed-backup",
+            "never-enter-seed-online",
+            "verify-address-on-device"
+          ],
+          "metricDeltas": {
+            "security": 5,
+            "complexity": 5
+          }
+        },
+        {
+          "id": "hot-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Hot wallet"
+    },
+    {
+      "id": "hot-hardened",
+      "title": "Hot wallet \u2014 practical hardening",
+      "body": "Even hardened, a hot single-sig remains exposed to OS malware. Common pattern: **hot wallet for spending**, cold/hardware for savings.\n",
+      "choices": [
+        {
+          "id": "hh-end",
+          "label": "Hot wallet path summary",
+          "nextNodeId": "path-end-hot"
+        },
+        {
+          "id": "hh-hw",
+          "label": "Graduate to hardware wallet",
+          "nextNodeId": "hardware-wallet",
+          "metricDeltas": {
+            "security": 15,
+            "convenience": -10,
+            "complexity": 10
+          }
+        },
+        {
+          "id": "hh-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Hot wallet"
+    },
+    {
+      "id": "path-end-hot",
+      "title": "Path summary \u2014 Single-sig hot wallet",
+      "body": "**Profile:** convenient daily spend, better privacy than exchanges, but malware and seed-handling dominate risk. Recovery = your backups.\n",
+      "choices": [
+        {
+          "id": "pe-h-ladder",
+          "label": "Return to ladder",
+          "nextNodeId": "ladder"
+        },
+        {
+          "id": "pe-h-start",
+          "label": "Start over",
+          "nextNodeId": "start"
+        }
+      ],
+      "category": "Summary"
+    },
+    {
+      "id": "hardware-wallet",
+      "title": "Single-key hardware wallet",
+      "body": "A dedicated device holds keys and signs offline (USB/QR/NFC). The computer sees PSBTs/xpubs, not the seed (if used correctly).\n\n**Benefits:** strong phishing resistance for signing; clear UX for address verification.\n**Still single-sig:** one seed still rules all.\n**Supply chain & seed generation** matter enormously.\n",
+      "choices": [
+        {
+          "id": "hw-seed",
+          "label": "Generate seed on / for the device",
+          "nextNodeId": "seed-gen-device",
+          "addsVulnIds": [
+            "single-point-key",
+            "supply-chain-device"
+          ],
+          "addsMitigationIds": [
+            "tamper-evident-seal"
+          ],
+          "metricDeltas": {
+            "security": 5
+          }
+        },
+        {
+          "id": "hw-supply",
+          "label": "Supply chain checklist",
+          "nextNodeId": "hw-supply-chain"
+        },
+        {
+          "id": "hw-backup",
+          "label": "Backup, passphrase, inheritance",
+          "nextNodeId": "backup-root"
+        },
+        {
+          "id": "hw-xpub",
+          "label": "Export xpub / watch-only",
+          "nextNodeId": "xpub-root"
+        },
+        {
+          "id": "hw-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Hardware"
+    },
+    {
+      "id": "hw-supply-chain",
+      "title": "Hardware supply chain",
+      "body": "- Buy from manufacturer or highly trusted reseller\n- Inspect **tamper-evident** packaging\n- Verify firmware signatures on first use\n- Prefer devices that accept **user entropy**\n- Know that **same-vendor multisig \u2260 independence**\n",
+      "choices": [
+        {
+          "id": "hsc-ok",
+          "label": "I verified seals & firmware",
+          "nextNodeId": "hardware-ready",
+          "addsMitigationIds": [
+            "tamper-evident-seal",
+            "verify-signatures",
+            "user-entropy-dice"
+          ],
+          "metricDeltas": {
+            "security": 8,
+            "complexity": 5
+          }
+        },
+        {
+          "id": "hsc-seed",
+          "label": "Continue to seed generation",
+          "nextNodeId": "seed-gen-device"
+        },
+        {
+          "id": "hsc-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Hardware"
+    },
+    {
+      "id": "hardware-ready",
+      "title": "Hardware wallet ready",
+      "body": "Device provenance improved. Next risks are seed ceremony quality, backup durability, and single-key failure.\n",
+      "choices": [
+        {
+          "id": "hr-seed",
+          "label": "Seed generation deep dive",
+          "nextNodeId": "seed-gen-root"
+        },
+        {
+          "id": "hr-end",
+          "label": "Cold/hardware path summary",
+          "nextNodeId": "path-end-cold"
+        },
+        {
+          "id": "hr-ms",
+          "label": "Consider multisig instead",
+          "nextNodeId": "multisig",
+          "addsMitigationIds": [
+            "multisig-threshold",
+            "diversify-vendors"
+          ],
+          "metricDeltas": {
+            "security": 10,
+            "complexity": 15,
+            "recoverability": 10
+          }
+        }
+      ],
+      "category": "Hardware"
+    },
+    {
+      "id": "path-end-cold",
+      "title": "Path summary \u2014 Single-sig cold / hardware",
+      "body": "**Profile:** strong day-to-day security vs malware if air-gapped/hardware signing is done right; complexity rises; recoverability hinges on backups & inheritance docs. Single seed remains a single point of failure.\n",
+      "choices": [
+        {
+          "id": "pe-cold-ladder",
+          "label": "Return to ladder",
+          "nextNodeId": "ladder"
+        },
+        {
+          "id": "pe-cold-start",
+          "label": "Start over",
+          "nextNodeId": "start"
+        }
+      ],
+      "category": "Summary"
+    },
+    {
+      "id": "airgap",
+      "title": "Air-gapped / cold storage",
+      "body": "Keys live on a device that **never** connects to the internet. Transactions move via QR, SD card, or USB as PSBTs.\n\n**Security\u2191 Complexity\u2191 Convenience\u2193**\nAir-gaps fail when people \"just quickly\" plug in Wi\u2011Fi to install software.\n",
+      "choices": [
+        {
+          "id": "ag-phone",
+          "label": "Air-gapped phone",
+          "nextNodeId": "airgap-phone",
+          "metricDeltas": {
+            "complexity": 5,
+            "security": 5
+          }
+        },
+        {
+          "id": "ag-pc",
+          "label": "Air-gapped PC / live OS",
+          "nextNodeId": "airgap-pc",
+          "metricDeltas": {
+            "complexity": 10,
+            "security": 8
+          }
+        },
+        {
+          "id": "ag-seed",
+          "label": "Seed ceremony on air-gap",
+          "nextNodeId": "seed-gen-root"
+        },
+        {
+          "id": "ag-sign",
+          "label": "Signing & address verification",
+          "nextNodeId": "signing-root"
+        },
+        {
+          "id": "ag-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Air-gap"
+    },
+    {
+      "id": "airgap-phone",
+      "title": "Air-gapped phone",
+      "body": "A dedicated phone flashed offline (or kept airplane-mode forever) can run a signing wallet.\n\n**Vulnerabilities:** breaking air-gap to install apps; malicious APKs; cameras/mics; assuming airplane mode = safe while Bluetooth/NFC still on.\n**Mitigations:** USB ferry of verified APKs; disable radios in hardware if possible; verify addresses on-device.\n",
+      "choices": [
+        {
+          "id": "ap-ferry",
+          "label": "Use USB ferry + verified builds",
+          "nextNodeId": "airgap-hardened",
+          "addsVulnIds": [
+            "break-airgap-install"
+          ],
+          "addsMitigationIds": [
+            "usb-ferry-software",
+            "verify-signatures",
+            "airgap-signing",
+            "no-cameras"
+          ],
+          "metricDeltas": {
+            "security": 10,
+            "complexity": 8
+          }
+        },
+        {
+          "id": "ap-seed",
+          "label": "Generate seed here",
+          "nextNodeId": "seed-gen-airgap-phone"
+        },
+        {
+          "id": "ap-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Air-gap"
+    },
+    {
+      "id": "airgap-pc",
+      "title": "Air-gapped PC / live OS",
+      "body": "Examples: Tails-like live USB, dedicated laptop with networking physically removed.\n\n**Note:** Electrum on Tails is popular for learning, but **Electrum does not generate BIP39 seeds** \u2014 restore incompatibility with BIP39 hardware wallets.\n",
+      "choices": [
+        {
+          "id": "apc-electrum",
+          "label": "TailsOS + Electrum path",
+          "nextNodeId": "seed-gen-electrum",
+          "addsVulnIds": [
+            "electrum-not-bip39"
+          ],
+          "metricDeltas": {
+            "complexity": 5
+          }
+        },
+        {
+          "id": "apc-bip39",
+          "label": "BIP39-capable air-gapped tooling",
+          "nextNodeId": "seed-gen-airgap-pc",
+          "addsMitigationIds": [
+            "usb-ferry-software",
+            "trustworthy-cli-guide"
+          ],
+          "metricDeltas": {
+            "security": 8,
+            "complexity": 10
+          }
+        },
+        {
+          "id": "apc-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Air-gap"
+    },
+    {
+      "id": "airgap-hardened",
+      "title": "Air-gap operationally hardened",
+      "body": "You've treated software transport as part of the threat model. Still verify every receive address on the offline screen before sharing it online.\n",
+      "choices": [
+        {
+          "id": "agh-sign",
+          "label": "Signing practices",
+          "nextNodeId": "signing-root"
+        },
+        {
+          "id": "agh-end",
+          "label": "Cold path summary",
+          "nextNodeId": "path-end-cold"
+        },
+        {
+          "id": "agh-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Air-gap"
+    },
+    {
+      "id": "multisig",
+      "title": "Multisignature",
+      "body": "**Multisig** requires *m-of-n* keys to spend (e.g. 2-of-3). No single seed loss or theft necessarily loses funds.\n\n**Benefits:** removes single point of failure; flexible recovery designs.\n**Costs:** backup of *each* key + descriptor/output script; wallet software complexity; fee/UX overhead.\n",
+      "choices": [
+        {
+          "id": "ms-same",
+          "label": "All keys from one vendor (anti-pattern)",
+          "nextNodeId": "multisig-same-vendor",
+          "addsVulnIds": [
+            "same-vendor-multisig"
+          ],
+          "metricDeltas": {
+            "security": -15
+          }
+        },
+        {
+          "id": "ms-div",
+          "label": "Diverse vendors / entropy",
+          "nextNodeId": "multisig-diverse",
+          "addsMitigationIds": [
+            "multisig-threshold",
+            "diversify-vendors",
+            "user-entropy-dice"
+          ],
+          "metricDeltas": {
+            "security": 15,
+            "complexity": 10
+          }
+        },
+        {
+          "id": "ms-dist",
+          "label": "Distribute across locations",
+          "nextNodeId": "distributed-multisig"
+        },
+        {
+          "id": "ms-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Multisig"
+    },
+    {
+      "id": "multisig-same-vendor",
+      "title": "Same-vendor multisig \u2260 independent",
+      "body": "If all signers share firmware, RNG, and supply chain, **one vendor bug can hit your threshold**.\n\nHistorical lesson: firmware RNG defects are not fixed for existing seeds by updating \u2014 **migrate**. Prefer multi-vendor so one bug can't satisfy *m*.\n",
+      "choices": [
+        {
+          "id": "mss-fix",
+          "label": "Switch to multi-vendor",
+          "nextNodeId": "multisig-diverse",
+          "addsMitigationIds": [
+            "diversify-vendors",
+            "migrate-after-rng-bug"
+          ],
+          "metricDeltas": {
+            "security": 20,
+            "complexity": 5
+          }
+        },
+        {
+          "id": "mss-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Multisig"
+    },
+    {
+      "id": "multisig-diverse",
+      "title": "Multi-vendor multisig",
+      "body": "Distinct manufacturers, purchase channels, and entropy sources. Export and backup the **wallet descriptor** (or equivalent) \u2014 without it, keys alone may not help.\n",
+      "choices": [
+        {
+          "id": "msd-dist",
+          "label": "Also distribute geographically / parties",
+          "nextNodeId": "distributed-multisig",
+          "addsMitigationIds": [
+            "multi-party-locations"
+          ],
+          "metricDeltas": {
+            "security": 8,
+            "recoverability": 8,
+            "complexity": 8
+          }
+        },
+        {
+          "id": "msd-backup",
+          "label": "Backup & inheritance for multisig",
+          "nextNodeId": "backup-multisig"
+        },
+        {
+          "id": "msd-end",
+          "label": "Multisig path summary",
+          "nextNodeId": "path-end-multisig"
+        },
+        {
+          "id": "msd-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Multisig"
+    },
+    {
+      "id": "distributed-multisig",
+      "title": "Distributed multisignature",
+      "body": "Keys (or seed backups) live in **different locations** \u2014 home, office, safe deposit, relatives \u2014 so fire/theft at one site doesn't hit threshold.\n\nStill ensure you can assemble *m* keys when you need to spend or rotate.\n",
+      "choices": [
+        {
+          "id": "dm-parties",
+          "label": "Add independent human parties",
+          "nextNodeId": "independent-multisig",
+          "addsVulnIds": [
+            "collusion-multisig"
+          ],
+          "addsMitigationIds": [
+            "multi-party-locations"
+          ],
+          "metricDeltas": {
+            "security": 5,
+            "complexity": 10,
+            "recoverability": 5
+          }
+        },
+        {
+          "id": "dm-end",
+          "label": "Multisig path summary",
+          "nextNodeId": "path-end-multisig"
+        },
+        {
+          "id": "dm-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Multisig"
+    },
+    {
+      "id": "independent-multisig",
+      "title": "Multisig with multiple independent parties",
+      "body": "Co-signers are different people/orgs (spouse, attorney, collaborative-custody firm, friend).\n\n**Pros:** inheritance & travel resilience.\n**Cons:** collusion/coercion; a co-sign **service** can become custodian-like if they can refuse signatures.\n",
+      "choices": [
+        {
+          "id": "im-agent",
+          "label": "Use a collaborative-custody key agent",
+          "nextNodeId": "multisig-key-agent",
+          "addsVulnIds": [
+            "key-agent-custody"
+          ],
+          "metricDeltas": {
+            "convenience": 10,
+            "security": -5,
+            "recoverability": 10
+          }
+        },
+        {
+          "id": "im-peers",
+          "label": "Only peer humans (no firm)",
+          "nextNodeId": "multisig-peers",
+          "addsMitigationIds": [
+            "multi-party-locations",
+            "inheritance-playbook"
+          ],
+          "metricDeltas": {
+            "complexity": 5,
+            "recoverability": 8
+          }
+        },
+        {
+          "id": "im-end",
+          "label": "Multisig path summary",
+          "nextNodeId": "path-end-multisig"
+        },
+        {
+          "id": "im-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Multisig"
+    },
+    {
+      "id": "multisig-key-agent",
+      "title": "Collaborative custody / key agent",
+      "body": "A firm holds one key and co-signs under policy (travel rule, fraud checks, inheritance).\n\nUseful \u2014 but you've reintroduced **counterparty** and policy risk for that key. Keep *m* such that you can still spend if the firm disappears (e.g. 2-of-3 where you hold 2).\n",
+      "choices": [
+        {
+          "id": "mka-end",
+          "label": "Multisig path summary",
+          "nextNodeId": "path-end-multisig",
+          "addsMitigationIds": [
+            "multisig-threshold",
+            "inheritance-playbook"
+          ]
+        },
+        {
+          "id": "mka-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Multisig"
+    },
+    {
+      "id": "multisig-peers",
+      "title": "Peer multi-party multisig",
+      "body": "Social recovery style: trusted humans hold keys. Document legal/practical expectations; practice a recovery drill.\n",
+      "choices": [
+        {
+          "id": "mp-end",
+          "label": "Multisig path summary",
+          "nextNodeId": "path-end-multisig"
+        },
+        {
+          "id": "mp-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Multisig"
+    },
+    {
+      "id": "backup-multisig",
+      "title": "Backing up multisig",
+      "body": "Backup **each seed**, the **descriptor**/configuration, derivation paths, and a written recovery playbook. Test restoring on a spare device with a tiny amount first.\n",
+      "choices": [
+        {
+          "id": "bm-ok",
+          "label": "I'll backup seeds + descriptor + playbook",
+          "nextNodeId": "path-end-multisig",
+          "addsMitigationIds": [
+            "offline-seed-backup",
+            "record-derivation-path",
+            "inheritance-playbook",
+            "reload-seed-twice"
+          ],
+          "metricDeltas": {
+            "recoverability": 15,
+            "complexity": 5
+          }
+        },
+        {
+          "id": "bm-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Multisig"
+    },
+    {
+      "id": "path-end-multisig",
+      "title": "Path summary \u2014 Multisig",
+      "body": "**Profile:** higher security against single theft/loss; complexity and coordination cost rise. Independence (vendors, locations, people) is the whole point \u2014 same-vendor stacks undermine it.\n",
+      "choices": [
+        {
+          "id": "pe-ms-ladder",
+          "label": "Return to ladder",
+          "nextNodeId": "ladder"
+        },
+        {
+          "id": "pe-ms-start",
+          "label": "Start over",
+          "nextNodeId": "start"
+        }
+      ],
+      "category": "Summary"
+    },
+    {
+      "id": "glacier",
+      "title": "High-security protocols (Glacier-style)",
+      "body": "**Glacier**-style protocols use dual permanently offline computers, detailed printed checklists, dice entropy, and meticulous verification for cold storage.\n\n**Security:** among the highest for single-org self-custody.\n**Complexity:** very high \u2014 human error becomes the dominant residual risk.\n**Recoverability:** only as good as your metal backups + written procedures for heirs.\n",
+      "choices": [
+        {
+          "id": "gl-accept",
+          "label": "Accept complexity for max assurance",
+          "nextNodeId": "glacier-ceremony",
+          "addsVulnIds": [
+            "glacier-complexity"
+          ],
+          "addsMitigationIds": [
+            "glacier-dual-computer",
+            "practice-dry-run",
+            "pencil-paper-only",
+            "never-speak-seed",
+            "no-cameras",
+            "user-entropy-dice"
+          ],
+          "metricDeltas": {
+            "security": 15,
+            "complexity": 15,
+            "convenience": -10
+          }
+        },
+        {
+          "id": "gl-ms",
+          "label": "Combine with multisig",
+          "nextNodeId": "independent-multisig",
+          "addsMitigationIds": [
+            "multisig-threshold",
+            "diversify-vendors"
+          ],
+          "metricDeltas": {
+            "security": 10,
+            "complexity": 10
+          }
+        },
+        {
+          "id": "gl-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Glacier"
+    },
+    {
+      "id": "glacier-ceremony",
+      "title": "Glacier-style ceremony outline",
+      "body": "1. Two air-gapped machines (or one + hardware), never networked\n2. Dice / verified entropy \u2192 BIP39 words on paper\n3. Checksum verification offline\n4. Test receive addresses; fund only after dual verification\n5. Metal backup; geographic diversity; inheritance sealed instructions\n\nPractice with **throwaway** entropy first.\n",
+      "choices": [
+        {
+          "id": "gc-seed",
+          "label": "Detail: seed generation options",
+          "nextNodeId": "seed-gen-root"
+        },
+        {
+          "id": "gc-end",
+          "label": "Done \u2014 high-security summary",
+          "nextNodeId": "path-end-glacier"
+        },
+        {
+          "id": "gc-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Glacier"
+    },
+    {
+      "id": "path-end-glacier",
+      "title": "Path summary \u2014 Glacier-style",
+      "body": "**Profile:** maximum procedural security, minimum convenience, high complexity. Best for infrequent-move cold storage when the operator will actually maintain the discipline.\n",
+      "choices": [
+        {
+          "id": "pe-g-ladder",
+          "label": "Return to ladder",
+          "nextNodeId": "ladder"
+        },
+        {
+          "id": "pe-g-start",
+          "label": "Start over",
+          "nextNodeId": "start"
+        }
+      ],
+      "category": "Summary"
+    },
+    {
+      "id": "seed-gen-root",
+      "title": "Generating a seed phrase",
+      "body": "A BIP39 seed (12 or 24 words) encodes entropy + checksum. **How** you generate it dominates long-term security.\n\n**Option 1:** A device generates the seed (hardware, air-gapped phone, Tails/Electrum, brain wallet).\n**Option 2:** You generate the first 11/23 words (dice, cards, lottery\u2026) then compute the checksum word offline.\n",
+      "choices": [
+        {
+          "id": "sg-opt1",
+          "label": "Option 1: Device generates the seed",
+          "nextNodeId": "seed-gen-device"
+        },
+        {
+          "id": "sg-opt2",
+          "label": "Option 2: I generate first 11/23 words",
+          "nextNodeId": "seed-gen-diy"
+        },
+        {
+          "id": "sg-pass",
+          "label": "Add BIP39 passphrase (25th word)?",
+          "nextNodeId": "passphrase"
+        },
+        {
+          "id": "sg-ladder",
+          "label": "Back to ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-gen-device",
+      "title": "Device-generated seed",
+      "body": "Choose how the device creates entropy:\n",
+      "choices": [
+        {
+          "id": "sgd-electrum",
+          "label": "TailsOS + Electrum",
+          "nextNodeId": "seed-gen-electrum"
+        },
+        {
+          "id": "sgd-hw",
+          "label": "Hardware wallet",
+          "nextNodeId": "seed-gen-hardware"
+        },
+        {
+          "id": "sgd-phone",
+          "label": "Air-gapped phone",
+          "nextNodeId": "seed-gen-airgap-phone"
+        },
+        {
+          "id": "sgd-brain",
+          "label": "Brain wallet",
+          "nextNodeId": "seed-gen-brain",
+          "addsVulnIds": [
+            "brain-wallet-weak"
+          ],
+          "metricDeltas": {
+            "security": -40,
+            "complexity": -10,
+            "recoverability": -20
+          }
+        },
+        {
+          "id": "sgd-root",
+          "label": "Back",
+          "nextNodeId": "seed-gen-root"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-gen-electrum",
+      "title": "TailsOS + Electrum",
+      "body": "Electrum is powerful on an amnesic OS, but it **does not generate BIP39** mnemonics. Seeds won't restore into most hardware wallets expecting BIP39.\n\nUse Electrum when you plan to stay in the Electrum ecosystem \u2014 or pick BIP39 tooling for interoperability.\n",
+      "choices": [
+        {
+          "id": "sge-stay",
+          "label": "Stay Electrum-native",
+          "nextNodeId": "seed-aftercare",
+          "addsVulnIds": [
+            "electrum-not-bip39"
+          ],
+          "addsMitigationIds": [
+            "offline-seed-backup",
+            "record-derivation-path"
+          ],
+          "metricDeltas": {
+            "complexity": 5
+          }
+        },
+        {
+          "id": "sge-bip39",
+          "label": "Switch to BIP39 air-gapped tooling",
+          "nextNodeId": "seed-gen-airgap-pc"
+        },
+        {
+          "id": "sge-back",
+          "label": "Back",
+          "nextNodeId": "seed-gen-device"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-gen-hardware",
+      "title": "Hardware wallet seed generation",
+      "body": "**Vulnerabilities**\n- Unsafe seed-gen software (rogue employee / malicious provider)\n- Compromised supply chain\n- Insufficient entropy / firmware RNG defects\n- Firmware update **does not** fix existing weak seeds \u2014 migrate funds\n\n**Mitigations**\n- Tamper-evident seal checks\n- Provide your own entropy (often **50\u2013100 dice rolls / coin flips / key mashing** per device docs)\n",
+      "choices": [
+        {
+          "id": "sgh-entropy",
+          "label": "I'll add user entropy (dice)",
+          "nextNodeId": "seed-gen-hw-entropy",
+          "addsVulnIds": [
+            "unsafe-seed-gen-sw",
+            "supply-chain-device",
+            "insufficient-entropy",
+            "firmware-rng-defect"
+          ],
+          "addsMitigationIds": [
+            "tamper-evident-seal",
+            "user-entropy-dice",
+            "follow-provider-instructions"
+          ],
+          "metricDeltas": {
+            "security": 12,
+            "complexity": 10
+          }
+        },
+        {
+          "id": "sgh-trust",
+          "label": "Trust device RNG only",
+          "nextNodeId": "seed-gen-hw-trust-rng",
+          "addsVulnIds": [
+            "unsafe-seed-gen-sw",
+            "insufficient-entropy",
+            "firmware-rng-defect",
+            "supply-chain-device"
+          ],
+          "metricDeltas": {
+            "security": -10,
+            "complexity": -5
+          }
+        },
+        {
+          "id": "sgh-back",
+          "label": "Back",
+          "nextNodeId": "seed-gen-device"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-gen-hw-entropy",
+      "title": "User entropy on hardware \u2014 follow-on risks",
+      "body": "Even with dice, residual issues:\n\n- Instructions not followed \u2192 not enough entropy\n- Device **ignores** your entropy\n- Audit missed bugs; software changed after audit\n- Audited source \u2260 built/signed binary\n- Forced upgrades\n\n**Mitigations:** follow provider instructions; audit/trust audited code; council of expert auditors; run exactly audited version; verify signatures; diversify vendors (especially in multisig).\n",
+      "choices": [
+        {
+          "id": "sghe-mit",
+          "label": "Apply audit & verify mitigations",
+          "nextNodeId": "seed-aftercare",
+          "addsVulnIds": [
+            "entropy-not-followed",
+            "device-ignores-entropy",
+            "audit-missed-bugs",
+            "software-changed-post-audit",
+            "binary-source-mismatch",
+            "forced-upgrades"
+          ],
+          "addsMitigationIds": [
+            "follow-provider-instructions",
+            "audit-trust-council",
+            "run-audited-version",
+            "verify-signatures",
+            "diversify-vendors",
+            "migrate-after-rng-bug"
+          ],
+          "metricDeltas": {
+            "security": 10,
+            "complexity": 12
+          }
+        },
+        {
+          "id": "sghe-back",
+          "label": "Back",
+          "nextNodeId": "seed-gen-hardware"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-gen-hw-trust-rng",
+      "title": "Trusting device RNG alone",
+      "body": "Historically, firmware RNG bugs have produced weak seeds. If a defect is announced: **move funds to a newly generated seed** \u2014 updating firmware is not enough.\n\nPrefer verifiable user entropy and multi-vendor multisig so one vendor bug can't hit threshold.\n",
+      "choices": [
+        {
+          "id": "sght-fix",
+          "label": "Add user entropy instead",
+          "nextNodeId": "seed-gen-hw-entropy"
+        },
+        {
+          "id": "sght-ms",
+          "label": "Plan multi-vendor multisig",
+          "nextNodeId": "multisig-diverse",
+          "addsMitigationIds": [
+            "diversify-vendors",
+            "migrate-after-rng-bug"
+          ]
+        },
+        {
+          "id": "sght-after",
+          "label": "Continue anyway to aftercare",
+          "nextNodeId": "seed-aftercare"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-gen-airgap-phone",
+      "title": "Air-gapped phone seed generation",
+      "body": "Generate BIP39 on a phone that never leaves airplane mode / has radios disabled.\n\nVerify the APK signature before install (via USB ferry). After generation, write the seed offline; confirm restore produces the same first address.\n",
+      "choices": [
+        {
+          "id": "sgap-ok",
+          "label": "Verified APK + written seed + restore test",
+          "nextNodeId": "seed-aftercare",
+          "addsVulnIds": [
+            "break-airgap-install",
+            "camera-seed"
+          ],
+          "addsMitigationIds": [
+            "usb-ferry-software",
+            "verify-signatures",
+            "reload-seed-twice",
+            "offline-seed-backup",
+            "no-cameras"
+          ],
+          "metricDeltas": {
+            "security": 10,
+            "complexity": 10
+          }
+        },
+        {
+          "id": "sgap-back",
+          "label": "Back",
+          "nextNodeId": "seed-gen-device"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-gen-brain",
+      "title": "Brain wallet",
+      "body": "Memorized passphrases as seeds are **routinely brute-forced**. Do not use for real funds. Educational dead-end.\n",
+      "choices": [
+        {
+          "id": "sgb-leave",
+          "label": "Choose a real entropy method instead",
+          "nextNodeId": "seed-gen-device",
+          "metricDeltas": {
+            "security": 30,
+            "recoverability": 15
+          }
+        },
+        {
+          "id": "sgb-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-gen-airgap-pc",
+      "title": "Air-gapped PC \u2014 BIP39 tooling",
+      "body": "Use a verified live OS or dedicated machine. Ferry software via USB; compute or generate BIP39 offline; never reconnect.\n",
+      "choices": [
+        {
+          "id": "sgpc-ok",
+          "label": "Offline BIP39 generate + verify",
+          "nextNodeId": "seed-checksum",
+          "addsMitigationIds": [
+            "usb-ferry-software",
+            "trustworthy-cli-guide",
+            "pencil-paper-only"
+          ],
+          "metricDeltas": {
+            "security": 8,
+            "complexity": 8
+          }
+        },
+        {
+          "id": "sgpc-back",
+          "label": "Back",
+          "nextNodeId": "seed-gen-device"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-gen-diy",
+      "title": "You generate first 11/23 words",
+      "body": "Physical entropy \u2192 BIP39 wordlist mapping. Then compute the **checksum (last) word** with air-gapped tooling.\n",
+      "choices": [
+        {
+          "id": "diy-dice",
+          "label": "Dice + mapping table",
+          "nextNodeId": "seed-dice"
+        },
+        {
+          "id": "diy-own",
+          "label": "Own randomness \u2192 word procedure",
+          "nextNodeId": "seed-own-mapping",
+          "addsVulnIds": [
+            "biased-word-mapping"
+          ],
+          "metricDeltas": {
+            "security": -8
+          }
+        },
+        {
+          "id": "diy-cards",
+          "label": "Playing cards / Seedpicker Solitaire",
+          "nextNodeId": "seed-cards"
+        },
+        {
+          "id": "diy-lottery",
+          "label": "Word lottery",
+          "nextNodeId": "seed-lottery"
+        },
+        {
+          "id": "diy-cross",
+          "label": "Cross-cutting OPSEC (math / speech / cameras)",
+          "nextNodeId": "seed-opsec"
+        },
+        {
+          "id": "diy-back",
+          "label": "Back",
+          "nextNodeId": "seed-gen-root"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-dice",
+      "title": "Dice methods",
+      "body": "Common approach: 6-sided dice with a mapping table (e.g. patterns using rolls limited to 1\u20134 plus heads/tails-style tables) to pick words uniformly.\n\n**Vulnerabilities**\n- Rolling multiple dice then **sorting** biases word choice\n- Biased physical dice (usually small entropy loss)\n- Unsafe / incorrect instructions\n\n**Mitigations:** follow instructions; casino/tested dice; trustworthy guides; never sort multi-die outcomes before mapping.\n",
+      "choices": [
+        {
+          "id": "sd-good",
+          "label": "Casino dice + trusted table + no sorting",
+          "nextNodeId": "seed-checksum",
+          "addsVulnIds": [
+            "dice-sort-bias",
+            "biased-dice",
+            "unsafe-dice-instructions"
+          ],
+          "addsMitigationIds": [
+            "casino-dice",
+            "trustworthy-dice-guide",
+            "pencil-paper-only"
+          ],
+          "metricDeltas": {
+            "security": 12,
+            "complexity": 12
+          }
+        },
+        {
+          "id": "sd-opsec",
+          "label": "Review OPSEC first",
+          "nextNodeId": "seed-opsec"
+        },
+        {
+          "id": "sd-back",
+          "label": "Back",
+          "nextNodeId": "seed-gen-diy"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-own-mapping",
+      "title": "Homegrown randomness \u2192 word mapping",
+      "body": "Easy to introduce **modular bias** or off-by-one errors. Prefer established tables (diceware-style BIP39 mappings) over inventing encodings.\n",
+      "choices": [
+        {
+          "id": "som-fix",
+          "label": "Use a reviewed dice table instead",
+          "nextNodeId": "seed-dice",
+          "addsMitigationIds": [
+            "trustworthy-dice-guide"
+          ],
+          "metricDeltas": {
+            "security": 10
+          }
+        },
+        {
+          "id": "som-anyway",
+          "label": "Proceed to checksum carefully",
+          "nextNodeId": "seed-checksum",
+          "addsMitigationIds": [
+            "pencil-paper-only"
+          ]
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-cards",
+      "title": "Playing cards / Seedpicker Solitaire",
+      "body": "Shuffled cards can provide entropy if the shuffle is thorough and the mapping is unbiased. Seedpicker-style solitaire procedures exist in the community \u2014 use a **reviewed** guide; do math on paper.\n",
+      "choices": [
+        {
+          "id": "sc-ok",
+          "label": "Reviewed card procedure \u2192 checksum",
+          "nextNodeId": "seed-checksum",
+          "addsMitigationIds": [
+            "trustworthy-dice-guide",
+            "pencil-paper-only",
+            "never-speak-seed"
+          ],
+          "metricDeltas": {
+            "security": 8,
+            "complexity": 12
+          }
+        },
+        {
+          "id": "sc-back",
+          "label": "Back",
+          "nextNodeId": "seed-gen-diy"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-lottery",
+      "title": "Word lottery",
+      "body": "Drawing words from a physical BIP39 word list can work if draws are with proper replacement/ordering rules so entropy is uniform \u2014 easy to get wrong. Prefer dice with known math.\n",
+      "choices": [
+        {
+          "id": "sl-dice",
+          "label": "Prefer dice mapping instead",
+          "nextNodeId": "seed-dice"
+        },
+        {
+          "id": "sl-ok",
+          "label": "Careful lottery \u2192 checksum",
+          "nextNodeId": "seed-checksum",
+          "addsVulnIds": [
+            "biased-word-mapping",
+            "unsafe-dice-instructions"
+          ],
+          "addsMitigationIds": [
+            "pencil-paper-only"
+          ],
+          "metricDeltas": {
+            "complexity": 10
+          }
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-opsec",
+      "title": "Seed ceremony OPSEC",
+      "body": "Cross-cutting rules:\n\n- **Writing intermediate math on an internet device** \u2192 use pencil/paper only\n- **Speaking words** \u2192 never speak the seed (home audio / phones)\n- **Cameras** \u2192 ensure no cameras (cover webcams; phones out)\n",
+      "choices": [
+        {
+          "id": "so-apply",
+          "label": "Apply pencil/paper + silence + no cameras",
+          "nextNodeId": "seed-gen-diy",
+          "addsVulnIds": [
+            "intermediate-math-online",
+            "speaking-seed",
+            "camera-seed"
+          ],
+          "addsMitigationIds": [
+            "pencil-paper-only",
+            "never-speak-seed",
+            "no-cameras"
+          ],
+          "metricDeltas": {
+            "security": 10,
+            "complexity": 5
+          }
+        },
+        {
+          "id": "so-checksum",
+          "label": "Go to checksum word",
+          "nextNodeId": "seed-checksum"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-checksum",
+      "title": "Last word (checksum)",
+      "body": "BIP39's final word encodes a checksum over the entropy. Computing it needs correct software.\n\n**Options:** Bitcoin hardware, air-gapped phone, air-gapped PC.\n\n**Vulnerabilities:** wrong CLI; breaking air-gap to install software; checksum mismatch vs what you wrote; address check uses different derivation path.\n\n**Mitigations:** trustworthy CLI guide; USB ferry; reload seed twice and confirm same address; write software+version+derivation path; load xpub on online watcher and match offline address.\n",
+      "choices": [
+        {
+          "id": "scs-hw",
+          "label": "Checksum via hardware wallet",
+          "nextNodeId": "seed-aftercare",
+          "addsVulnIds": [
+            "wrong-cli",
+            "checksum-mismatch",
+            "derivation-path-mismatch"
+          ],
+          "addsMitigationIds": [
+            "trustworthy-cli-guide",
+            "reload-seed-twice",
+            "record-derivation-path",
+            "xpub-watcher-match"
+          ],
+          "metricDeltas": {
+            "security": 5,
+            "complexity": 5
+          }
+        },
+        {
+          "id": "scs-phone",
+          "label": "Checksum via air-gapped phone",
+          "nextNodeId": "seed-aftercare",
+          "addsVulnIds": [
+            "break-airgap-install",
+            "checksum-mismatch"
+          ],
+          "addsMitigationIds": [
+            "usb-ferry-software",
+            "reload-seed-twice",
+            "record-derivation-path"
+          ],
+          "metricDeltas": {
+            "security": 5,
+            "complexity": 8
+          }
+        },
+        {
+          "id": "scs-pc",
+          "label": "Checksum via air-gapped PC",
+          "nextNodeId": "seed-aftercare",
+          "addsVulnIds": [
+            "wrong-cli",
+            "break-airgap-install",
+            "checksum-mismatch",
+            "derivation-path-mismatch"
+          ],
+          "addsMitigationIds": [
+            "trustworthy-cli-guide",
+            "usb-ferry-software",
+            "reload-seed-twice",
+            "record-derivation-path",
+            "xpub-watcher-match"
+          ],
+          "metricDeltas": {
+            "security": 8,
+            "complexity": 10
+          }
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "seed-aftercare",
+      "title": "After seed creation",
+      "body": "Before sending serious value:\n\n1. Restore from backup on a second session/device\n2. Confirm identical addresses (same script/path)\n3. Optionally export xpub to a watch-only wallet\n4. Decide on passphrase, geographic backups, inheritance notes\n",
+      "choices": [
+        {
+          "id": "sa-xpub",
+          "label": "Get the public key / xpub",
+          "nextNodeId": "xpub-root"
+        },
+        {
+          "id": "sa-backup",
+          "label": "Backup & inheritance",
+          "nextNodeId": "backup-root"
+        },
+        {
+          "id": "sa-sign",
+          "label": "Signing & address safety",
+          "nextNodeId": "signing-root"
+        },
+        {
+          "id": "sa-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Seed generation"
+    },
+    {
+      "id": "xpub-root",
+      "title": "Getting the public key / xpub",
+      "body": "An **xpub** (extended public key) lets a watch-only wallet derive all receive/change addresses for an account **without** spending keys.\n\n**How to export**\n- **Phone:** wallet app export (hot \u2014 malware can steal xpub + poison UI)\n- **Hardware:** QR / USB export of account xpub; confirm fingerprint on device\n- **SD card / QR** from air-gapped signer\n- **Air-gapped verify:** compare first addresses offline vs watcher\n\n**Risks:** xpub leaks **privacy** (all addresses + history); watch-only malware can show **wrong** receive addresses (address poisoning). Always verify the address on the cold device screen.\n",
+      "choices": [
+        {
+          "id": "xp-phone",
+          "label": "Export from phone (hot)",
+          "nextNodeId": "xpub-phone",
+          "addsVulnIds": [
+            "xpub-privacy",
+            "watch-only-malware",
+            "hot-malware"
+          ],
+          "metricDeltas": {
+            "security": -5,
+            "convenience": 5
+          }
+        },
+        {
+          "id": "xp-hw",
+          "label": "Hardware export (QR / USB)",
+          "nextNodeId": "xpub-hardware",
+          "addsMitigationIds": [
+            "limit-xpub-share",
+            "verify-address-on-device",
+            "xpub-watcher-match"
+          ],
+          "metricDeltas": {
+            "security": 5
+          }
+        },
+        {
+          "id": "xp-air",
+          "label": "Air-gapped export + verify",
+          "nextNodeId": "xpub-airgap",
+          "addsMitigationIds": [
+            "airgap-signing",
+            "verify-address-on-device",
+            "xpub-watcher-match",
+            "limit-xpub-share"
+          ],
+          "metricDeltas": {
+            "security": 10,
+            "complexity": 8
+          }
+        },
+        {
+          "id": "xp-back",
+          "label": "Back to aftercare",
+          "nextNodeId": "seed-aftercare"
+        }
+      ],
+      "category": "xpub"
+    },
+    {
+      "id": "xpub-phone",
+      "title": "Phone xpub export",
+      "body": "Convenient but the phone can leak the xpub (privacy) and display attacker-controlled addresses. Prefer hardware confirmation for deposits above dust.\n",
+      "choices": [
+        {
+          "id": "xph-harden",
+          "label": "Only use phone watcher; verify on cold device",
+          "nextNodeId": "xpub-verified",
+          "addsMitigationIds": [
+            "verify-address-on-device",
+            "limit-xpub-share"
+          ],
+          "metricDeltas": {
+            "security": 8
+          }
+        },
+        {
+          "id": "xph-hw",
+          "label": "Use hardware export instead",
+          "nextNodeId": "xpub-hardware"
+        }
+      ],
+      "category": "xpub"
+    },
+    {
+      "id": "xpub-hardware",
+      "title": "Hardware xpub export",
+      "body": "Export via QR or USB. Check the device's wallet fingerprint. On the online machine, import as watch-only and match address #0 with the hardware display.\n",
+      "choices": [
+        {
+          "id": "xhw-ok",
+          "label": "Matched addresses \u2014 good",
+          "nextNodeId": "xpub-verified",
+          "addsMitigationIds": [
+            "xpub-watcher-match",
+            "verify-address-on-device",
+            "record-derivation-path"
+          ]
+        },
+        {
+          "id": "xhw-sign",
+          "label": "Next: signing hygiene",
+          "nextNodeId": "signing-root"
+        }
+      ],
+      "category": "xpub"
+    },
+    {
+      "id": "xpub-airgap",
+      "title": "Air-gapped xpub verify",
+      "body": "Offline device shows address; online watcher (with xpub) should match. If they disagree, stop \u2014 derivation mismatch or malware.\n",
+      "choices": [
+        {
+          "id": "xa-ok",
+          "label": "Addresses match",
+          "nextNodeId": "xpub-verified"
+        },
+        {
+          "id": "xa-sign",
+          "label": "Signing hygiene",
+          "nextNodeId": "signing-root"
+        }
+      ],
+      "category": "xpub"
+    },
+    {
+      "id": "xpub-verified",
+      "title": "Watch-only setup complete",
+      "body": "You can monitor balances online without exposing spending keys. Treat the xpub as sensitive. For every receive, glance at the cold/hardware screen.\n",
+      "choices": [
+        {
+          "id": "xv-backup",
+          "label": "Backup & inheritance",
+          "nextNodeId": "backup-root"
+        },
+        {
+          "id": "xv-sign",
+          "label": "Signing & address safety",
+          "nextNodeId": "signing-root"
+        },
+        {
+          "id": "xv-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "xpub"
+    },
+    {
+      "id": "backup-root",
+      "title": "Backup, disasters & inheritance",
+      "body": "**Physical theft** of seed backups, **fire/flood**, and **inheritance without clear instructions** destroy more coins than clever cryptography.\n\nAlso: never photograph seeds; metal > paper for fire; geographic diversity helps disasters but increases theft surface.\n",
+      "choices": [
+        {
+          "id": "br-phys",
+          "label": "Physical backup strategy",
+          "nextNodeId": "backup-physical",
+          "addsVulnIds": [
+            "physical-theft-seed",
+            "fire-flood-backup",
+            "seed-screenshot",
+            "no-backup"
+          ]
+        },
+        {
+          "id": "br-inh",
+          "label": "Inheritance planning",
+          "nextNodeId": "backup-inheritance",
+          "addsVulnIds": [
+            "inheritance-unclear"
+          ]
+        },
+        {
+          "id": "br-pass",
+          "label": "Passphrase considerations",
+          "nextNodeId": "passphrase"
+        },
+        {
+          "id": "br-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Backup"
+    },
+    {
+      "id": "backup-physical",
+      "title": "Physical backups",
+      "body": "- Stamp seeds into metal (or quality plates)\n- Avoid single points of disaster\n- Consider sealed tamper-evident bags\n- Multisig can mean each location holds one key (not the whole)\n",
+      "choices": [
+        {
+          "id": "bp-ok",
+          "label": "Metal + geographic diversity",
+          "nextNodeId": "backup-done",
+          "addsMitigationIds": [
+            "offline-seed-backup",
+            "geographic-backup-diversity"
+          ],
+          "metricDeltas": {
+            "recoverability": 15,
+            "complexity": 5,
+            "security": 5
+          }
+        },
+        {
+          "id": "bp-inh",
+          "label": "Add inheritance docs",
+          "nextNodeId": "backup-inheritance"
+        }
+      ],
+      "category": "Backup"
+    },
+    {
+      "id": "backup-inheritance",
+      "title": "Inheritance",
+      "body": "Heirs need a **playbook**: where materials are, which software/paths, whether a passphrase exists, who can help verify \u2014 **without** pasting the seed into a will that becomes public probate.\n\nPractice a guided recovery with a trusted person using a **test** wallet first.\n",
+      "choices": [
+        {
+          "id": "bi-ok",
+          "label": "Write inheritance playbook",
+          "nextNodeId": "backup-done",
+          "addsMitigationIds": [
+            "inheritance-playbook",
+            "record-derivation-path",
+            "passphrase-separate-backup"
+          ],
+          "metricDeltas": {
+            "recoverability": 20,
+            "complexity": 5
+          }
+        },
+        {
+          "id": "bi-ms",
+          "label": "Use multi-party multisig for inheritance",
+          "nextNodeId": "independent-multisig",
+          "metricDeltas": {
+            "recoverability": 10,
+            "complexity": 15
+          }
+        }
+      ],
+      "category": "Backup"
+    },
+    {
+      "id": "backup-done",
+      "title": "Backup posture improved",
+      "body": "Recoverability is up. Re-test restores periodically \u2014 especially after software upgrades.\n",
+      "choices": [
+        {
+          "id": "bd-sign",
+          "label": "Signing & address safety",
+          "nextNodeId": "signing-root"
+        },
+        {
+          "id": "bd-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        },
+        {
+          "id": "bd-end-cold",
+          "label": "Cold path summary",
+          "nextNodeId": "path-end-cold"
+        }
+      ],
+      "category": "Backup"
+    },
+    {
+      "id": "passphrase",
+      "title": "BIP39 passphrase (25th word)",
+      "body": "An optional passphrase creates a hidden wallet. Great for plausible deniability / extra secrecy \u2014 catastrophic if lost or untested.\n\n**Rules:** backup separately from the seed; test recovery; record wallet fingerprint/xpub so you know you opened the right wallet.\n",
+      "choices": [
+        {
+          "id": "pp-yes",
+          "label": "Use passphrase with separate backup + test",
+          "nextNodeId": "seed-aftercare",
+          "addsVulnIds": [
+            "passphrase-lost"
+          ],
+          "addsMitigationIds": [
+            "passphrase-separate-backup",
+            "reload-seed-twice"
+          ],
+          "metricDeltas": {
+            "security": 10,
+            "recoverability": -10,
+            "complexity": 10
+          }
+        },
+        {
+          "id": "pp-no",
+          "label": "Skip passphrase (simpler recovery)",
+          "nextNodeId": "seed-aftercare",
+          "metricDeltas": {
+            "recoverability": 5,
+            "complexity": -5
+          }
+        }
+      ],
+      "category": "Passphrase"
+    },
+    {
+      "id": "signing-root",
+      "title": "Signing & address verification",
+      "body": "Spend path risks:\n\n- Malware-infected verifier shows **poisoned addresses**\n- Fake support asks you to \"re-enter seed to sync\"\n- Wrong derivation \u2192 sending to an address you don't control\n\n**Habit:** verify full address (or verified QR) on hardware/air-gapped display; never type seeds into websites.\n",
+      "choices": [
+        {
+          "id": "sr-verify",
+          "label": "Always verify on signing device",
+          "nextNodeId": "signing-hardened",
+          "addsVulnIds": [
+            "address-poisoning",
+            "watch-only-malware",
+            "seed-phishing-support"
+          ],
+          "addsMitigationIds": [
+            "verify-address-on-device",
+            "never-enter-seed-online",
+            "airgap-signing"
+          ],
+          "metricDeltas": {
+            "security": 12,
+            "complexity": 3
+          }
+        },
+        {
+          "id": "sr-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Signing"
+    },
+    {
+      "id": "signing-hardened",
+      "title": "Signing hygiene adopted",
+      "body": "Good. Combine with multisig if amounts warrant. Educational demo complete for this branch \u2014 explore other ladder rungs or recommended paths.\n",
+      "choices": [
+        {
+          "id": "sh-ms",
+          "label": "Explore multisig",
+          "nextNodeId": "multisig"
+        },
+        {
+          "id": "sh-end-cold",
+          "label": "Cold path summary",
+          "nextNodeId": "path-end-cold"
+        },
+        {
+          "id": "sh-ladder",
+          "label": "Ladder",
+          "nextNodeId": "ladder"
+        }
+      ],
+      "category": "Signing"
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+[
+  {
+    "id": "hw-2fa",
+    "title": "Hardware 2FA (security key)",
+    "description": "Use FIDO2/U2F keys instead of SMS OTP to resist SIM-swap and many phishing sites.",
+    "addressesVulnIds": ["sim-swap", "phish-creds", "compromised-creds"]
+  },
+  {
+    "id": "withdrawal-allowlist",
+    "title": "Withdrawal address allowlist",
+    "description": "Lock withdrawals to pre-approved addresses with a time delay for changes.",
+    "addressesVulnIds": ["phish-creds", "compromised-creds", "sim-swap"]
+  },
+  {
+    "id": "split-holdings",
+    "title": "Split holdings across venues",
+    "description": "Keep only working capital on any single custodian; diversify counterparty risk.",
+    "addressesVulnIds": ["custodian-hack", "insolvency", "gov-seizure", "debasement"]
+  },
+  {
+    "id": "proof-of-reserves",
+    "title": "Prefer transparent / PoR custodians",
+    "description": "Favor services that publish auditable reserves and liabilities—still not a guarantee.",
+    "addressesVulnIds": ["debasement", "insolvency"]
+  },
+  {
+    "id": "strong-unique-password",
+    "title": "Unique strong password + password manager",
+    "description": "Eliminate reuse; store credentials offline-capable password managers carefully.",
+    "addressesVulnIds": ["compromised-creds", "phish-creds"]
+  },
+  {
+    "id": "fed-jurisdictional-dispersion",
+    "title": "Jurisdictionally dispersed federation",
+    "description": "Choose federations whose operators span countries/legal systems to raise the cost of seizure.",
+    "addressesVulnIds": ["fed-jurisdiction", "gov-seizure"]
+  },
+  {
+    "id": "fed-threshold-docs",
+    "title": "Understand federation threshold & recovery docs",
+    "description": "Know m-of-n, backup procedures, and what happens if members leave before depositing large amounts.",
+    "addressesVulnIds": ["fed-collusion", "fed-key-loss"]
+  },
+  {
+    "id": "offline-seed-backup",
+    "title": "Offline durable seed backup",
+    "description": "Write seed on paper or stamp into metal; never store in photos, email, or cloud notes.",
+    "addressesVulnIds": ["seed-screenshot", "no-backup", "fire-flood-backup"]
+  },
+  {
+    "id": "geographic-backup-diversity",
+    "title": "Geographic backup diversity",
+    "description": "Keep redundant backups in separate locations (with careful theft/coercion tradeoffs).",
+    "addressesVulnIds": ["fire-flood-backup", "physical-theft-seed", "no-backup"]
+  },
+  {
+    "id": "tamper-evident-seal",
+    "title": "Verify tamper-evident seals & packaging",
+    "description": "Buy from trusted channels; photograph packaging; abort if seals look disturbed.",
+    "addressesVulnIds": ["supply-chain-device"]
+  },
+  {
+    "id": "user-entropy-dice",
+    "title": "Provide your own entropy (50–100+ dice / flips)",
+    "description": "Follow device docs for external entropy so you do not rely solely on vendor RNG.",
+    "addressesVulnIds": ["insufficient-entropy", "firmware-rng-defect", "unsafe-seed-gen-sw"]
+  },
+  {
+    "id": "follow-provider-instructions",
+    "title": "Follow official entropy instructions exactly",
+    "description": "Use the vendor's documented procedure for dice/coin contribution; do not invent shortcuts.",
+    "addressesVulnIds": ["entropy-not-followed", "unsafe-dice-instructions"]
+  },
+  {
+    "id": "audit-trust-council",
+    "title": "Prefer audited code + expert auditor council",
+    "description": "Trust (or commission) multiple independent audits; treat a single audit as limited assurance.",
+    "addressesVulnIds": ["audit-missed-bugs", "unsafe-seed-gen-sw"]
+  },
+  {
+    "id": "run-audited-version",
+    "title": "Run exactly the audited version",
+    "description": "Pin firmware/app to the reviewed release; avoid unexplained forced upgrades when possible.",
+    "addressesVulnIds": ["software-changed-post-audit", "forced-upgrades"]
+  },
+  {
+    "id": "verify-signatures",
+    "title": "Verify vendor signatures / reproducible builds",
+    "description": "Check OpenPGP/minisign signatures; prefer reproducible builds so binary matches source.",
+    "addressesVulnIds": ["binary-source-mismatch", "supply-chain-device"]
+  },
+  {
+    "id": "diversify-vendors",
+    "title": "Diversify hardware vendors",
+    "description": "In multisig, use distinct manufacturers, firmware trees, and purchase channels.",
+    "addressesVulnIds": ["same-vendor-multisig", "firmware-rng-defect", "supply-chain-device"]
+  },
+  {
+    "id": "migrate-after-rng-bug",
+    "title": "Migrate funds after RNG/firmware seed bugs",
+    "description": "A firmware update does not heal an already-generated weak seed—create a new seed and move coins.",
+    "addressesVulnIds": ["firmware-rng-defect"]
+  },
+  {
+    "id": "casino-dice",
+    "title": "Casino / tested dice",
+    "description": "Use high-quality dice and optionally test for bias; never sort multi-die rolls before mapping.",
+    "addressesVulnIds": ["biased-dice", "dice-sort-bias"]
+  },
+  {
+    "id": "trustworthy-dice-guide",
+    "title": "Trustworthy dice → BIP39 instructions",
+    "description": "Use well-reviewed mapping tables (e.g. 5 rolls with 1–4 + coin, or established Seedpicker procedures).",
+    "addressesVulnIds": ["unsafe-dice-instructions", "biased-word-mapping"]
+  },
+  {
+    "id": "pencil-paper-only",
+    "title": "Pencil & paper for intermediate math",
+    "description": "Never type dice rolls, partial words, or checksum worksheets into an internet-connected device.",
+    "addressesVulnIds": ["intermediate-math-online"]
+  },
+  {
+    "id": "never-speak-seed",
+    "title": "Never speak seed words",
+    "description": "Silence smart speakers; no video calls; no 'read aloud to verify' habits.",
+    "addressesVulnIds": ["speaking-seed"]
+  },
+  {
+    "id": "no-cameras",
+    "title": "Ensure no cameras during ceremony",
+    "description": "Cover/disable webcams; leave phones outside; check room for recording devices.",
+    "addressesVulnIds": ["camera-seed"]
+  },
+  {
+    "id": "trustworthy-cli-guide",
+    "title": "Trustworthy air-gapped CLI guide",
+    "description": "Use a vetted procedure for computing checksum words offline; verify hashes of guides/tools.",
+    "addressesVulnIds": ["wrong-cli", "checksum-mismatch"]
+  },
+  {
+    "id": "usb-ferry-software",
+    "title": "USB ferry for offline software",
+    "description": "Transfer verified ISOs/binaries via write-once or inspected USB; do not reconnect the air-gapped PC to the internet.",
+    "addressesVulnIds": ["break-airgap-install"]
+  },
+  {
+    "id": "reload-seed-twice",
+    "title": "Reload seed twice; confirm same address",
+    "description": "Restore the written seed on a second device/session and verify identical receive addresses before funding.",
+    "addressesVulnIds": ["checksum-mismatch", "derivation-path-mismatch", "no-backup"]
+  },
+  {
+    "id": "record-derivation-path",
+    "title": "Record software, version, derivation path / BIP",
+    "description": "Write down wallet software, version, script type (BIP84 etc.), and account so heirs and future-you can restore.",
+    "addressesVulnIds": ["derivation-path-mismatch", "inheritance-unclear"]
+  },
+  {
+    "id": "xpub-watcher-match",
+    "title": "Load xpub on online watcher; match offline address",
+    "description": "Export xpub carefully; confirm the first addresses match what the cold device shows—then fund.",
+    "addressesVulnIds": ["derivation-path-mismatch", "address-poisoning"]
+  },
+  {
+    "id": "verify-address-on-device",
+    "title": "Verify receive address on hardware / air-gapped screen",
+    "description": "Never trust only the computer display; confirm full address (or QR) on the signing device.",
+    "addressesVulnIds": ["address-poisoning", "watch-only-malware", "hot-malware"]
+  },
+  {
+    "id": "limit-xpub-share",
+    "title": "Limit who receives your xpub",
+    "description": "Treat xpubs as sensitive privacy material; use separate accounts for different counterparties.",
+    "addressesVulnIds": ["xpub-privacy"]
+  },
+  {
+    "id": "inheritance-playbook",
+    "title": "Written inheritance playbook",
+    "description": "Document where keys live, passphrase handling, who to trust, and how to verify software—without putting the seed in the will text.",
+    "addressesVulnIds": ["inheritance-unclear"]
+  },
+  {
+    "id": "passphrase-separate-backup",
+    "title": "Backup passphrase separately; test recovery; record fingerprint",
+    "description": "Store the 25th word apart from the seed; practice a full restore; note wallet fingerprint/xpub for verification.",
+    "addressesVulnIds": ["passphrase-lost"]
+  },
+  {
+    "id": "never-enter-seed-online",
+    "title": "Never enter seed on a website or 'support' form",
+    "description": "No legitimate support needs your seed. Bookmark real URLs; ignore urgency scams.",
+    "addressesVulnIds": ["seed-phishing-support", "phish-creds"]
+  },
+  {
+    "id": "multisig-threshold",
+    "title": "Use multisig threshold (e.g. 2-of-3)",
+    "description": "Eliminate single-key catastrophic failure; require multiple independent approvals to spend.",
+    "addressesVulnIds": ["single-point-key", "physical-theft-seed"]
+  },
+  {
+    "id": "multi-party-locations",
+    "title": "Distribute keys across people / locations",
+    "description": "Independent parties and geographic separation reduce theft, disaster, and coercion correlation.",
+    "addressesVulnIds": ["physical-theft-seed", "fire-flood-backup", "collusion-multisig"]
+  },
+  {
+    "id": "glacier-dual-computer",
+    "title": "Glacier-style dual permanently-offline computers",
+    "description": "Two air-gapped machines, printed procedures, and meticulous checklists for maximum seed-gen assurance—at high complexity cost.",
+    "addressesVulnIds": ["hot-malware", "break-airgap-install", "insufficient-entropy"]
+  },
+  {
+    "id": "practice-dry-run",
+    "title": "Practice ceremony with throwaway entropy first",
+    "description": "Rehearse Glacier/dice/multisig setup with worthless seeds before the real ceremony to reduce fatal mistakes.",
+    "addressesVulnIds": ["glacier-complexity", "checksum-mismatch"]
+  },
+  {
+    "id": "self-custody-withdrawal",
+    "title": "Periodic withdrawals to self-custody",
+    "description": "Don't leave long-term savings on exchanges; schedule transfers to wallets you control.",
+    "addressesVulnIds": ["custodian-hack", "insolvency", "withdrawal-freeze", "debasement"]
+  },
+  {
+    "id": "airgap-signing",
+    "title": "Air-gapped / PSBT signing only",
+    "description": "Keep private keys on devices that never touch the internet; move only partially signed transactions.",
+    "addressesVulnIds": ["hot-malware", "seed-phishing-support"]
+  }
+]
