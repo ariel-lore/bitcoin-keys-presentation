@@ -1816,3 +1816,144 @@ button {
   font-weight: 700;
   margin: 0.1rem 0 0.15rem 0.15rem;
 }
+
+/* ——— Summary: one consolidated view (hide left aside) ——— */
+
+.app-summary .app-body {
+  grid-template-columns: 1fr;
+}
+
+.app-summary .path-aside {
+  display: none;
+}
+
+.summary-unified {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.summary-unified .path-risk-list {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+}
+
+.prl-panel-static {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.15rem 0.35rem 0.45rem;
+}
+
+.prl-panel-static h2 {
+  margin: 0;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--orange);
+  font-weight: 700;
+}
+
+.path-risk-list.operable .prl-panel-static h2 {
+  color: #86efac;
+}
+
+/* Presentation-scale checklist (finished path / summary) */
+.path-risk-list.prl-presentation {
+  padding: 0.85rem 1rem 1rem;
+}
+
+.path-risk-list.prl-presentation .prl-panel-static h2,
+.path-risk-list.prl-presentation .prl-panel-toggle h2 {
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+}
+
+.path-risk-list.prl-presentation .prl-panel-meta {
+  font-size: 0.8rem;
+}
+
+.path-risk-list.prl-presentation .prl-label {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: normal;
+}
+
+.path-risk-list.prl-presentation .prl-desc {
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.path-risk-list.prl-presentation .prl-idx {
+  width: 1.55rem;
+  height: 1.55rem;
+  font-size: 0.8rem;
+}
+
+.path-risk-list.prl-presentation .prl-risk-count,
+.path-risk-list.prl-presentation .prl-badge {
+  font-size: 0.78rem;
+}
+
+.path-risk-list.prl-presentation .prl-risk-head strong {
+  font-size: 0.95rem;
+}
+
+.path-risk-list.prl-presentation .prl-risk > p,
+.path-risk-list.prl-presentation .prl-mit p {
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.path-risk-list.prl-presentation .prl-mit .mit-title {
+  font-size: 0.92rem;
+}
+
+.path-risk-list.prl-presentation .prl-jump {
+  font-size: 0.85rem;
+}
+
+.path-risk-list.prl-presentation .prl-step {
+  border-radius: 10px;
+}
+
+.path-risk-list.prl-presentation .prl-step-head {
+  padding: 0.55rem 0.65rem;
+}
+
+.path-risk-list.prl-presentation .prl-step-body {
+  padding: 0 0.75rem 0.7rem 2.2rem;
+  gap: 0.45rem;
+}
+
+.path-risk-list.prl-presentation .prl-steps {
+  gap: 0.55rem;
+}
+
+.path-risk-list.prl-embedded {
+  border-radius: 12px;
+}
+
+/* Bigger summary header / risk line for presentation */
+.summary-view .summary-risk-line {
+  font-size: 1.05rem;
+}
+
+.summary-view .summary-h {
+  font-size: 0.9rem;
+}
+
+.summary-view .node-teaser {
+  font-size: 1.1rem;
+  white-space: normal;
+}
+
+.summary-view .node-scroll {
+  overflow-y: auto;
+}

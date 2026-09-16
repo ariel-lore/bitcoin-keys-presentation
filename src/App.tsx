@@ -19,7 +19,9 @@ export default function App() {
   const operable = adventure.sufficientToOperate;
 
   return (
-    <div className={`app ${operable ? 'app-operable' : 'app-picking'}`}>
+    <div
+      className={`app ${operable ? 'app-operable' : 'app-picking'}${isSummary ? ' app-summary' : ''}`}
+    >
       <header className="topbar">
         <div className="brand">
           <span className="btc-mark" aria-hidden>
@@ -49,14 +51,17 @@ export default function App() {
       </header>
 
       <div className="app-body">
-        <aside className="path-aside">
-          <PathRiskList
-            state={adventure.state}
-            sufficientToOperate={operable}
-            onJump={adventure.jumpToNode}
-            onApplyMitigation={adventure.applyMitigationForVuln}
-          />
-        </aside>
+        {/* Hide left checklist on summary — SummaryView owns the single consolidated view */}
+        {!isSummary && (
+          <aside className="path-aside">
+            <PathRiskList
+              state={adventure.state}
+              sufficientToOperate={operable}
+              onJump={adventure.jumpToNode}
+              onApplyMitigation={adventure.applyMitigationForVuln}
+            />
+          </aside>
+        )}
 
         <main className={`slide ${operable ? 'slide-procedure' : 'slide-question'}`}>
           {isSummary ? (
@@ -66,6 +71,7 @@ export default function App() {
               openVulnIds={adventure.openVulnIds}
               onChoose={adventure.choose}
               onApplyMitigation={adventure.applyMitigationForVuln}
+              onJump={adventure.jumpToNode}
               procedureMode={operable}
             />
           ) : (

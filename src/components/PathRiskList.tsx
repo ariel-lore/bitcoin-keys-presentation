@@ -16,20 +16,37 @@ function switchButtonLabel(mitTitle: string, choiceLabel?: string): string {
   return `Switch to ${short}`;
 }
 
+/** Prefer choice label; fall back to node title (destination / question). */
+function stepTitle(
+  choiceLabel: string | null | undefined,
+  nodeId: string,
+  isStart: boolean,
+): string {
+  if (isStart) return nodeById[nodeId]?.title ?? 'Start';
+  return choiceLabel || nodeById[nodeId]?.title || nodeId;
+}
+
 /**
  * Unified vertical path checklist + risks introduced at each step.
  * Entire panel expands/collapses as one unit; content scrolls when expanded.
+ * When embedded (summary), always open — left aside is hidden to avoid duplicate UI.
  */
 export function PathRiskList({
   state,
   sufficientToOperate,
   onJump,
   onApplyMitigation,
+  embedded = false,
+  presentation = false,
 }: {
   state: AdventureState;
   sufficientToOperate: boolean;
   onJump: (nodeId: string) => void;
   onApplyMitigation: (vulnId: string) => void;
+  /** Render inside SummaryView (no collapse chrome; always expanded) */
+  embedded?: boolean;
+  /** Larger type for presentation / finished-path readability */
+  presentation?: boolean;
 }) {
   const mitigated = useMemo(() => new Set(state.mitigatedVulnIds), [state.mitigatedVulnIds]);
 
@@ -46,45 +63,61 @@ export function PathRiskList({
     [state.vulnIds, stepScopedVulnIds],
   );
 
-  const [panelOpen, setPanelOpen] = useState(sufficientToOperate);
+  const [panelOpen, setPanelOpen] = useState(sufficientToOperate || embedded);
 
   useEffect(() => {
-    if (sufficientToOperate) setPanelOpen(true);
-  }, [sufficientToOperate]);
+    if (sufficientToOperate || embedded) setPanelOpen(true);
+  }, [sufficientToOperate, embedded]);
 
   const openRiskCount = state.vulnIds.filter((id) => !mitigated.has(id)).length;
+  const showBody = embedded || panelOpen;
 
   return (
     <nav
-      className={`path-risk-list ${sufficientToOperate ? 'operable' : 'incomplete'} ${panelOpen ? 'panel-open' : 'panel-collapsed'}`}
+      className={[
+        'path-risk-list',
+        sufficientToOperate ? 'operable' : 'incomplete',
+        embedded || panelOpen ? 'panel-open' : 'panel-collapsed',
+        embedded ? 'prl-embedded' : '',
+        presentation ? 'prl-presentation' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       aria-label={sufficientToOperate ? 'Setup checklist' : 'Path checklist'}
     >
       <header className="prl-head">
-        <button
-          type="button"
-          className="prl-panel-toggle"
-          onClick={() => setPanelOpen((o) => !o)}
-          aria-expanded={panelOpen}
-        >
-          <h2>{sufficientToOperate ? 'Checklist' : 'Path checklist'}</h2>
-          <span className="prl-panel-meta">
-            {openRiskCount > 0 ? `${openRiskCount} open` : 'clear'}
-            <span className="prl-chevron" aria-hidden>
-              {panelOpen ? '▾' : '▸'}
+        {embedded ? (
+          <div className="prl-panel-static">
+            <h2>{sufficientToOperate ? 'Setup checklist' : 'Path checklist'}</h2>
+            <span className="prl-panel-meta">
+              {openRiskCount > 0 ? `${openRiskCount} open` : 'clear'}
             </span>
-          </span>
-        </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="prl-panel-toggle"
+            onClick={() => setPanelOpen((o) => !o)}
+            aria-expanded={panelOpen}
+          >
+            <h2>{sufficientToOperate ? 'Checklist' : 'Path checklist'}</h2>
+            <span className="prl-panel-meta">
+              {openRiskCount > 0 ? `${openRiskCount} open` : 'clear'}
+              <span className="prl-chevron" aria-hidden>
+                {panelOpen ? '▾' : '▸'}
+              </span>
+            </span>
+          </button>
+        )}
       </header>
 
-      {panelOpen && (
+      {showBody && (
         <div className="prl-scroll">
           <ol className="prl-steps">
             {state.trail.map((step, i) => {
               const node = nodeById[step.nodeId];
               const isStart = i === 0 && !step.choiceLabel;
-              const label = isStart
-                ? (node?.title ?? 'Start')
-                : (step.choiceLabel ?? node?.title ?? step.nodeId);
+              const label = stepTitle(step.choiceLabel, step.nodeId, isStart);
               const description = isStart
                 ? 'Starting question'
                 : (step.choiceDescription || (node ? `Leads to: ${node.title}` : null));
