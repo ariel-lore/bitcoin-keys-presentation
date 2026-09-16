@@ -271,6 +271,77 @@ function normalizeLegacy(s: AdventureState & { mitigationIds?: string[] }): Adve
   };
 }
 
+const STORAGE_KEY = 'btc-custody-adventure-v1';
+
+function readStoredState(): AdventureState | null {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed: unknown = JSON.parse(raw);
+    if (!snapshotValid(parsed)) {
+      sessionStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return normalizeLegacy(parsed);
+  } catch {
+    try {
+      sessionStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
+    return null;
+  }
+}
+
+function writeStoredState(s: AdventureState) {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+  } catch {
+    /* quota / private mode */
+  }
+}
+
+function clearStoredState() {
+  try {
+    sessionStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+function loadInitialState(): AdventureState {
+  if (typeof window !== 'undefined') {
+    const fromHistory = window.history.state;
+    if (snapshotValid(fromHistory)) {
+      return normalizeLegacy(fromHistory);
+    }
+    const fromStorage = readStoredState();
+    if (fromStorage) return fromStorage;
+    const fromUrl = readNodeFromUrl();
+    if (fromUrl && fromUrl !== tree.startNodeId) {
+      return {
+        currentNodeId: fromUrl,
+        trail: [
+          {
+            nodeId: fromUrl,
+            choiceId: null,
+            choiceLabel: null,
+            choiceDescription: null,
+            addsVulnIds: [],
+            kind: 'start',
+          },
+        ],
+        vulnIds: [],
+        mitigatedVulnIds: [],
+        tags: [],
+        procedureSteps: [],
+        ...emptyKeys(),
+      };
+    }
+  }
+  return initialState();
+}
+
 function appendProcedureFromMitigation(
   prev: AdventureState,
   mitigationId: string,
@@ -433,33 +504,14 @@ function applyChooseOtherOption(prev: AdventureState, mit: Mitigation, vulnId: s
 }
 
 export function useAdventure() {
-  const [state, setState] = useState<AdventureState>(() => {
-    const fromUrl = readNodeFromUrl();
-    if (fromUrl && fromUrl !== tree.startNodeId) {
-      return {
-        currentNodeId: fromUrl,
-        trail: [
-          {
-            nodeId: fromUrl,
-            choiceId: null,
-            choiceLabel: null,
-            choiceDescription: null,
-            addsVulnIds: [],
-            kind: 'start',
-          },
-        ],
-        vulnIds: [],
-        mitigatedVulnIds: [],
-        tags: [],
-        procedureSteps: [],
-        ...emptyKeys(),
-      };
-    }
-    return initialState();
-  });
+  const [state, setState] = useState<AdventureState>(() => loadInitialState());
 
   const stateRef = useRef(state);
   stateRef.current = state;
+
+  useEffect(() => {
+    writeStoredState(state);
+  }, [state]);
 
   useEffect(() => {
     if (!historyBootstrapped) {
@@ -591,6 +643,7 @@ export function useAdventure() {
   }, []);
 
   const reset = useCallback(() => {
+    clearStoredState();
     const next = initialState();
     setState(next);
     window.history.replaceState(next, '', urlFor(next.currentNodeId));
