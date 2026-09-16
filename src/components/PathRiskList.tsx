@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { AdventureState, ProcedureStep } from '../types/schema';
+import type { AdventureState, Choice, ProcedureStep, TrailStep } from '../types/schema';
 import { nodeById, vulnById, mitigationForVuln } from '../lib/data';
 import type { Severity } from '../types/schema';
+import { ChoiceIcon } from './ChoiceIcon';
 
 const severityClass: Record<Severity, string> = {
   low: 'sev-low',
@@ -24,6 +25,23 @@ function stepTitle(
 ): string {
   if (isStart) return nodeById[nodeId]?.title ?? 'Start';
   return choiceLabel || nodeById[nodeId]?.title || nodeId;
+}
+
+
+/** Reconstruct the Choice taken for a trail step (for icon + title). */
+function choiceForTrailStep(trail: TrailStep[], index: number): Choice | null {
+  const step = trail[index];
+  if (!step?.choiceId || index <= 0) return null;
+  const parent = nodeById[trail[index - 1].nodeId];
+  const found = parent?.choices.find((c) => c.id === step.choiceId);
+  if (found) return found;
+  // Fallback: synthetic choice so resolveChoiceIcon still works from id/label
+  return {
+    id: step.choiceId,
+    label: step.choiceLabel || step.choiceId,
+    nextNodeId: step.nodeId,
+    description: step.choiceDescription ?? undefined,
+  };
 }
 
 /**
@@ -118,6 +136,7 @@ export function PathRiskList({
               const node = nodeById[step.nodeId];
               const isStart = i === 0 && !step.choiceLabel;
               const label = stepTitle(step.choiceLabel, step.nodeId, isStart);
+              const choice = choiceForTrailStep(state.trail, i);
               const description = isStart
                 ? 'Starting question'
                 : (step.choiceDescription || (node ? `Leads to: ${node.title}` : null));
@@ -138,6 +157,11 @@ export function PathRiskList({
                     <span className={`prl-idx`} aria-hidden>
                       {i + 1}
                     </span>
+                    {choice && (
+                      <span className="prl-step-icon" aria-hidden>
+                        <ChoiceIcon choice={choice} />
+                      </span>
+                    )}
                     <span className="prl-step-main">
                       <span className="prl-label">{label}</span>
                       {vulns.length > 0 && (

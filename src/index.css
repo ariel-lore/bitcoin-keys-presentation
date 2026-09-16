@@ -1554,6 +1554,24 @@ button {
   gap: 0.1rem;
 }
 
+
+.prl-step-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prl-step-icon .brand-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.path-risk-list.prl-presentation .prl-step-icon .brand-icon {
+  width: 40px;
+  height: 40px;
+}
+
 .prl-label {
   font-size: 0.75rem;
   font-weight: 650;
