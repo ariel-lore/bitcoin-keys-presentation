@@ -2003,12 +2003,13 @@ button {
   overflow-y: auto;
 }
 
-/* Summary presentation: no checklist chrome / green frame; steps in middle third */
+/* Summary presentation: no checklist chrome; step cards hug content, centered */
 .path-risk-list.prl-embedded.prl-presentation {
   border: none !important;
   background: transparent !important;
   box-shadow: none !important;
   padding: 0.35rem 0 1rem;
+  align-items: center;
 }
 
 .path-risk-list.prl-embedded.prl-presentation.operable,
@@ -2021,48 +2022,57 @@ button {
   display: none;
 }
 
-.path-risk-list.prl-presentation .prl-steps {
-  width: 100%;
-  max-width: none;
+.path-risk-list.prl-presentation .prl-scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Number / icon / title sit in the middle third, left-justified as a column */
+/* Column width = widest step; all cards share it so numbers stay aligned */
+.path-risk-list.prl-presentation .prl-steps {
+  width: max-content;
+  max-width: min(42rem, 100%);
+  margin-inline: auto;
+  align-self: center;
+}
+
+.path-risk-list.prl-presentation .prl-step {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .path-risk-list.prl-presentation .prl-step-head {
-  display: grid;
-  grid-template-columns: 1fr minmax(12rem, 34%) 1fr;
+  display: flex;
   align-items: center;
   gap: 0;
-  padding: 0.55rem 0.5rem;
-}
-
-.path-risk-list.prl-presentation .prl-step-head::before {
-  content: '';
-  grid-column: 1;
+  padding: 0.55rem 0.85rem;
 }
 
 .path-risk-list.prl-presentation .prl-step-cluster {
-  grid-column: 2;
   display: flex;
   align-items: center;
   gap: 0.55rem;
   min-width: 0;
   text-align: left;
-  justify-self: stretch;
+  width: 100%;
 }
 
 .path-risk-list.prl-presentation .prl-step-body {
-  display: grid;
-  grid-template-columns: 1fr minmax(12rem, 34%) 1fr;
-  padding: 0 0.5rem 0.65rem;
-}
-
-.path-risk-list.prl-presentation .prl-step-body > * {
-  grid-column: 2;
+  padding: 0 0.85rem 0.65rem;
+  /* indent body under title column (idx + icon + gaps) */
+  padding-left: calc(0.85rem + 1.75rem + 0.55rem + 40px + 0.55rem);
 }
 
 .path-risk-list.prl-presentation .prl-idx {
   width: 1.75rem;
   height: 1.75rem;
   font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.path-risk-list.prl-presentation .prl-orphans {
+  width: max-content;
+  max-width: min(42rem, 100%);
+  margin-inline: auto;
 }
 
