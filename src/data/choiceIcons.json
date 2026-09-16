@@ -1,0 +1,1062 @@
+{
+  "version": 1,
+  "defaultIcon": "/icons/default.svg",
+  "byId": {
+    "start-custodian": "/icons/custodian.svg",
+    "start-federated": "/icons/federation.svg",
+    "start-self": "/icons/self-custody.svg",
+    "start-collaborative": "/icons/collaborative.svg",
+    "creds-walletofsatoshi-provide": "/icons/custodian.svg",
+    "creds-bitcoinwell-provide": "/icons/custodian.svg",
+    "creds-coinos-provide": "/icons/custodian.svg",
+    "creds-bullbitcoin-provide": "/icons/custodian.svg",
+    "creds-kraken-provide": "/icons/custodian.svg",
+    "kyc-bitcoinwell-provide": "/icons/custodian.svg",
+    "kyc-bullbitcoin-provide": "/icons/custodian.svg",
+    "kyc-kraken-provide": "/icons/custodian.svg",
+    "auth-bitcoinwell-authenticator": "/icons/totp.svg",
+    "auth-bitcoinwell-skip": "/icons/skip.svg",
+    "auth-coinos-authenticator": "/icons/totp.svg",
+    "auth-coinos-skip": "/icons/skip.svg",
+    "auth-bullbitcoin-authenticator": "/icons/totp.svg",
+    "auth-bullbitcoin-skip": "/icons/skip.svg",
+    "auth-kraken-authenticator": "/icons/totp.svg",
+    "auth-kraken-passkey": "/icons/passkey.svg",
+    "auth-kraken-hardware_key": "/icons/hardware-key.svg",
+    "pe-c-another-custodian": "/icons/custodian.svg",
+    "pe-c-another-model": "/icons/another.svg",
+    "sf-single": "/icons/single-key.svg",
+    "sf-multi": "/icons/multisig.svg",
+    "sk-hot": "/icons/hot.svg",
+    "sk-cold": "/icons/cold.svg",
+    "fed-app-other": "/icons/federation.svg",
+    "fedi-dl-official": "/icons/download.svg",
+    "fedi-open-app": "/icons/create.svg",
+    "fedi-join-existing": "/icons/federation.svg",
+    "fedi-run-own": "/icons/warning.svg",
+    "fedi-invite-open": "/icons/qr-invite.svg",
+    "fedi-social-enable": "/icons/social-backup.svg",
+    "fedi-social-skip": "/icons/skip.svg",
+    "fedi-personal-bak-done": "/icons/backup.svg",
+    "fedi-pin-yes": "/icons/pin.svg",
+    "fedi-pin-skip": "/icons/skip.svg",
+    "pe-f-another-app": "/icons/federation.svg",
+    "pe-f-another-model": "/icons/another.svg",
+    "fedi-guardian-back-join": "/icons/federation.svg",
+    "fedi-guardian-back-model": "/icons/another.svg",
+    "fed-other-to-fedi": "/icons/back.svg",
+    "fed-other-back": "/icons/another.svg",
+    "bw-install-official": "/icons/download.svg",
+    "bw-add-btc": "/icons/create.svg",
+    "bw-type-bip84": "/icons/segwit.svg",
+    "bw-type-bip49": "/icons/segwit.svg",
+    "bw-type-lightning": "/icons/lightning.svg",
+    "bw-lndhub-back": "/icons/back.svg",
+    "bw-lndhub-accept": "/icons/lightning.svg",
+    "pe-bw-ln-onchain": "/icons/create.svg",
+    "pe-bw-ln-model": "/icons/another.svg",
+    "bw-create-done": "/icons/create.svg",
+    "bw-seed-offline": "/icons/backup.svg",
+    "bw-bak-paper": "/icons/paper.svg",
+    "bw-bak-metal": "/icons/metal.svg",
+    "bw-bak-other": "/icons/backup.svg",
+    "bw-verify-done": "/icons/verify.svg",
+    "bw-receive-show": "/icons/receive.svg",
+    "bw-test-yes": "/icons/receive.svg",
+    "bw-test-skip": "/icons/skip.svg",
+    "bw-send-continue": "/icons/send.svg",
+    "pe-bw-tool": "/icons/cold.svg",
+    "pe-bw-model": "/icons/another.svg",
+    "trz-suite-official": "/icons/install.svg",
+    "trz-fw-official": "/icons/firmware.svg",
+    "trz-auth-ok": "/icons/verify.svg",
+    "trz-create-new": "/icons/create.svg",
+    "trz-recover": "/icons/recover.svg",
+    "trz-recover-to-create": "/icons/create.svg",
+    "trz-recover-back": "/icons/another.svg",
+    "trz-bak-single": "/icons/shamir-share.svg",
+    "trz-bak-multi": "/icons/shamir-share.svg",
+    "trz-words-12": "/icons/words.svg",
+    "trz-words-20": "/icons/words.svg",
+    "trz-words-24": "/icons/words.svg",
+    "trz-seed-written": "/icons/seed.svg",
+    "trz-backup-verified": "/icons/backup.svg",
+    "trz-pin-set": "/icons/pin.svg",
+    "trz-pass-enabled": "/icons/passphrase.svg",
+    "trz-pass-entered": "/icons/passphrase.svg",
+    "trz-pass-tested": "/icons/passphrase.svg",
+    "trz-pass-stored-separate": "/icons/passphrase.svg",
+    "trz-receive-verified": "/icons/receive.svg",
+    "pe-trz-p-shamir": "/icons/shamir-share.svg",
+    "pe-trz-p-tool": "/icons/cold.svg",
+    "pe-trz-p-model": "/icons/another.svg",
+    "trz-shamir-3of2": "/icons/shamir-share.svg",
+    "trz-share-1-written": "/icons/shamir-share.svg",
+    "trz-share-1-verified": "/icons/shamir-share.svg",
+    "trz-share-2-written": "/icons/shamir-share.svg",
+    "trz-share-2-verified": "/icons/shamir-share.svg",
+    "trz-share-3-written": "/icons/shamir-share.svg",
+    "trz-share-3-verified": "/icons/shamir-share.svg",
+    "trz-s1-home": "/icons/home.svg",
+    "trz-s1-elsewhere": "/icons/elsewhere.svg",
+    "trz-s2-physical": "/icons/vault.svg",
+    "trz-s2-elsewhere": "/icons/elsewhere.svg",
+    "trz-s3-family": "/icons/family.svg",
+    "trz-s3-elsewhere": "/icons/elsewhere.svg",
+    "trz-no-photos": "/icons/opsec.svg",
+    "trz-shamir-recv-ok": "/icons/receive.svg",
+    "trz-recombine-trezor": "/icons/multisig.svg",
+    "pe-trz-s-pass": "/icons/shamir-share.svg",
+    "pe-trz-s-tool": "/icons/cold.svg",
+    "pe-trz-s-model": "/icons/another.svg",
+    "ms-2of3": "/icons/threshold.svg",
+    "ms-3of5": "/icons/warning.svg",
+    "ms-other-thresh": "/icons/warning.svg",
+    "ms-stub-to-2of3": "/icons/multisig.svg",
+    "ms-stub-back": "/icons/another.svg",
+    "ms-dev-multi-vendor": "/icons/warning.svg",
+    "ms-dev-casa": "/icons/collaborative.svg",
+    "ms-mv-to-ss": "/icons/default.svg",
+    "ms-mv-legacy": "/icons/multisig.svg",
+    "ms-ss-k1-dice": "/icons/dice.svg",
+    "ms-ss-k1-rng": "/icons/rng.svg",
+    "ms-ss-k1-bak-done": "/icons/backup.svg",
+    "ms-ss-k1-family": "/icons/family.svg",
+    "ms-ss-k1-store-other": "/icons/elsewhere.svg",
+    "ms-ss-k2-dice": "/icons/dice.svg",
+    "ms-ss-k2-rng": "/icons/rng.svg",
+    "ms-ss-k2-bak-done": "/icons/backup.svg",
+    "ms-ss-k2-home": "/icons/home.svg",
+    "ms-ss-k2-store-other": "/icons/elsewhere.svg",
+    "ms-ss-k3-dice": "/icons/dice.svg",
+    "ms-ss-k3-rng": "/icons/rng.svg",
+    "ms-ss-k3-bak-done": "/icons/backup.svg",
+    "ms-ss-k3-physical": "/icons/vault.svg",
+    "ms-ss-k3-store-other": "/icons/elsewhere.svg",
+    "ms-ss-sparrow-ok": "/icons/sparrow.svg",
+    "ms-ss-wallet-created": "/icons/sparrow.svg",
+    "ms-ss-xpub-1-done": "/icons/xpub.svg",
+    "ms-ss-xpub-2-done": "/icons/xpub.svg",
+    "ms-ss-xpub-3-done": "/icons/xpub.svg",
+    "ms-ss-desc-exported": "/icons/descriptor.svg",
+    "ms-ss-desc-distributed": "/icons/descriptor.svg",
+    "ms-ss-recv-ok": "/icons/receive.svg",
+    "ms-ss-psbt-qr": "/icons/send.svg",
+    "pe-ms-ss-devices": "/icons/another.svg",
+    "pe-ms-ss-structure": "/icons/single-key.svg",
+    "pe-ms-ss-model": "/icons/another.svg",
+    "manx-dice": "/icons/dice.svg",
+    "manx-seedpicker": "/icons/words.svg",
+    "manx-solitaire": "/icons/cards.svg",
+    "manx-entropy-hw": "/icons/dice.svg",
+    "manx-metal-focus": "/icons/metal.svg",
+    "sp-to-checksum": "/icons/cold.svg",
+    "sp-back": "/icons/another.svg",
+    "sol-to-cards": "/icons/cards.svg",
+    "sol-back": "/icons/another.svg",
+    "metal-ok": "/icons/metal.svg",
+    "metal-back": "/icons/cold.svg",
+    "collab-casa": "/icons/collaborative.svg",
+    "collab-to-ms": "/icons/multisig.svg",
+    "collab-back": "/icons/another.svg",
+    "pe-collab-ms": "/icons/multisig.svg",
+    "pe-collab-model": "/icons/another.svg",
+    "cc-dice-hook-go": "/icons/cold.svg",
+    "led-rng": "/icons/rng.svg",
+    "led-entropy": "/icons/dice.svg",
+    "led-pin-pass": "/icons/pin.svg",
+    "led-pin": "/icons/pin.svg",
+    "led-none": "/icons/skip.svg",
+    "trz-rng": "/icons/rng.svg",
+    "trz-entropy": "/icons/rng.svg",
+    "trz-pin-pass": "/icons/pin.svg",
+    "trz-pin": "/icons/pin.svg",
+    "trz-none": "/icons/skip.svg",
+    "cc-dice": "/icons/dice.svg",
+    "cc-rng": "/icons/rng.svg",
+    "cc-ondev": "/icons/pin.svg",
+    "cc-sd": "/icons/pin.svg",
+    "cc-wipe": "/icons/metal.svg",
+    "bk-std": "/icons/recover.svg",
+    "bk-min-cloud": "/icons/recover.svg",
+    "bk-pin": "/icons/pin.svg",
+    "bk-weak": "/icons/warning.svg",
+    "ss-dice": "/icons/dice.svg",
+    "ss-image": "/icons/rng.svg",
+    "ss-metal": "/icons/metal.svg",
+    "ss-paper": "/icons/paper.svg",
+    "ss-none": "/icons/no.svg",
+    "jd-rng": "/icons/rng.svg",
+    "jd-oracle": "/icons/rng.svg",
+    "jd-pin-pass": "/icons/pin.svg",
+    "jd-pin": "/icons/pin.svg",
+    "jd-none": "/icons/skip.svg",
+    "ta-electrum": "/icons/electrum.svg",
+    "ta-bip39": "/icons/seed.svg",
+    "ta-ferry": "/icons/verify.svg",
+    "ta-online": "/icons/receive.svg",
+    "ph-hot": "/icons/hot.svg",
+    "ph-air": "/icons/airgap.svg",
+    "ph-rng": "/icons/seed.svg",
+    "ph-metal": "/icons/paper.svg",
+    "ph-cloud": "/icons/cloud.svg",
+    "ph-none": "/icons/no.svg",
+    "ap-ferry": "/icons/verify.svg",
+    "ap-break": "/icons/download.svg",
+    "aps-gen": "/icons/seed.svg",
+    "bw-hot": "/icons/hot.svg",
+    "bw-watch": "/icons/watch-only.svg",
+    "bw-rng": "/icons/seed.svg",
+    "bc-desc": "/icons/descriptor.svg",
+    "bc-import": "/icons/default.svg",
+    "bc-watch": "/icons/watch-only.svg",
+    "bc-hot": "/icons/hot.svg",
+    "bc-dedicated": "/icons/cold.svg",
+    "man-dice": "/icons/dice.svg",
+    "man-entropy-hw": "/icons/dice.svg",
+    "man-coins": "/icons/coin.svg",
+    "man-cards": "/icons/cards.svg",
+    "seh-back": "/icons/rng.svg",
+    "sdh-back": "/icons/rng.svg",
+    "sdm-manual": "/icons/dice.svg",
+    "sdm-hw": "/icons/dice.svg",
+    "msc-geo": "/icons/multisig.svg",
+    "msc-vendor": "/icons/diversity.svg",
+    "msc-end": "/icons/summary.svg",
+    "mss-fix": "/icons/diversity.svg",
+    "mss-anyway": "/icons/continue.svg",
+    "msd-dist": "/icons/yes.svg",
+    "msd-backup": "/icons/inheritance.svg",
+    "msd-end": "/icons/multisig.svg",
+    "dm-parties": "/icons/yes.svg",
+    "dm-end": "/icons/multisig.svg",
+    "im-agent": "/icons/collaborative.svg",
+    "im-peers": "/icons/no.svg",
+    "im-end": "/icons/multisig.svg",
+    "mka-yes": "/icons/yes.svg",
+    "mka-no": "/icons/no.svg",
+    "mp-drill": "/icons/recover.svg",
+    "mp-skip": "/icons/skip.svg",
+    "bm-ok": "/icons/descriptor.svg",
+    "bm-partial": "/icons/descriptor.svg",
+    "pe-multisig-receive": "/icons/receive.svg",
+    "pe-multisig-send": "/icons/send.svg",
+    "pe-ms-harden-backup": "/icons/inheritance.svg",
+    "pe-ms-harden-sign": "/icons/signing.svg",
+    "pe-ms-harden-pass": "/icons/passphrase.svg",
+    "pe-ms-harden-ms": "/icons/multisig.svg",
+    "pe-ms-explore": "/icons/another.svg",
+    "gl-accept": "/icons/yes.svg",
+    "gl-ms": "/icons/multisig.svg",
+    "gl-back": "/icons/back.svg",
+    "gc-seed": "/icons/seed.svg",
+    "gc-done": "/icons/glacier.svg",
+    "pe-glacier-receive": "/icons/receive.svg",
+    "pe-glacier-send": "/icons/send.svg",
+    "pe-g-harden-backup": "/icons/inheritance.svg",
+    "pe-g-harden-sign": "/icons/signing.svg",
+    "pe-g-harden-pass": "/icons/passphrase.svg",
+    "pe-g-harden-ms": "/icons/multisig.svg",
+    "pe-g-explore": "/icons/another.svg",
+    "sd-good": "/icons/dice.svg",
+    "sd-back": "/icons/rng.svg",
+    "sc-ok": "/icons/cards.svg",
+    "sc-back": "/icons/rng.svg",
+    "so-apply": "/icons/paper.svg",
+    "so-checksum": "/icons/continue.svg",
+    "scs-hw": "/icons/hardware-wallet.svg",
+    "scs-phone": "/icons/cold.svg",
+    "scs-pc": "/icons/cold.svg",
+    "xp-phone": "/icons/phone.svg",
+    "xp-hw": "/icons/qr-invite.svg",
+    "xp-air": "/icons/cold.svg",
+    "xp-back": "/icons/back.svg",
+    "xph-harden": "/icons/cold.svg",
+    "xph-hw": "/icons/back.svg",
+    "xhw-ok": "/icons/yes.svg",
+    "xhw-sign": "/icons/continue.svg",
+    "xa-ok": "/icons/yes.svg",
+    "xa-sign": "/icons/continue.svg",
+    "xv-receive": "/icons/continue.svg",
+    "xv-send": "/icons/continue.svg",
+    "xv-summary": "/icons/summary.svg",
+    "br-phys": "/icons/backup.svg",
+    "br-inh": "/icons/inheritance.svg",
+    "br-pass": "/icons/passphrase.svg",
+    "br-summary": "/icons/summary.svg",
+    "bp-ok": "/icons/metal.svg",
+    "bp-inh": "/icons/inheritance.svg",
+    "bi-ok": "/icons/yes.svg",
+    "bi-ms": "/icons/multisig.svg",
+    "bd-receive": "/icons/continue.svg",
+    "bd-send": "/icons/continue.svg",
+    "bd-summary": "/icons/summary.svg",
+    "pp-yes": "/icons/recover.svg",
+    "pp-no": "/icons/recover.svg",
+    "sr-verify": "/icons/verify.svg",
+    "sr-summary": "/icons/summary.svg",
+    "sh-receive": "/icons/continue.svg",
+    "sh-send": "/icons/continue.svg",
+    "sh-ms": "/icons/multisig.svg",
+    "sh-summary": "/icons/summary.svg",
+    "pe-s-receive": "/icons/receive.svg",
+    "pe-s-send": "/icons/send.svg",
+    "pe-s-harden-ms": "/icons/multisig.svg",
+    "pe-s-xpub": "/icons/xpub.svg",
+    "pe-s-harden-backup": "/icons/inheritance.svg",
+    "pe-s-tool": "/icons/another.svg",
+    "pe-s-explore": "/icons/another.svg",
+    "rcv-watch-hot": "/icons/hot.svg",
+    "rcv-hw-verify": "/icons/cold.svg",
+    "rcv-exchange-dep": "/icons/receive.svg",
+    "rd-send": "/icons/continue.svg",
+    "rd-summary": "/icons/summary.svg",
+    "snd-psbt": "/icons/airgap.svg",
+    "snd-connected-hw": "/icons/hardware-wallet.svg",
+    "snd-hot": "/icons/hot.svg",
+    "sd-summary": "/icons/summary.svg",
+    "sd-receive": "/icons/back.svg"
+  },
+  "tagRules": [
+    {
+      "tags": [
+        "custodial"
+      ],
+      "icon": "/icons/custodian.svg"
+    },
+    {
+      "tags": [
+        "federation"
+      ],
+      "icon": "/icons/federation.svg"
+    },
+    {
+      "tags": [
+        "self-custody"
+      ],
+      "icon": "/icons/self-custody.svg"
+    },
+    {
+      "tags": [
+        "collaborative"
+      ],
+      "icon": "/icons/collaborative.svg"
+    },
+    {
+      "tags": [
+        "single-sig"
+      ],
+      "icon": "/icons/single-key.svg"
+    },
+    {
+      "tags": [
+        "multisig"
+      ],
+      "icon": "/icons/multisig.svg"
+    },
+    {
+      "tags": [
+        "hot"
+      ],
+      "icon": "/icons/hot.svg"
+    },
+    {
+      "tags": [
+        "cold"
+      ],
+      "icon": "/icons/cold.svg"
+    },
+    {
+      "tags": [
+        "airgap"
+      ],
+      "icon": "/icons/airgap.svg"
+    },
+    {
+      "tags": [
+        "auth-creds"
+      ],
+      "icon": "/icons/email.svg"
+    },
+    {
+      "tags": [
+        "kyc"
+      ],
+      "icon": "/icons/kyc.svg"
+    },
+    {
+      "tags": [
+        "authenticator"
+      ],
+      "icon": "/icons/totp.svg"
+    },
+    {
+      "tags": [
+        "passkey"
+      ],
+      "icon": "/icons/passkey.svg"
+    },
+    {
+      "tags": [
+        "hardware_key"
+      ],
+      "icon": "/icons/hardware-key.svg"
+    },
+    {
+      "tags": [
+        "2fa-skipped"
+      ],
+      "icon": "/icons/skip.svg"
+    },
+    {
+      "tags": [
+        "install"
+      ],
+      "icon": "/icons/download.svg"
+    },
+    {
+      "tags": [
+        "invite",
+        "join"
+      ],
+      "icon": "/icons/qr-invite.svg"
+    },
+    {
+      "tags": [
+        "social-backup"
+      ],
+      "icon": "/icons/social-backup.svg"
+    },
+    {
+      "tags": [
+        "social-backup-skipped"
+      ],
+      "icon": "/icons/skip.svg"
+    },
+    {
+      "tags": [
+        "pin"
+      ],
+      "icon": "/icons/pin.svg"
+    },
+    {
+      "tags": [
+        "pin-skipped"
+      ],
+      "icon": "/icons/skip.svg"
+    },
+    {
+      "tags": [
+        "backup-paper",
+        "paper"
+      ],
+      "icon": "/icons/paper.svg"
+    },
+    {
+      "tags": [
+        "backup-metal",
+        "paper-metal"
+      ],
+      "icon": "/icons/metal.svg"
+    },
+    {
+      "tags": [
+        "backup-other"
+      ],
+      "icon": "/icons/backup.svg"
+    },
+    {
+      "tags": [
+        "backup"
+      ],
+      "icon": "/icons/backup.svg"
+    },
+    {
+      "tags": [
+        "dice"
+      ],
+      "icon": "/icons/dice.svg"
+    },
+    {
+      "tags": [
+        "cards"
+      ],
+      "icon": "/icons/cards.svg"
+    },
+    {
+      "tags": [
+        "lightning",
+        "lndhub"
+      ],
+      "icon": "/icons/lightning.svg"
+    },
+    {
+      "tags": [
+        "shamir",
+        "slip39"
+      ],
+      "icon": "/icons/shamir-share.svg"
+    },
+    {
+      "tags": [
+        "bip39",
+        "seed"
+      ],
+      "icon": "/icons/seed.svg"
+    },
+    {
+      "tags": [
+        "passphrase"
+      ],
+      "icon": "/icons/passphrase.svg"
+    },
+    {
+      "tags": [
+        "verify",
+        "authenticity"
+      ],
+      "icon": "/icons/verify.svg"
+    },
+    {
+      "tags": [
+        "receive"
+      ],
+      "icon": "/icons/receive.svg"
+    },
+    {
+      "tags": [
+        "send",
+        "psbt"
+      ],
+      "icon": "/icons/send.svg"
+    },
+    {
+      "tags": [
+        "descriptor"
+      ],
+      "icon": "/icons/descriptor.svg"
+    },
+    {
+      "tags": [
+        "sparrow"
+      ],
+      "icon": "/icons/sparrow.svg"
+    },
+    {
+      "tags": [
+        "xpub"
+      ],
+      "icon": "/icons/xpub.svg"
+    },
+    {
+      "tags": [
+        "watch-only"
+      ],
+      "icon": "/icons/watch-only.svg"
+    },
+    {
+      "tags": [
+        "firmware"
+      ],
+      "icon": "/icons/firmware.svg"
+    },
+    {
+      "tags": [
+        "create"
+      ],
+      "icon": "/icons/create.svg"
+    },
+    {
+      "tags": [
+        "recover"
+      ],
+      "icon": "/icons/recover.svg"
+    },
+    {
+      "tags": [
+        "rng",
+        "device-rng"
+      ],
+      "icon": "/icons/rng.svg"
+    },
+    {
+      "tags": [
+        "user-entropy"
+      ],
+      "icon": "/icons/dice.svg"
+    },
+    {
+      "tags": [
+        "coin-flips"
+      ],
+      "icon": "/icons/coin.svg"
+    },
+    {
+      "tags": [
+        "test-receive",
+        "test"
+      ],
+      "icon": "/icons/test.svg"
+    },
+    {
+      "tags": [
+        "test-receive-skipped"
+      ],
+      "icon": "/icons/skip.svg"
+    },
+    {
+      "tags": [
+        "stub"
+      ],
+      "icon": "/icons/warning.svg"
+    },
+    {
+      "tags": [
+        "opsec"
+      ],
+      "icon": "/icons/opsec.svg"
+    },
+    {
+      "tags": [
+        "suite"
+      ],
+      "icon": "/icons/install.svg"
+    },
+    {
+      "tags": [
+        "bip84",
+        "bip49",
+        "p2wsh"
+      ],
+      "icon": "/icons/segwit.svg"
+    },
+    {
+      "tags": [
+        "electrum"
+      ],
+      "icon": "/icons/electrum.svg"
+    },
+    {
+      "tags": [
+        "sd-card"
+      ],
+      "icon": "/icons/sd-card.svg"
+    },
+    {
+      "tags": [
+        "casa"
+      ],
+      "icon": "/icons/collaborative.svg"
+    },
+    {
+      "tags": [
+        "guardian"
+      ],
+      "icon": "/icons/federation.svg"
+    },
+    {
+      "tags": [
+        "2of3"
+      ],
+      "icon": "/icons/threshold.svg"
+    },
+    {
+      "tags": [
+        "multi-vendor"
+      ],
+      "icon": "/icons/diversity.svg"
+    }
+  ],
+  "keywordRules": [
+    {
+      "pattern": "\\bcustodian\\b",
+      "flags": "i",
+      "icon": "/icons/custodian.svg"
+    },
+    {
+      "pattern": "\\bfederat",
+      "flags": "i",
+      "icon": "/icons/federation.svg"
+    },
+    {
+      "pattern": "\\bself-?custod",
+      "flags": "i",
+      "icon": "/icons/self-custody.svg"
+    },
+    {
+      "pattern": "\\bcollaborative\\b",
+      "flags": "i",
+      "icon": "/icons/collaborative.svg"
+    },
+    {
+      "pattern": "\\bsingle key\\b",
+      "flags": "i",
+      "icon": "/icons/single-key.svg"
+    },
+    {
+      "pattern": "\\bmultisig|\\bmulti-?signature|\\b2-of-3|\\b3-of-5",
+      "flags": "i",
+      "icon": "/icons/multisig.svg"
+    },
+    {
+      "pattern": "\\bhot wallet|\\bhot:",
+      "flags": "i",
+      "icon": "/icons/hot.svg"
+    },
+    {
+      "pattern": "\\bcold|\\bair-?gapp",
+      "flags": "i",
+      "icon": "/icons/cold.svg"
+    },
+    {
+      "pattern": "\\bemail and password|\\bpassword\\b",
+      "flags": "i",
+      "icon": "/icons/password.svg"
+    },
+    {
+      "pattern": "\\bprovide email\\b|\\bemail\\b",
+      "flags": "i",
+      "icon": "/icons/email.svg"
+    },
+    {
+      "pattern": "\\bKYC\\b|\\bpersonal information",
+      "flags": "i",
+      "icon": "/icons/kyc.svg"
+    },
+    {
+      "pattern": "\\bTOTP|\\bAuthenticator",
+      "flags": "i",
+      "icon": "/icons/totp.svg"
+    },
+    {
+      "pattern": "\\bPasskey\\b",
+      "flags": "i",
+      "icon": "/icons/passkey.svg"
+    },
+    {
+      "pattern": "\\bHardware security key\\b",
+      "flags": "i",
+      "icon": "/icons/hardware-key.svg"
+    },
+    {
+      "pattern": "\\bwithout 2FA|\\bSkip\\b|\\bskip\\b",
+      "flags": "i",
+      "icon": "/icons/skip.svg"
+    },
+    {
+      "pattern": "\\bInstall|\\binstalled from official|\\bdownload",
+      "flags": "i",
+      "icon": "/icons/download.svg"
+    },
+    {
+      "pattern": "\\bQR|\\binvite",
+      "flags": "i",
+      "icon": "/icons/qr-invite.svg"
+    },
+    {
+      "pattern": "\\bsocial backup",
+      "flags": "i",
+      "icon": "/icons/social-backup.svg"
+    },
+    {
+      "pattern": "\\bPIN\\b",
+      "flags": "i",
+      "icon": "/icons/pin.svg"
+    },
+    {
+      "pattern": "\\bPaper\\b",
+      "flags": "i",
+      "icon": "/icons/paper.svg"
+    },
+    {
+      "pattern": "\\bMetal\\b",
+      "flags": "i",
+      "icon": "/icons/metal.svg"
+    },
+    {
+      "pattern": "\\bdice\\b",
+      "flags": "i",
+      "icon": "/icons/dice.svg"
+    },
+    {
+      "pattern": "\\bcards?\\b|\\bSolitaire|\\bPontifex",
+      "flags": "i",
+      "icon": "/icons/cards.svg"
+    },
+    {
+      "pattern": "\\bLightning\\b",
+      "flags": "i",
+      "icon": "/icons/lightning.svg"
+    },
+    {
+      "pattern": "\\bShamir|\\bMulti-share|\\bshare\\b",
+      "flags": "i",
+      "icon": "/icons/shamir-share.svg"
+    },
+    {
+      "pattern": "\\bpassphrase\\b",
+      "flags": "i",
+      "icon": "/icons/passphrase.svg"
+    },
+    {
+      "pattern": "\\bverif",
+      "flags": "i",
+      "icon": "/icons/verify.svg"
+    },
+    {
+      "pattern": "\\breceive\\b",
+      "flags": "i",
+      "icon": "/icons/receive.svg"
+    },
+    {
+      "pattern": "\\bsend\\b|\\bPSBT\\b",
+      "flags": "i",
+      "icon": "/icons/send.svg"
+    },
+    {
+      "pattern": "\\bdescriptor\\b",
+      "flags": "i",
+      "icon": "/icons/descriptor.svg"
+    },
+    {
+      "pattern": "\\bSparrow\\b",
+      "flags": "i",
+      "icon": "/icons/sparrow.svg"
+    },
+    {
+      "pattern": "\\bxpub\\b",
+      "flags": "i",
+      "icon": "/icons/xpub.svg"
+    },
+    {
+      "pattern": "\\bwatch-?only\\b",
+      "flags": "i",
+      "icon": "/icons/watch-only.svg"
+    },
+    {
+      "pattern": "\\bfirmware\\b",
+      "flags": "i",
+      "icon": "/icons/firmware.svg"
+    },
+    {
+      "pattern": "\\bauthenticity\\b",
+      "flags": "i",
+      "icon": "/icons/authenticity.svg"
+    },
+    {
+      "pattern": "\\bCreate new|\\bcreate\\b|\\bWallet created|\\bAdd Bitcoin",
+      "flags": "i",
+      "icon": "/icons/create.svg"
+    },
+    {
+      "pattern": "\\bRecover\\b|\\brecovery\\b",
+      "flags": "i",
+      "icon": "/icons/recover.svg"
+    },
+    {
+      "pattern": "\\banother\\b|\\bdifferent\\b|\\bChange\\b|\\bExplore another|\\bChoose another",
+      "flags": "i",
+      "icon": "/icons/another.svg"
+    },
+    {
+      "pattern": "\\bsummary\\b|\\bOpen path",
+      "flags": "i",
+      "icon": "/icons/summary.svg"
+    },
+    {
+      "pattern": "\\bContinue\\b|\\bProceed\\b|\\bNext:",
+      "flags": "i",
+      "icon": "/icons/continue.svg"
+    },
+    {
+      "pattern": "\\bYes\\b|✓",
+      "flags": "i",
+      "icon": "/icons/yes.svg"
+    },
+    {
+      "pattern": "\\bNo\\b|— simpler|\\bSkip extra",
+      "flags": "i",
+      "icon": "/icons/no.svg"
+    },
+    {
+      "pattern": "\\bBack\\b|\\binstead\\b|\\bReturn\\b|\\bRevisit\\b",
+      "flags": "i",
+      "icon": "/icons/back.svg"
+    },
+    {
+      "pattern": "\\bHome\\b",
+      "flags": "i",
+      "icon": "/icons/home.svg"
+    },
+    {
+      "pattern": "\\bFamily\\b",
+      "flags": "i",
+      "icon": "/icons/family.svg"
+    },
+    {
+      "pattern": "\\bvault\\b|\\bsafe deposit|\\bPhysical storage|\\bNearby physical",
+      "flags": "i",
+      "icon": "/icons/vault.svg"
+    },
+    {
+      "pattern": "\\bSomewhere else\\b",
+      "flags": "i",
+      "icon": "/icons/elsewhere.svg"
+    },
+    {
+      "pattern": "\\binheritance\\b",
+      "flags": "i",
+      "icon": "/icons/inheritance.svg"
+    },
+    {
+      "pattern": "\\bsigning\\b|\\bsign with",
+      "flags": "i",
+      "icon": "/icons/signing.svg"
+    },
+    {
+      "pattern": "\\b12 words|\\b20 words|\\b24 words|\\bword",
+      "flags": "i",
+      "icon": "/icons/words.svg"
+    },
+    {
+      "pattern": "\\bGlacier|\\bceremony\\b",
+      "flags": "i",
+      "icon": "/icons/glacier.svg"
+    },
+    {
+      "pattern": "\\bOPSEC|\\bno photos|\\bsilence|\\bno cameras",
+      "flags": "i",
+      "icon": "/icons/opsec.svg"
+    },
+    {
+      "pattern": "\\bRNG\\b|\\bentropy\\b",
+      "flags": "i",
+      "icon": "/icons/rng.svg"
+    },
+    {
+      "pattern": "\\bcamera|\\bimage entropy",
+      "flags": "i",
+      "icon": "/icons/camera.svg"
+    },
+    {
+      "pattern": "\\bcloud\\b",
+      "flags": "i",
+      "icon": "/icons/cloud.svg"
+    },
+    {
+      "pattern": "\\bUSB ferry|\\bUSB\\b",
+      "flags": "i",
+      "icon": "/icons/usb.svg"
+    },
+    {
+      "pattern": "\\bSD\\b",
+      "flags": "i",
+      "icon": "/icons/sd-card.svg"
+    },
+    {
+      "pattern": "\\bElectrum\\b",
+      "flags": "i",
+      "icon": "/icons/electrum.svg"
+    },
+    {
+      "pattern": "\\bSegWit|\\bBIP84|\\bBIP49|\\bnative SegWit|\\bWrapped",
+      "flags": "i",
+      "icon": "/icons/segwit.svg"
+    },
+    {
+      "pattern": "\\bplaybook\\b",
+      "flags": "i",
+      "icon": "/icons/playbook.svg"
+    },
+    {
+      "pattern": "\\bdiversif|\\bvendor",
+      "flags": "i",
+      "icon": "/icons/diversity.svg"
+    },
+    {
+      "pattern": "\\bthreshold|\\b2-of-3|\\b3-of-5",
+      "flags": "i",
+      "icon": "/icons/threshold.svg"
+    },
+    {
+      "pattern": "\\bcoin flips?\\b",
+      "flags": "i",
+      "icon": "/icons/coin.svg"
+    },
+    {
+      "pattern": "\\bseed\\b|\\bBIP39\\b|\\brecovery phrase",
+      "flags": "i",
+      "icon": "/icons/seed.svg"
+    },
+    {
+      "pattern": "\\bbackup\\b",
+      "flags": "i",
+      "icon": "/icons/backup.svg"
+    },
+    {
+      "pattern": "\\bhardware\\b|\\bdevice\\b|\\bTrezor Suite|\\bfirmware",
+      "flags": "i",
+      "icon": "/icons/hardware-wallet.svg"
+    },
+    {
+      "pattern": "\\bphone\\b|\\bmobile\\b",
+      "flags": "i",
+      "icon": "/icons/phone.svg"
+    },
+    {
+      "pattern": "\\bPC\\b|\\bmachine\\b|\\bonline PC",
+      "flags": "i",
+      "icon": "/icons/pc.svg"
+    },
+    {
+      "pattern": "\\bwallet\\b",
+      "flags": "i",
+      "icon": "/icons/wallet.svg"
+    },
+    {
+      "pattern": "\\bBitcoin\\b|\\bon-chain\\b",
+      "flags": "i",
+      "icon": "/icons/bitcoin.svg"
+    },
+    {
+      "pattern": "\\bOpen Fedi|\\bOpen\\b|\\bprofile\\b",
+      "flags": "i",
+      "icon": "/icons/open-app.svg"
+    },
+    {
+      "pattern": "\\btest\\b",
+      "flags": "i",
+      "icon": "/icons/test.svg"
+    },
+    {
+      "pattern": "\\bwarn|\\bstub|\\backnowledge risks",
+      "flags": "i",
+      "icon": "/icons/warning.svg"
+    },
+    {
+      "pattern": "\\boptional\\b|\\bharden",
+      "flags": "i",
+      "icon": "/icons/continue.svg"
+    },
+    {
+      "pattern": "\\bHow will you",
+      "flags": "i",
+      "icon": "/icons/explore.svg"
+    },
+    {
+      "pattern": "\\bConsider\\b|\\bExplore\\b",
+      "flags": "i",
+      "icon": "/icons/explore.svg"
+    },
+    {
+      "pattern": "\\bWeak\\b|\\bMinimize\\b|\\bStandard setup",
+      "flags": "i",
+      "icon": "/icons/warning.svg"
+    },
+    {
+      "pattern": "\\bConfirmed\\b|\\bcompleted\\b|\\bready\\b|\\bwritten\\b|\\bset\\b|\\benabled\\b|\\bopened\\b|\\bstored\\b|\\bimported\\b|\\bexported\\b|\\bdistributed\\b|\\bconfigured\\b|\\bprepared\\b|\\btested\\b",
+      "flags": "i",
+      "icon": "/icons/check.svg"
+    }
+  ]
+}

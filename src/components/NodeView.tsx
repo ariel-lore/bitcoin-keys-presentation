@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import type { TreeNode, Choice } from '../types/schema';
 import { Markdown } from '../lib/markdown';
 import {
   bodyTeaser,
   vulnById,
-  brandInitials,
   mitigationById,
   unavoidableRiskByChoiceId,
 } from '../lib/data';
+import { ChoiceIcon } from './ChoiceIcon';
 
 export function NodeView({
   node,
@@ -84,7 +83,7 @@ export function NodeView({
               return (
                 <li key={c.id} className="choice-item">
                   <button type="button" className="choice-btn" onClick={() => onChoose(c)}>
-                    {(c.icon || c.subtitle) && <BrandIcon choice={c} />}
+                    <ChoiceIcon choice={c} />
                     <span className="choice-text">
                       <span className="choice-label">{c.label}</span>
                       {c.subtitle && <span className="choice-subtitle">{c.subtitle}</span>}
@@ -112,26 +111,6 @@ export function NodeView({
   );
 }
 
-function BrandIcon({ choice }: { choice: Choice }) {
-  const [failed, setFailed] = useState(false);
-  if (!choice.icon || failed) {
-    return (
-      <span className="brand-icon brand-fallback" aria-hidden>
-        {brandInitials(choice.label)}
-      </span>
-    );
-  }
-  return (
-    <img
-      className="brand-icon"
-      src={choice.icon}
-      alt=""
-      width={28}
-      height={28}
-      onError={() => setFailed(true)}
-    />
-  );
-}
 
 /** Hover detail: description / services only — risks stay listed under the option. */
 function ChoiceDetail({ choice }: { choice: Choice }) {

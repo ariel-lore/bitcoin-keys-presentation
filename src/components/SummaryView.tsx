@@ -1,8 +1,8 @@
 import type { AdventureState, Choice, TreeNode } from '../types/schema';
 import { isSufficientToOperate } from '../types/schema';
 import { Markdown } from '../lib/markdown';
-import { bodyTeaser, vulnById, mitigationForVuln, brandInitials } from '../lib/data';
-import { useState } from 'react';
+import { bodyTeaser, vulnById, mitigationForVuln } from '../lib/data';
+import { ChoiceIcon } from './ChoiceIcon';
 
 export function SummaryView({
   node,
@@ -166,7 +166,7 @@ export function SummaryView({
                     className={`choice-btn ${c.nextNodeId === 'start' ? 'choice-discreet' : ''}`}
                     onClick={() => onChoose(c)}
                   >
-                    {(c.icon || c.subtitle) && <BrandIcon choice={c} />}
+                    <ChoiceIcon choice={c} />
                     <span className="choice-text">
                       <span className="choice-label">{c.label}</span>
                       {c.subtitle && <span className="choice-subtitle">{c.subtitle}</span>}
@@ -183,24 +183,3 @@ export function SummaryView({
   );
 }
 
-function BrandIcon({ choice }: { choice: Choice }) {
-  const [failed, setFailed] = useState(false);
-  if (!choice.icon || failed) {
-    if (!choice.icon) return null;
-    return (
-      <span className="brand-icon brand-fallback" aria-hidden>
-        {brandInitials(choice.label)}
-      </span>
-    );
-  }
-  return (
-    <img
-      className="brand-icon"
-      src={choice.icon}
-      alt=""
-      width={28}
-      height={28}
-      onError={() => setFailed(true)}
-    />
-  );
-}
