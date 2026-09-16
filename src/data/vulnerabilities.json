@@ -275,7 +275,7 @@
   {
     "id": "firmware-rng-defect",
     "title": "Hardware RNG / firmware seed-gen defect",
-    "description": "Weak on-device entropy (historical firmware bugs) can make seeds crackable. Firmware updates do NOT fix existing seeds\u2014you must migrate funds to a new seed.",
+    "description": "Weak on-device entropy (historical firmware bugs) can make seeds crackable.",
     "severity": "critical",
     "categories": [
       "hardware",
@@ -524,7 +524,7 @@
   {
     "id": "single-point-key",
     "title": "Single key = single point of failure",
-    "description": "One compromised or lost seed controls (or loses) everything; no threshold protection.",
+    "description": "One compromised or lost seed controls (or loses) everything.",
     "severity": "high",
     "categories": [
       "single-sig"
