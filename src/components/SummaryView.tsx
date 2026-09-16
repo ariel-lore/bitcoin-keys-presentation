@@ -68,7 +68,6 @@ export function SummaryView({
                       {s.choiceDescription && <span className="proc-desc">{s.choiceDescription}</span>}
                       {(s.addsVulnIds?.length ?? 0) > 0 && (
                         <ul className="proc-step-risks">
-                          <li className="proc-introduced-label">Introduced at this step</li>
                           {(s.addsVulnIds ?? []).map((id) => {
                             const v = vulnById[id];
                             if (!v) return null;
