@@ -2002,3 +2002,67 @@ button {
 .summary-view .node-scroll {
   overflow-y: auto;
 }
+
+/* Summary presentation: no checklist chrome / green frame; steps in middle third */
+.path-risk-list.prl-embedded.prl-presentation {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0.35rem 0 1rem;
+}
+
+.path-risk-list.prl-embedded.prl-presentation.operable,
+.path-risk-list.prl-embedded.prl-presentation.incomplete {
+  border: none !important;
+  background: transparent !important;
+}
+
+.path-risk-list.prl-embedded .prl-head {
+  display: none;
+}
+
+.path-risk-list.prl-presentation .prl-steps {
+  width: 100%;
+  max-width: none;
+}
+
+/* Number / icon / title sit in the middle third, left-justified as a column */
+.path-risk-list.prl-presentation .prl-step-head {
+  display: grid;
+  grid-template-columns: 1fr minmax(12rem, 34%) 1fr;
+  align-items: center;
+  gap: 0;
+  padding: 0.55rem 0.5rem;
+}
+
+.path-risk-list.prl-presentation .prl-step-head::before {
+  content: '';
+  grid-column: 1;
+}
+
+.path-risk-list.prl-presentation .prl-step-cluster {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+  text-align: left;
+  justify-self: stretch;
+}
+
+.path-risk-list.prl-presentation .prl-step-body {
+  display: grid;
+  grid-template-columns: 1fr minmax(12rem, 34%) 1fr;
+  padding: 0 0.5rem 0.65rem;
+}
+
+.path-risk-list.prl-presentation .prl-step-body > * {
+  grid-column: 2;
+}
+
+.path-risk-list.prl-presentation .prl-idx {
+  width: 1.75rem;
+  height: 1.75rem;
+  font-size: 0.85rem;
+}
+

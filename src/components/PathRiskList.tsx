@@ -90,6 +90,15 @@ export function PathRiskList({
   const openRiskCount = state.vulnIds.filter((id) => !mitigated.has(id)).length;
   const showBody = embedded || panelOpen;
 
+  /** Path starts at the first choice taken — omit the opening question step. */
+  const visibleTrail = useMemo(() => {
+    if (state.trail.length <= 1) return state.trail;
+    const [first, ...rest] = state.trail;
+    const isOpeningQuestion = !first.choiceId && !first.choiceLabel;
+    return isOpeningQuestion ? rest : state.trail;
+  }, [state.trail]);
+
+
   return (
     <nav
       className={[
@@ -103,15 +112,8 @@ export function PathRiskList({
         .join(' ')}
       aria-label={sufficientToOperate ? 'Setup checklist' : 'Path checklist'}
     >
-      <header className="prl-head">
-        {embedded ? (
-          <div className="prl-panel-static">
-            <h2>{sufficientToOperate ? 'Setup checklist' : 'Path checklist'}</h2>
-            <span className="prl-panel-meta">
-              {openRiskCount > 0 ? `${openRiskCount} open` : 'clear'}
-            </span>
-          </div>
-        ) : (
+      {!embedded && (
+        <header className="prl-head">
           <button
             type="button"
             className="prl-panel-toggle"
@@ -126,17 +128,18 @@ export function PathRiskList({
               </span>
             </span>
           </button>
-        )}
-      </header>
+        </header>
+      )}
 
       {showBody && (
         <div className="prl-scroll">
           <ol className="prl-steps">
-            {state.trail.map((step, i) => {
+            {visibleTrail.map((step, i) => {
+              const trailIndex = state.trail.indexOf(step);
               const node = nodeById[step.nodeId];
-              const isStart = i === 0 && !step.choiceLabel;
+              const isStart = trailIndex === 0 && !step.choiceLabel;
               const label = stepTitle(step.choiceLabel, step.nodeId, isStart);
-              const choice = choiceForTrailStep(state.trail, i);
+              const choice = choiceForTrailStep(state.trail, trailIndex >= 0 ? trailIndex : i);
               const description = isStart
                 ? 'Starting question'
                 : (step.choiceDescription || (node ? `Leads to: ${node.title}` : null));
@@ -145,7 +148,7 @@ export function PathRiskList({
                 .filter((id) => state.vulnIds.includes(id) || mitigated.has(id))
                 .map((id) => vulnById[id])
                 .filter(Boolean);
-              const isLast = i === state.trail.length - 1;
+              const isLast = i === visibleTrail.length - 1;
               const done = !isLast || sufficientToOperate;
 
               return (
@@ -154,24 +157,26 @@ export function PathRiskList({
                   className={`prl-step open ${isLast ? 'current' : ''} ${done ? 'done' : ''}`}
                 >
                   <div className="prl-step-head">
-                    <span className={`prl-idx`} aria-hidden>
-                      {i + 1}
-                    </span>
-                    {choice && (
-                      <span className="prl-step-icon" aria-hidden>
-                        <ChoiceIcon choice={choice} />
+                    <div className="prl-step-cluster">
+                      <span className={`prl-idx`} aria-hidden>
+                        {i + 1}
                       </span>
-                    )}
-                    <span className="prl-step-main">
-                      <span className="prl-label">{label}</span>
-                      {vulns.length > 0 && (
-                        <span className="prl-risk-count" title={`${vulns.length} introduced here`}>
-                          {vulns.filter((v) => !mitigated.has(v.id)).length > 0
-                            ? `${vulns.filter((v) => !mitigated.has(v.id)).length} introduced`
-                            : 'secured'}
+                      {choice && (
+                        <span className="prl-step-icon" aria-hidden>
+                          <ChoiceIcon choice={choice} />
                         </span>
                       )}
-                    </span>
+                      <span className="prl-step-main">
+                        <span className="prl-label">{label}</span>
+                        {vulns.length > 0 && (
+                          <span className="prl-risk-count" title={`${vulns.length} introduced here`}>
+                            {vulns.filter((v) => !mitigated.has(v.id)).length > 0
+                              ? `${vulns.filter((v) => !mitigated.has(v.id)).length} introduced`
+                              : 'secured'}
+                          </span>
+                        )}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="prl-step-body">
