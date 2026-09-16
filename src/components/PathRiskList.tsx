@@ -102,8 +102,8 @@ export function PathRiskList({
                   className={`prl-step open ${isLast ? 'current' : ''} ${done ? 'done' : ''}`}
                 >
                   <div className="prl-step-head">
-                    <span className={`prl-idx ${done && !isLast ? 'prl-idx-check' : ''}`} aria-hidden>
-                      {done && !isLast ? '✓' : i + 1}
+                    <span className={`prl-idx`} aria-hidden>
+                      {i + 1}
                     </span>
                     <span className="prl-step-main">
                       <span className="prl-label">{label}</span>

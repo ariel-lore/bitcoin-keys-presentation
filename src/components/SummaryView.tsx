@@ -64,7 +64,6 @@ export function SummaryView({
                   .filter((s) => s.choiceLabel)
                   .map((s, i) => (
                     <li key={`t-${s.choiceId}-${i}`}>
-                      <strong>✓ {s.choiceLabel}</strong>
                       {s.choiceDescription && <span className="proc-desc">{s.choiceDescription}</span>}
                       {(s.addsVulnIds?.length ?? 0) > 0 && (
                         <ul className="proc-step-risks">
