@@ -9,7 +9,7 @@ import type {
   TrailStep,
 } from '../types/schema';
 import { isSufficientToOperate } from '../types/schema';
-import { tree, nodeById, uniquePush, uniqueRemove, mitigationById, mitigationForVuln } from '../lib/data';
+import { tree, nodeById, uniquePush, uniqueRemove, mitigationById, mitigationForVuln, unavoidableRiskByChoiceId } from '../lib/data';
 
 /** Survives React Strict Mode remount so we only bootstrap history once. */
 let historyBootstrapped = false;
@@ -53,6 +53,14 @@ function initialState(): AdventureState {
   };
 }
 
+
+/** Intrinsic + unavoidable-on-path risks for a chosen option (for path checklist). */
+function risksForChoice(choice: Choice): string[] {
+  const unavoidable = unavoidableRiskByChoiceId[choice.id];
+  if (unavoidable?.length) return [...unavoidable];
+  return choice.addsVulnIds ? [...choice.addsVulnIds] : [];
+}
+
 function applyChoice(prev: AdventureState, choice: Choice): AdventureState | null {
   const nextNode = nodeById[choice.nextNodeId];
   if (!nextNode) return null;
@@ -64,7 +72,8 @@ function applyChoice(prev: AdventureState, choice: Choice): AdventureState | nul
     },
     choice.setsFlags,
   );
-  let vulnIds = uniquePush(prev.vulnIds, choice.addsVulnIds);
+  const introduced = risksForChoice(choice);
+  let vulnIds = uniquePush(prev.vulnIds, introduced);
   vulnIds = uniqueRemove(vulnIds, choice.clearsVulnIds);
   // Drop mitigated markers for vulns no longer on the path
   const vulnSet = new Set(vulnIds);
@@ -78,7 +87,7 @@ function applyChoice(prev: AdventureState, choice: Choice): AdventureState | nul
         choiceId: choice.id,
         choiceLabel: choice.label,
         choiceDescription: choice.description ?? null,
-        addsVulnIds: choice.addsVulnIds ? [...choice.addsVulnIds] : [],
+        addsVulnIds: introduced,
         kind: 'choice',
       },
     ],
@@ -132,7 +141,8 @@ function replayTrail(
       continue;
     }
     currentNodeId = choice.nextNodeId;
-    vulnIds = uniquePush(vulnIds, choice.addsVulnIds);
+    const introduced = risksForChoice(choice);
+    vulnIds = uniquePush(vulnIds, introduced);
     vulnIds = uniqueRemove(vulnIds, choice.clearsVulnIds);
     tags = uniquePush(tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]);
     keys = applyFlags(keys, choice.setsFlags);
@@ -141,7 +151,7 @@ function replayTrail(
       choiceId: choice.id,
       choiceLabel: choice.label,
       choiceDescription: choice.description ?? null,
-      addsVulnIds: choice.addsVulnIds ? [...choice.addsVulnIds] : [],
+      addsVulnIds: introduced,
       kind: 'choice',
     });
   }
@@ -203,7 +213,8 @@ function walkPath(path: RecommendedPath): AdventureState {
     const choice = node?.choices.find((c) => c.id === choiceId);
     if (!choice) break;
     currentNodeId = choice.nextNodeId;
-    vulnIds = uniquePush(vulnIds, choice.addsVulnIds);
+    const introduced = risksForChoice(choice);
+    vulnIds = uniquePush(vulnIds, introduced);
     vulnIds = uniqueRemove(vulnIds, choice.clearsVulnIds);
     tags = uniquePush(tags, [...(choice.tags ?? []), ...(choice.capabilities ?? []), ...(choice.enables ?? [])]);
     keys = applyFlags(keys, choice.setsFlags);
@@ -212,7 +223,7 @@ function walkPath(path: RecommendedPath): AdventureState {
       choiceId: choice.id,
       choiceLabel: choice.label,
       choiceDescription: choice.description ?? null,
-      addsVulnIds: choice.addsVulnIds ? [...choice.addsVulnIds] : [],
+      addsVulnIds: introduced,
       kind: 'choice',
     });
   }

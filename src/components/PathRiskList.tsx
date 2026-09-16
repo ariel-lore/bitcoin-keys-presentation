@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { AdventureState, Choice, ProcedureStep, TrailStep } from '../types/schema';
-import { nodeById, vulnById, mitigationForVuln } from '../lib/data';
+import { nodeById, vulnById, mitigationForVuln, unavoidableRiskByChoiceId } from '../lib/data';
 import type { Severity } from '../types/schema';
 import { ChoiceIcon } from './ChoiceIcon';
 
@@ -68,13 +68,43 @@ export function PathRiskList({
 }) {
   const mitigated = useMemo(() => new Set(state.mitigatedVulnIds), [state.mitigatedVulnIds]);
 
+  /** Path starts at the first choice taken — omit the opening question step. */
+  const visibleTrail = useMemo(() => {
+    if (state.trail.length <= 1) return state.trail;
+    const [first, ...rest] = state.trail;
+    const isOpeningQuestion = !first.choiceId && !first.choiceLabel;
+    return isOpeningQuestion ? rest : state.trail;
+  }, [state.trail]);
+
+  /**
+   * For each visible path step: show that choice's "Unavoidable on this path" risks,
+   * but silence any risk already listed under an earlier step.
+   */
+  const risksByVisibleIndex = useMemo(() => {
+    const seen = new Set<string>();
+    return visibleTrail.map((step) => {
+      const choiceId = step.choiceId;
+      const raw =
+        (choiceId && unavoidableRiskByChoiceId[choiceId]) ||
+        step.addsVulnIds ||
+        [];
+      const fresh: string[] = [];
+      for (const id of raw) {
+        if (seen.has(id)) continue;
+        seen.add(id);
+        fresh.push(id);
+      }
+      return fresh;
+    });
+  }, [visibleTrail]);
+
   const stepScopedVulnIds = useMemo(() => {
     const ids = new Set<string>();
-    for (const step of state.trail) {
-      for (const id of step.addsVulnIds ?? []) ids.add(id);
+    for (const list of risksByVisibleIndex) {
+      for (const id of list) ids.add(id);
     }
     return ids;
-  }, [state.trail]);
+  }, [risksByVisibleIndex]);
 
   const orphanVulnIds = useMemo(
     () => state.vulnIds.filter((id) => !stepScopedVulnIds.has(id)),
@@ -89,14 +119,6 @@ export function PathRiskList({
 
   const openRiskCount = state.vulnIds.filter((id) => !mitigated.has(id)).length;
   const showBody = embedded || panelOpen;
-
-  /** Path starts at the first choice taken — omit the opening question step. */
-  const visibleTrail = useMemo(() => {
-    if (state.trail.length <= 1) return state.trail;
-    const [first, ...rest] = state.trail;
-    const isOpeningQuestion = !first.choiceId && !first.choiceLabel;
-    return isOpeningQuestion ? rest : state.trail;
-  }, [state.trail]);
 
 
   return (
@@ -143,9 +165,8 @@ export function PathRiskList({
               const description = isStart
                 ? 'Starting question'
                 : (step.choiceDescription || (node ? `Leads to: ${node.title}` : null));
-              // Intrinsic risks introduced at this step (hide ones later cleared off the path)
-              const vulns = (step.addsVulnIds ?? [])
-                .filter((id) => state.vulnIds.includes(id) || mitigated.has(id))
+              // Unavoidable-on-path risks for this choice, minus ones already shown earlier
+              const vulns = (risksByVisibleIndex[i] ?? [])
                 .map((id) => vulnById[id])
                 .filter(Boolean);
               const isLast = i === visibleTrail.length - 1;
@@ -171,7 +192,7 @@ export function PathRiskList({
                         {vulns.length > 0 && (
                           <span className="prl-risk-count" title={`${vulns.length} introduced here`}>
                             {vulns.filter((v) => !mitigated.has(v.id)).length > 0
-                              ? `${vulns.filter((v) => !mitigated.has(v.id)).length} introduced`
+                              ? `${vulns.filter((v) => !mitigated.has(v.id)).length} risks`
                               : 'secured'}
                           </span>
                         )}
@@ -193,7 +214,7 @@ export function PathRiskList({
                     {vulns.length > 0 && (
                       <ul className="prl-risks" aria-label={`Risks introduced at ${label}`}>
                         <li className="prl-introduced-label" aria-hidden>
-                          Introduced at this step
+                          Unavoidable on this path
                         </li>
                         {vulns.map((v) => (
                           <RiskRow
