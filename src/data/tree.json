@@ -2085,26 +2085,91 @@
     },
     {
       "id": "seed-dice",
-      "title": "Which manual dice procedure will you follow?",
-      "body": "Casino/tested dice + trusted mapping table; **never sort** multi-die outcomes before mapping.\n",
+      "title": "Which dice will you use?",
+      "body": "",
       "category": "Seed generation",
       "choices": [
         {
           "id": "sd-good",
-          "label": "Casino dice + trusted table + no sorting",
+          "label": "Casino dice",
+          "nextNodeId": "seed-dice-lookup",
+          "addsVulnIds": [
+          ],
+          "description": ""
+        },
+        {
+          "id": "sd-regular",
+          "label": "Regular dice (d6)",
+          "nextNodeId": "seed-dice-lookup",
+          "addsVulnIds": [
+            "biased-dice"
+          ],
+          "description": ""
+        },
+        {
+          "id": "sd-d8",
+          "label": "d8 dice",
+          "nextNodeId": "seed-dice-lookup",
+          "addsVulnIds": [
+            "biased-dice"
+          ],
+          "description": ""
+        },
+        {
+          "id": "sd-d20",
+          "label": "d20 dice",
+          "nextNodeId": "seed-dice-lookup",
+          "addsVulnIds": [
+            "biased-dice"
+          ],
+          "description": ""
+        },
+        {
+          "id": "sd-d2^256",
+          "label": "d2^256 dice (joke)",
+          "nextNodeId": "seed-checksum",
+          "addsVulnIds": [
+            "biased-dice"
+          ],
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "seed-dice-lookup",
+      "title": "Which manual dice procedure will you follow?",
+      "body": "",
+      "category": "Seed generation",
+      "choices": [
+        {
+          "id": "sd-bitbox",
+          "label": "5d4 + 1d2 Lookup table",
           "nextNodeId": "seed-checksum",
           "addsVulnIds": [
             "dice-sort-bias",
-            "biased-dice",
             "unsafe-dice-instructions"
           ],
-          "description": "Casino dice + trusted table + no sorting. This option continues the path and may add specific risks shown under the button."
+          "description": ""
         },
         {
-          "id": "sd-back",
-          "label": "Other entropy methods",
-          "nextNodeId": "tool-manual",
-          "description": "Other entropy methods. This option continues the path and may add specific risks shown under the button."
+          "id": "sd-table-lookup1",
+          "label": "11d2 Binary lookup table",
+          "nextNodeId": "seed-checksum",
+          "addsVulnIds": [
+            "dice-sort-bias",
+            "unsafe-dice-instructions"
+          ],
+          "description": ""
+        },
+        {
+          "id": "sd-table-lookup2",
+          "label": "Other lookup table",
+          "nextNodeId": "seed-checksum",
+          "addsVulnIds": [
+            "dice-sort-bias",
+            "unsafe-dice-instructions"
+          ],
+          "description": ""
         }
       ]
     },
