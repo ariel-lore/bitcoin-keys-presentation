@@ -1966,7 +1966,7 @@
         {
           "id": "pe-ms-harden-ms",
           "label": "Consider multisig",
-          "nextNodeId": "multisig",
+          "nextNodeId": "self-custody",
           "description": "Move toward an m-of-n multisignature structure."
         },
         {
@@ -2071,7 +2071,7 @@
         {
           "id": "pe-g-harden-ms",
           "label": "Consider multisig",
-          "nextNodeId": "multisig",
+          "nextNodeId": "self-custody",
           "description": "Move toward an m-of-n multisignature structure."
         },
         {
@@ -2534,7 +2534,7 @@
         {
           "id": "sh-ms",
           "label": "Explore multisig",
-          "nextNodeId": "multisig",
+          "nextNodeId": "self-custody",
           "description": "Structural upgrade to m-of-n."
         },
         {
@@ -2567,7 +2567,7 @@
         {
           "id": "pe-s-harden-ms",
           "label": "Consider multisig (structural switch)",
-          "nextNodeId": "multisig",
+          "nextNodeId": "self-custody",
           "description": "Change structure to m-of-n instead of single key."
         },
         {

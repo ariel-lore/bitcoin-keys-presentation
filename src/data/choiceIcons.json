@@ -26,7 +26,6 @@
     "pe-c-another-custodian": "/icons/custodian.svg",
     "pe-c-another-model": "/icons/another.svg",
     "sf-single": "/icons/single-key.svg",
-    "sf-multi": "/icons/multisig.svg",
     "sk-hot": "/icons/hot.svg",
     "sk-cold": "/icons/cold.svg",
     "fed-app-other": "/icons/federation.svg",
@@ -315,7 +314,10 @@
     "snd-connected-hw": "/icons/hardware-wallet.svg",
     "snd-hot": "/icons/hot.svg",
     "sd-summary": "/icons/summary.svg",
-    "sd-receive": "/icons/back.svg"
+    "sd-receive": "/icons/back.svg",
+    "sk-manual": "/brands/manual-seed.svg",
+    "sk-cold-hw": "/icons/hardware-wallet.svg",
+    "ms-redirect-hub": "/icons/multisig.svg"
   },
   "tagRules": [
     {
@@ -869,12 +871,12 @@
       "icon": "/icons/continue.svg"
     },
     {
-      "pattern": "\\bYes\\b|✓",
+      "pattern": "\\bYes\\b|\u2713",
       "flags": "i",
       "icon": "/icons/yes.svg"
     },
     {
-      "pattern": "\\bNo\\b|— simpler|\\bSkip extra",
+      "pattern": "\\bNo\\b|\u2014 simpler|\\bSkip extra",
       "flags": "i",
       "icon": "/icons/no.svg"
     },

@@ -429,8 +429,8 @@
     "kind": "switchOption",
     "switchTo": {
       "replaceChoiceTag": "single-sig",
-      "targetNodeId": "multisig",
-      "choiceLabel": "Multisignature",
+      "targetNodeId": "self-custody",
+      "choiceLabel": "2-of-3 Multisig",
       "clearsVulnIds": [
         "single-point-key"
       ]

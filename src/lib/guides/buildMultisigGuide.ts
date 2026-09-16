@@ -28,40 +28,28 @@ const KEY_STORAGE: Record<number, { label: string; choiceId: string; vulns: stri
 /** Seedsigner-only 2-of-3 + Sparrow + descriptors at 3 locations. */
 export function buildMultisigGuideNodes(): TreeNode[] {
   const nodes: TreeNode[] = [
+    // Thin redirect: thresholds now live on self-custody. Kept so legacy tree.json
+    // "Consider multisig" links do not dead-end.
     multiChoice(
       'multisig',
-      'What multisig threshold?',
-      '**m-of-n** keys required to spend. This detailed guide focuses on **2-of-3**; other thresholds stay as light hooks.\n',
+      'How will spending be authorized?',
+      'Threshold choice moved to the self-custody hub. Continue there to pick single key or an m-of-n threshold.\n',
       [
         {
-          id: 'ms-2of3',
-          label: '2-of-3',
-          nextNodeId: 'ms-signing-devices',
-          description: 'Any two of three keys spend. Common DIY collaborative setup.',
-          tags: ['2of3'],
-        },
-        {
-          id: 'ms-3of5',
-          label: '3-of-5 (light hook)',
-          nextNodeId: 'ms-threshold-stub',
-          description: 'Higher threshold stub — expand later; 2-of-3 has the deep walkthrough.',
-          tags: ['stub'],
-        },
-        {
-          id: 'ms-other-thresh',
-          label: 'Other threshold (light hook)',
-          nextNodeId: 'ms-threshold-stub',
-          description: 'Custom m-of-n stub.',
-          tags: ['stub'],
+          id: 'ms-redirect-hub',
+          label: 'Continue to spending authorization',
+          nextNodeId: 'self-custody',
+          description: 'Single key · 2-of-3 · 3-of-5 · Other threshold.',
+          tags: ['multisig'],
         },
       ],
-      { category: 'Multisig', tags: ['multisig'] },
+      { category: 'Multisig', tags: ['multisig', 'redirect'] },
     ),
 
     multiChoice(
       'ms-threshold-stub',
       'Other thresholds',
-      'Only **2-of-3** is fully expanded in this build. Return there for Seedsigner + Sparrow detail.\n',
+      'Only **2-of-3** is fully expanded in this build. Pick **Use 2-of-3 instead** for Seedsigner + Sparrow detail, or return to spending authorization.\n',
       [
         {
           id: 'ms-stub-to-2of3',
@@ -73,7 +61,7 @@ export function buildMultisigGuideNodes(): TreeNode[] {
           id: 'ms-stub-back',
           label: 'Choose another custody structure',
           nextNodeId: 'self-custody',
-          description: 'Back to single key vs multisig.',
+          description: 'Back to spending authorization (single key / thresholds).',
         },
       ],
       { category: 'Multisig · Stub', tags: ['stub'] },
@@ -346,7 +334,7 @@ export function buildMultisigGuideNodes(): TreeNode[] {
           id: 'pe-ms-ss-structure',
           label: 'Choose single key instead',
           nextNodeId: 'self-custody',
-          description: 'Back to single vs multi.',
+          description: 'Back to spending authorization.',
         },
         {
           id: 'pe-ms-ss-model',

@@ -109,7 +109,7 @@ export function buildBreadthHookNodes(): TreeNode[] {
         {
           id: 'metal-back',
           label: 'Back to cold tools',
-          nextNodeId: 'sk-cold',
+          nextNodeId: 'sk-cold-hardware',
           description: 'Pick a signing device.',
         },
       ],
@@ -133,8 +133,8 @@ export function buildBreadthHookNodes(): TreeNode[] {
         {
           id: 'collab-to-ms',
           label: 'DIY multisig instead (Seedsigner 2-of-3)',
-          nextNodeId: 'multisig',
-          description: 'Open the detailed self-managed multisig guide.',
+          nextNodeId: 'ms-signing-devices',
+          description: 'Open the detailed self-managed 2-of-3 multisig guide.',
         },
         {
           id: 'collab-back',
@@ -158,7 +158,7 @@ export function buildBreadthHookNodes(): TreeNode[] {
         {
           id: 'pe-collab-ms',
           label: 'Try DIY 2-of-3 multisig',
-          nextNodeId: 'multisig',
+          nextNodeId: 'ms-signing-devices',
           description: 'Seedsigner + Sparrow detailed path.',
         },
         {

@@ -2,7 +2,7 @@
   {
     "id": "path-custodial",
     "name": "Custodian (Kraken)",
-    "summary": "Hosted custodian: email/password → KYC → mandatory 2FA (authenticator). Account claim only — no private key. Counterparty and auth risks remain on the path.",
+    "summary": "Hosted custodian: email/password \u2192 KYC \u2192 mandatory 2FA (authenticator). Account claim only \u2014 no private key. Counterparty and auth risks remain on the path.",
     "choiceSequence": [
       "start-custodian",
       "sc-kraken",
@@ -26,7 +26,7 @@
   {
     "id": "path-federated-fedi",
     "name": "Federated custody (Fedi member)",
-    "summary": "Join an existing Fedimint federation via Fedi: official download → invite → social backup choice → personal backup → PIN. No on-chain private key; federation intrinsic risks apply.",
+    "summary": "Join an existing Fedimint federation via Fedi: official download \u2192 invite \u2192 social backup choice \u2192 personal backup \u2192 PIN. No on-chain private key; federation intrinsic risks apply.",
     "choiceSequence": [
       "start-federated",
       "fed-app-fedi",
@@ -43,7 +43,7 @@
   {
     "id": "path-hot-bluewallet",
     "name": "Self-custodied hot (BlueWallet)",
-    "summary": "Phone hot wallet: official install → Bitcoin wallet → BIP84 → create → offline backup → verify → receive → send risks. PRIV+PUB when complete.",
+    "summary": "Phone hot wallet: official install \u2192 Bitcoin wallet \u2192 BIP84 \u2192 create \u2192 offline backup \u2192 verify \u2192 receive \u2192 send risks. PRIV+PUB when complete.",
     "choiceSequence": [
       "start-self",
       "sf-single",
@@ -65,11 +65,12 @@
   {
     "id": "path-cold-trezor-passphrase",
     "name": "Self-custodied cold (Trezor + passphrase)",
-    "summary": "Trezor Safe path: Suite → firmware → authenticity → single-share BIP39 → PIN → enable passphrase → test → store separately → verify receive. PRIV+PUB.",
+    "summary": "Trezor Safe path: Suite \u2192 firmware \u2192 authenticity \u2192 single-share BIP39 \u2192 PIN \u2192 enable passphrase \u2192 test \u2192 store separately \u2192 verify receive. PRIV+PUB.",
     "choiceSequence": [
       "start-self",
       "sf-single",
       "sk-cold",
+      "sk-cold-hw",
       "sk-trezor",
       "pt-safe5",
       "trz-suite-official",
@@ -92,11 +93,12 @@
   {
     "id": "path-cold-trezor-shamir",
     "name": "Self-custodied cold (Trezor 2-of-3 Shamir)",
-    "summary": "Multi-share Backup: 3 shares / threshold 2 → write+verify each share → Home / Physical storage / Family → never digitize → recombine on Trezor to spend.",
+    "summary": "Multi-share Backup: 3 shares / threshold 2 \u2192 write+verify each share \u2192 Home / Physical storage / Family \u2192 never digitize \u2192 recombine on Trezor to spend.",
     "choiceSequence": [
       "start-self",
       "sf-single",
       "sk-cold",
+      "sk-cold-hw",
       "sk-trezor",
       "pt-safe3",
       "trz-suite-official",
@@ -123,10 +125,9 @@
   {
     "id": "path-multisig-seedsigner",
     "name": "Multisig 2-of-3 (Seedsigner + Sparrow)",
-    "summary": "Three Seedsigners (same-vendor risk): dice/RNG per key → Family/Home/Physical storage → Sparrow 2-of-3 → xpubs → descriptor at all three locations → verify receive → PSBT QR spend.",
+    "summary": "Three Seedsigners (same-vendor risk): dice/RNG per key \u2192 Family/Home/Physical storage \u2192 Sparrow 2-of-3 \u2192 xpubs \u2192 descriptor at all three locations \u2192 verify receive \u2192 PSBT QR spend.",
     "choiceSequence": [
       "start-self",
-      "sf-multi",
       "ms-2of3",
       "ms-dev-seedsigner-all",
       "ms-ss-k1-dice",

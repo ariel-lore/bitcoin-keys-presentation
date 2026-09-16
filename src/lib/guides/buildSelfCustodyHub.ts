@@ -2,7 +2,8 @@ import type { TreeNode } from '../../types/schema';
 import { multiChoice } from './helpers';
 
 /**
- * Rewires self-custody entry: Single vs Multi → Hot vs Cold → tools.
+ * Rewires self-custody entry: spending authorization (single / thresholds) →
+ * Hot vs Cold → Manual vs Hardware → tools.
  * Detailed guides: BlueWallet (hot), Trezor (cold), Seedsigner multisig.
  * Other tools keep light hooks into legacy tree.json nodes where useful.
  */
@@ -10,8 +11,8 @@ export function buildSelfCustodyHubNodes(): TreeNode[] {
   return [
     multiChoice(
       'self-custody',
-      'Single key or multisignature?',
-      'You hold the keys. Structure matters: one key vs multisignature.\n',
+      'How will spending be authorized?',
+      'You hold the keys. Structure matters: one key alone, or an m-of-n multisignature threshold.\n',
       [
         {
           id: 'sf-single',
@@ -22,11 +23,25 @@ export function buildSelfCustodyHubNodes(): TreeNode[] {
           tags: ['single-sig'],
         },
         {
-          id: 'sf-multi',
-          label: 'Multisignature',
-          nextNodeId: 'multisig',
-          description: 'm-of-n keys to spend. Removes single points of failure; more ceremony.',
-          tags: ['multisig'],
+          id: 'ms-2of3',
+          label: '2-of-3 Multisig',
+          nextNodeId: 'ms-signing-devices',
+          description: 'Any two of three keys spend. Common DIY collaborative setup.',
+          tags: ['2of3', 'multisig'],
+        },
+        {
+          id: 'ms-3of5',
+          label: '3-of-5 Multisig',
+          nextNodeId: 'ms-threshold-stub',
+          description: 'Higher threshold stub — expand later; 2-of-3 has the deep walkthrough.',
+          tags: ['stub', 'multisig'],
+        },
+        {
+          id: 'ms-other-thresh',
+          label: 'Other threshold',
+          nextNodeId: 'ms-threshold-stub',
+          description: 'Custom m-of-n stub.',
+          tags: ['stub', 'multisig'],
         },
       ],
       { category: 'Self-custody', tags: ['self-custody'] },
@@ -95,7 +110,34 @@ export function buildSelfCustodyHubNodes(): TreeNode[] {
 
     multiChoice(
       'sk-cold',
-      'Which cold / air-gapped tool?',
+      'How will you generate the cold seed?',
+      'Manual entropy ceremonies vs generating on a hardware / air-gapped device.\n',
+      [
+        {
+          id: 'sk-manual',
+          label: 'Manual seed generation',
+          icon: '/brands/manual-seed.svg',
+          subtitle: 'Dice · Solitaire · Seedpicker',
+          nextNodeId: 'tool-manual-extended',
+          description: 'Physical entropy ceremonies including dice and manual word picking.',
+          tags: ['manual', 'entropy'],
+        },
+        {
+          id: 'sk-cold-hw',
+          label: 'Hardware seed generation',
+          icon: '/icons/hardware-wallet.svg',
+          subtitle: 'Trezor · Ledger · Coldcard · air-gapped',
+          nextNodeId: 'sk-cold-hardware',
+          description: 'Generate the seed on a hardware wallet or air-gapped signer.',
+          tags: ['hardware', 'cold'],
+        },
+      ],
+      { category: 'Cold', tags: ['cold'] },
+    ),
+
+    multiChoice(
+      'sk-cold-hardware',
+      'Which hardware / air-gapped device?',
       'Trezor has detailed passphrase and Multi-share guides. Others are wired light hooks (not dead ends).\n',
       [
         {
@@ -132,7 +174,7 @@ export function buildSelfCustodyHubNodes(): TreeNode[] {
           icon: '/brands/seedsigner.svg',
           subtitle: 'Air-gapped · light hook',
           nextNodeId: 'product-seedsigner',
-          description: 'Single-key Seedsigner path. For 2-of-3 multisig, choose Multisignature instead.',
+          description: 'Single-key Seedsigner path. For 2-of-3 multisig, choose 2-of-3 Multisig at spending authorization.',
         },
         {
           id: 'sk-jade',
@@ -159,16 +201,8 @@ export function buildSelfCustodyHubNodes(): TreeNode[] {
           description: 'Offline phone signer path.',
           addsVulnIds: ['break-airgap-install'],
         },
-        {
-          id: 'sk-manual',
-          label: 'Manual entropy (dice / cards / Seedpicker)',
-          icon: '/brands/manual-seed.svg',
-          subtitle: 'Dice · Solitaire · Seedpicker hooks',
-          nextNodeId: 'tool-manual-extended',
-          description: 'Physical entropy ceremonies including dice and manual word picking.',
-        },
       ],
-      { category: 'Cold', tags: ['cold'] },
+      { category: 'Cold · Hardware', tags: ['cold', 'hardware'] },
     ),
   ];
 }

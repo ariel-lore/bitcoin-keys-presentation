@@ -307,7 +307,7 @@ export function buildTrezorGuideNodes(): TreeNode[] {
         {
           id: 'pe-trz-p-tool',
           label: 'Choose another cold tool',
-          nextNodeId: 'sk-cold',
+          nextNodeId: 'sk-cold-hardware',
           description: 'Pick a different cold wallet.',
         },
         {
@@ -511,7 +511,7 @@ export function buildTrezorGuideNodes(): TreeNode[] {
         {
           id: 'pe-trz-s-tool',
           label: 'Choose another cold tool',
-          nextNodeId: 'sk-cold',
+          nextNodeId: 'sk-cold-hardware',
           description: 'Pick a different cold wallet.',
         },
         {
