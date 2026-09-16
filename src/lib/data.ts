@@ -22,6 +22,9 @@ const custodians = custodiansData as CustodianDef[];
  * 1. Generated start + custodian flow
  * 2. Guide builders (Fedi, BlueWallet, Trezor, multisig, hub, breadth)
  * 3. Remaining tree.json nodes not owned by (1)/(2)
+ *
+ * tree.json is trimmed of owned/obsolete ids; the filter below remains so
+ * reintroduced collisions are still dropped at merge time.
  */
 function mergeTree(raw: TreeFile): TreeFile {
   const custodianNodes = buildCustodianFlowNodes(custodians);
